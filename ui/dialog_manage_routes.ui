@@ -112,7 +112,7 @@ when used, domain destinations are resolved to IP before routing.</string>
             </item>
             <item>
              <property name="text">
-              <string>direct</string>
+              <string notr="true">direct</string>
              </property>
             </item>
            </widget>
