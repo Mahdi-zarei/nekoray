@@ -2,7 +2,27 @@
 
 Qt based cross-platform GUI proxy configuration manager (backend: sing-box)
 
-Support Windows / Linux out of the box now.
+Support Windows / Linux / MacOS out of the box now.
+
+### Using Tun mode in MacOS
+To use Tun mode in MacOS, you need to open the app as root.
+
+Open the app like this:
+
+```shell
+sudo /Applications/nekoray.app/Contents/MacOS/nekoray
+```
+
+It will open a Nekoray instance with no configurations; if you have configured your Nekoray in normal mode, close the app and do this to copy them:
+
+**`Note:`** Replace `YOU` with your username
+
+```shell
+sudo cp -r /Users/YOU/Library/Preferences/nekoray/ /private/var/root/Library/Preferences/nekoray
+```
+
+Now, you can open it with the first command.
+
 
 ### GitHub Releases (Portable ZIP)
 
