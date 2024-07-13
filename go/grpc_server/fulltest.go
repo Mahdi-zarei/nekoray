@@ -4,14 +4,14 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-	"grpc_server/gen"
 	"io"
 	"log"
-	"math"
 	"net"
 	"net/http"
 	"strings"
 	"time"
+
+	"grpc_server/gen"
 
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/speedtest"
@@ -55,7 +55,7 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 	// UDP Latency
 	var udpLatency string
 	if in.FullUdpLatency {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+		ctx, cancel := context.WithTimeout(ctx, time.Second*3)
 		result := make(chan string)
 
 		go func() {
@@ -113,36 +113,34 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 		}
 	}
 
-	// 下载
+	// download speed
 	var speed string
 	if in.FullSpeed {
 		if in.FullSpeedTimeout <= 0 {
 			in.FullSpeedTimeout = 30
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(in.FullSpeedTimeout))
-		result := make(chan string)
-		var bodyClose io.Closer
+		ctx, cancel := context.WithTimeout(ctx, time.Second*time.Duration(in.FullSpeedTimeout))
+		result := make(chan string, 1)
 
-		go func() {
-			req, _ := http.NewRequestWithContext(ctx, "GET", in.FullSpeedUrl, nil)
-			resp, err := httpClient.Do(req)
-			if err == nil && resp != nil && resp.Body != nil {
-				bodyClose = resp.Body
-				defer resp.Body.Close()
-
-				timeStart := time.Now()
-				n, _ := io.Copy(io.Discard, resp.Body)
-				timeEnd := time.Now()
-
-				duration := math.Max(timeEnd.Sub(timeStart).Seconds(), 0.000001)
-				resultSpeed := (float64(n) / duration) / MiB
-				result <- fmt.Sprintf("%.2fMiB/s", resultSpeed)
-			} else {
-				result <- "Error"
+		go func(ctx context.Context, client *http.Client, url string, result chan<- string) {
+			req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+			if err != nil {
+				result <- err.Error()
+				return
 			}
-			close(result)
-		}()
+			resp, err := client.Do(req)
+			if err != nil {
+				result <- err.Error()
+				return
+			}
+			defer resp.Body.Close()
+
+			start := time.Now()
+			copiedBytes, _ := io.Copy(io.Discard, resp.Body)
+			duration := time.Since(start).Seconds()
+			result <- fmt.Sprintf("%.2fMib/s", float64(copiedBytes)/duration/MiB)
+		}(ctx, httpClient, in.FullSpeedUrl, result)
 
 		select {
 		case <-ctx.Done():
@@ -152,9 +150,6 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 		}
 
 		cancel()
-		if bodyClose != nil {
-			bodyClose.Close()
-		}
 	}
 
 	fr := make([]string, 0)
