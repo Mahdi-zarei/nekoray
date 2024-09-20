@@ -134,6 +134,21 @@ namespace NekoGui {
         int ntp_server_port = 0;
         QString ntp_interval = "";
 
+        // Hijack
+        bool enable_dns_server = false;
+        QString dns_server_listen_addr = "127.0.0.1";
+#ifdef Q_OS_LINUX
+        int dns_server_listen_port = 5353;
+#else
+        int dns_server_listen_port = 53;
+#endif
+        QString dns_v4_resp = "127.0.0.1";
+        QString dns_v6_resp = "::1";
+        QStringList dns_server_rules = {};
+        bool enable_redirect = false;
+        QString redirect_listen_address = "127.0.0.1";
+        int redirect_listen_port = 443;
+
         // Hotkey
         QString hotkey_mainwindow = "";
         QString hotkey_group = "";

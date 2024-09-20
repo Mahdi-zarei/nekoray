@@ -295,6 +295,15 @@ namespace NekoGui {
         _add(new configItem("ntp_interval", &ntp_interval, itemType::string));
         _add(new configItem("geoip_download_url", &geoip_download_url, itemType::string));
         _add(new configItem("geosite_download_url", &geosite_download_url, itemType::string));
+        _add(new configItem("enable_dns_server", &enable_dns_server, itemType::boolean));
+        _add(new configItem("dns_server_listen_addr", &dns_server_listen_addr, itemType::string));
+        _add(new configItem("dns_server_listen_port", &dns_server_listen_port, itemType::integer));
+        _add(new configItem("dns_v4_resp", &dns_v4_resp, itemType::string));
+        _add(new configItem("dns_v6_resp", &dns_v6_resp, itemType::string));
+        _add(new configItem("dns_server_rules", &dns_server_rules, itemType::stringList));
+        _add(new configItem("enable_redirect", &enable_redirect, itemType::boolean));
+        _add(new configItem("redirect_listen_address", &redirect_listen_address, itemType::string));
+        _add(new configItem("redirect_listen_port", &redirect_listen_port, itemType::integer));
     }
 
     void DataStore::UpdateStartedId(int id) {

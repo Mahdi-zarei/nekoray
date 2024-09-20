@@ -132,6 +132,122 @@ also if the connection cannot be established with the current address family (ip
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Hijack</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>DNS Server</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="dnshijack_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="dnshijack_what">
+            <property name="text">
+             <string>How does it work?</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="dnshijack_listenaddr_l">
+            <property name="text">
+             <string>Listen Address</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="dnshijack_listenaddr"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="dnshijack_listenport_l">
+            <property name="text">
+             <string>Listen Port</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="dnshijack_listenport"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="dnshijack_rules_l">
+            <property name="text">
+             <string>Rules</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QTextEdit" name="dnshijack_rules"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="dnshijack_v4resp"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="dnshijack_v4resp_l">
+            <property name="text">
+             <string>IPv4 Response</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="dnshijack_v6resp"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="dnshijack_v6resp_l">
+            <property name="text">
+             <string>IPv6 Response</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Redirect Settings</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="redirect_listenport"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="redirect_listenport_l">
+            <property name="text">
+             <string>Listen Port</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="redirect_enable">
+            <property name="text">
+             <string>Enable</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="redirect_listenaddr"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="redirect_listenaddr_l">
+            <property name="text">
+             <string>Listen Address</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>DNS</string>

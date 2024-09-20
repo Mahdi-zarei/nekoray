@@ -531,6 +531,17 @@ namespace NekoGui {
             {"tag", "dns-out"},
         };
 
+        if (dataStore->enable_redirect) {
+            status->inbounds.prepend(QJsonObject{
+                {"tag", "hijack"},
+                {"type", "direct"},
+                {"listen", dataStore->redirect_listen_address},
+                {"listen_port", dataStore->redirect_listen_port},
+                {"sniff", true},
+                {"sniff_override_destination", true},
+            });
+        }
+
         // custom inbound
         if (!status->forTest) QJSONARRAY_ADD(status->inbounds, QString2QJsonObject(dataStore->custom_inbound)["inbounds"].toArray())
 
@@ -579,7 +590,39 @@ namespace NekoGui {
                 status->domainListDNSDirect << neededEnt->bean->serverAddress;
             }
         }
-        routeObj["rules"] = routeChain->get_route_rules(false, outboundMap);
+        auto routeRules = routeChain->get_route_rules(false, outboundMap);
+        if (dataStore->enable_dns_server) routeRules.prepend(QJsonObject{
+            {"inbound", "dns-in"},
+            {"outbound", "dns-out"}
+        });
+        routeObj["rules"] = routeRules;
+
+        bool needHijackRules = false;
+        QJsonArray hijackDomains;
+        QJsonArray hijackDomainSuffix;
+        QJsonArray hijackDomainRegex;
+        QJsonArray hijackGeoAssets;
+
+        if (dataStore->enable_dns_server) {
+            for (const auto& rule : dataStore->dns_server_rules) {
+                if (rule.startsWith("ruleset:")) {
+                    hijackGeoAssets << rule.mid(8);
+                }
+                if (rule.startsWith("domain:")) {
+                    hijackDomains << rule.mid(7);
+                }
+                if (rule.startsWith("suffix:")) {
+                    hijackDomainSuffix << rule.mid(7);
+                }
+                if (rule.startsWith("regex:")) {
+                    hijackDomainRegex << rule.mid(6);
+                }
+                needHijackRules = true;
+            }
+        }
+        for (auto ruleSet : hijackGeoAssets) {
+            if (!neededRuleSets->contains(ruleSet.toString())) neededRuleSets->append(ruleSet.toString());
+        }
 
         auto ruleSetArray = QJsonArray();
         for (const auto &item: *neededRuleSets) {
@@ -636,6 +679,24 @@ namespace NekoGui {
             {"tag", "dns-block"},
             {"address", "rcode://success"},
         };
+
+        // Hijack
+        if (dataStore->enable_dns_server) {
+            dnsServers += QJsonObject {
+                {"tag", "dns-hijack"},
+                {"address", "hijack://10.10.10.10"},
+                {"inet4_response", dataStore->dns_v4_resp},
+                {"inet6_response", dataStore->dns_v6_resp},
+            };
+
+            status->inbounds.prepend(QJsonObject{
+                {"tag", "dns-in"},
+                {"type", "direct"},
+                {"listen", dataStore->dns_server_listen_addr},
+                {"listen_port", dataStore->dns_server_listen_port},
+                {"sniff", true},
+            });
+        }
 
         // Fakedns
         if (dataStore->fake_dns) {
@@ -703,6 +764,17 @@ namespace NekoGui {
                 {"domain_keyword", directDnsKeywords},
                 {"domain_regex", directDnsRegexes},
                 {"server", "dns-direct"},
+            };
+        }
+
+        // dns hijack rules
+        if (needHijackRules) {
+            dnsRules += QJsonObject{
+                    {"rule_set", hijackGeoAssets},
+                    {"domain", hijackDomains},
+                    {"domain_suffix", hijackDomainSuffix},
+                    {"domain_regex", hijackDomainRegex},
+                    {"server", "dns-hijack"},
             };
         }
 

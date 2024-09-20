@@ -10,7 +10,9 @@ require (
 	grpc_server v1.0.0
 )
 
-replace github.com/sagernet/sing-box => github.com/Mahdi-zarei/sing-box v1.3.5-0.20240918061449-35f1c345ec90
+replace github.com/sagernet/sing-box => github.com/Mahdi-zarei/sing-box v1.3.5-0.20240920073315-bc73938972f4
+
+replace github.com/sagernet/sing-dns => github.com/Mahdi-zarei/sing-dns v0.3.0-beta.14.0.20240918175353-709eafff43d3
 
 require (
 	berty.tech/go-libtor v1.0.385 // indirect

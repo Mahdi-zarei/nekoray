@@ -32,6 +32,10 @@ private:
 
     int currentRouteProfileID = -1;
 
+    void set_dns_hijack_enability(bool enable) const;
+
+    static bool validate_dns_rules(const QString &rawString);
+
     QShortcut* deleteShortcut;
 public slots:
     void accept() override;
