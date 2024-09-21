@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QShortcut>
+#include <rpc/gRPC.h>
 
 void DialogManageRoutes::reloadProfileItems() {
     if (chainList.empty()) {
@@ -129,9 +130,25 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     ui->dnshijack_listenaddr->setText(NekoGui::dataStore->dns_server_listen_addr);
     ui->dnshijack_listenport->setValidator(QRegExpValidator_Number);
     ui->dnshijack_listenport->setText(Int2String(NekoGui::dataStore->dns_server_listen_port));
-    ui->dnshijack_rules->setText(NekoGui::dataStore->dns_server_rules.join("\n"));
     ui->dnshijack_v4resp->setText(NekoGui::dataStore->dns_v4_resp);
     ui->dnshijack_v6resp->setText(NekoGui::dataStore->dns_v6_resp);
+    connect(ui->dnshijack_what, &QPushButton::clicked, this, [=] {
+        MessageBoxInfo("What is this?", NekoGui::Information::HijackInfo);
+    });
+
+    bool ok;
+    auto geoIpList = NekoGui_rpc::defaultClient->GetGeoList(&ok, NekoGui_rpc::GeoRuleSetType::ip);
+    auto geoSiteList = NekoGui_rpc::defaultClient->GetGeoList(&ok, NekoGui_rpc::GeoRuleSetType::site);
+    QStringList ruleItems = {"domain:", "suffix:", "regex:"};
+    for (auto geoIP : geoIpList) {
+        ruleItems.append("rule_set:"+geoIP);
+    }
+    for (auto geoSite: geoSiteList) {
+        ruleItems.append("rule_set:"+geoSite);
+    }
+    rule_editor = new AutoCompleteTextEdit("", ruleItems, this);
+    ui->hijack_box->layout()->replaceWidget(ui->dnshijack_rules, rule_editor);
+    rule_editor->setPlainText(NekoGui::dataStore->dns_server_rules.join("\n"));
 #ifndef Q_OS_LINUX
     ui->dnshijack_listenport->setVisible(false);
     ui->dnshijack_listenport_l->setVisible(false);
@@ -194,7 +211,7 @@ void DialogManageRoutes::accept() {
     NekoGui::dataStore->dns_server_listen_port = ui->dnshijack_listenport->text().toInt();
     NekoGui::dataStore->dns_v4_resp = ui->dnshijack_v4resp->text();
     NekoGui::dataStore->dns_v6_resp = ui->dnshijack_v6resp->text();
-    auto rawRules = ui->dnshijack_rules->toPlainText().split("\n");
+    auto rawRules = rule_editor->toPlainText().split("\n");
     QStringList dnsRules;
     for (const auto& rawRule : rawRules) {
         if (rawRule.trimmed().isEmpty()) continue;

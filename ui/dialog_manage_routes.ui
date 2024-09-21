@@ -138,7 +138,7 @@ also if the connection cannot be established with the current address family (ip
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="hijack_box">
          <property name="title">
           <string>DNS Server</string>
          </property>
@@ -179,6 +179,9 @@ also if the connection cannot be established with the current address family (ip
           </item>
           <item row="5" column="0">
            <widget class="QLabel" name="dnshijack_rules_l">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Following format should be used:&lt;br/&gt;domain:a.com&lt;/p&gt;&lt;p&gt;suffix:a.com&lt;/p&gt;&lt;p&gt;regex:someregex&lt;/p&gt;&lt;p&gt;rule_set:nameOfRuleSet&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>Rules</string>
             </property>

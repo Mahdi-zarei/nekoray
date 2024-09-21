@@ -20,6 +20,9 @@ service LibcoreService {
   rpc CompileGeoSiteToSrs(CompileGeoSiteToSrsRequest) returns (EmptyResp);
   //
   rpc SetSystemProxy(SetSystemProxyRequest) returns (EmptyResp);
+  //
+  rpc GetSystemDNS(EmptyReq) returns (GetSystemDNSResponse);
+  rpc SetSystemDNS(SetSystemDNSRequest) returns (EmptyResp);
 }
 
 message EmptyReq {}
@@ -107,4 +110,15 @@ message CompileGeoSiteToSrsRequest {
 message SetSystemProxyRequest {
   bool enable = 1;
   string address = 2;
+}
+
+message SetSystemDNSRequest {
+  bool clear = 1;
+  repeated string servers = 2;
+  bool set_dhcp = 3;
+}
+
+message GetSystemDNSResponse {
+  repeated string servers = 1;
+  bool is_dhcp = 2;
 }

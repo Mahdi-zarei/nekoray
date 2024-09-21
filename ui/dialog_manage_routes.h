@@ -37,6 +37,8 @@ private:
     static bool validate_dns_rules(const QString &rawString);
 
     QShortcut* deleteShortcut;
+
+    AutoCompleteTextEdit* rule_editor;
 public slots:
     void accept() override;
 

@@ -79,7 +79,7 @@ namespace Qv2ray::ui::widgets {
 
     void AutoCompleteTextEdit::insertCompletion(const QString &completion) {
         QTextCursor tc = textCursor();
-        tc.select(QTextCursor::WordUnderCursor);
+        tc.select(QTextCursor::LineUnderCursor);
         tc.removeSelectedText();
         tc.insertText(completion);
         setTextCursor(tc);
@@ -145,7 +145,7 @@ namespace Qv2ray::ui::widgets {
             return;
         }
 
-        if (auto word = wordUnderCursor(); word != c->completionPrefix()) {
+        if (auto word = lineUnderCursor(); word != c->completionPrefix()) {
             c->setCompletionPrefix(word);
             c->popup()->setCurrentIndex(c->completionModel()->index(0, 0));
         }

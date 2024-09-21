@@ -127,6 +127,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="system_dns">
+          <property name="text">
+           <string>System DNS</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="checkBox_SystemProxy">
           <property name="text">
            <string>System Proxy</string>
@@ -337,7 +344,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_program">

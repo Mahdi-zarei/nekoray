@@ -208,6 +208,8 @@ private:
 
     static void stop_core_daemon();
 
+    static bool set_system_dns(bool set, bool save_set = true);
+
     void CheckUpdate();
 
 protected:

@@ -207,6 +207,39 @@ void MainWindow::stop_core_daemon() {
     NekoGui_rpc::defaultClient->Exit();
 }
 
+bool MainWindow::set_system_dns(bool set, bool save_set) {
+    bool rpcOK;
+    QStringList servers;
+    bool is_dhcp = false;
+    QString res;
+    if (set) {
+        bool ok;
+        auto sysDefaults = defaultClient->GetSystemDNS(&ok);
+        if (!ok) {
+            MW_show_log("Failed to get system dns settings");
+            return false;
+        }
+        QStringList sysDefServers;
+        for (const auto& server : sysDefaults.servers()) {
+            sysDefServers.append(server.c_str());
+        }
+        NekoGui::dataStore->system_dns_servers = sysDefServers;
+        NekoGui::dataStore->is_dhcp = sysDefaults.is_dhcp();
+        servers = {NekoGui::dataStore->dns_server_listen_addr};
+        res = defaultClient->SetSystemDNS(&rpcOK, servers, is_dhcp, false);
+    } else {
+        servers = NekoGui::dataStore->system_dns_servers;
+        is_dhcp = NekoGui::dataStore->is_dhcp;
+        res = defaultClient->SetSystemDNS(&rpcOK, servers, is_dhcp, true);
+    }
+    if (!rpcOK) {
+        MW_show_log("Failed to set system dns: " + res);
+        return false;
+    }
+    if (save_set) NekoGui::dataStore->system_dns_set = set;
+    return true;
+}
+
 void MainWindow::neko_start(int _id) {
     if (NekoGui::dataStore->prepare_exit) return;
 

@@ -149,6 +149,11 @@ namespace NekoGui {
         QString redirect_listen_address = "127.0.0.1";
         int redirect_listen_port = 443;
 
+        // System dns
+        bool system_dns_set = false;
+        bool is_dhcp = false;
+        QStringList system_dns_servers = {};
+
         // Hotkey
         QString hotkey_mainwindow = "";
         QString hotkey_group = "";

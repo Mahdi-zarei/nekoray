@@ -324,6 +324,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         neko_set_spmode_vpn(false);
     });
     connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
+    connect(ui->system_dns, &QCheckBox::clicked, this, [=](bool checked) {
+        if (const auto ok = set_system_dns(checked); !ok) {
+            ui->system_dns->setChecked(!checked);
+        }
+    });
 
     connect(ui->menu_server, &QMenu::aboutToShow, this, [=](){
         if (!speedtestRunning.tryLock()) {
@@ -571,8 +576,11 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
                     neko_set_spmode_vpn(true, false);
                 }
             }
-
             neko_start(info.split(",")[1].toInt());
+            if (NekoGui::dataStore->system_dns_set) {
+                set_system_dns(true);
+                ui->system_dns->setChecked(true);
+            }
         }
     }
 }
@@ -612,6 +620,9 @@ void MainWindow::on_menu_hotkey_settings_triggered() {
 }
 
 void MainWindow::on_commitDataRequest() {
+    qDebug() << "Handling DNS setting";
+    if (NekoGui::dataStore->system_dns_set) set_system_dns(false, false);
+    qDebug() << "Done handling DNS setting";
     qDebug() << "Start of data save";
     //
     if (!isMaximized()) {
