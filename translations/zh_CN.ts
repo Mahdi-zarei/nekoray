@@ -1526,7 +1526,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Add new Group</source>
-        <translation>添加新组</translation>
+        <translation>新建分组</translation>
     </message>
     <message>
         <source>Delete selected Group</source>
