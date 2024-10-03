@@ -41,11 +41,11 @@
     </message>
     <message>
         <source>Core</source>
-        <translation>核心</translation>
+        <translation>内核</translation>
     </message>
     <message>
         <source>Extra Core</source>
-        <translation>其他核心</translation>
+        <translation>外部内核</translation>
     </message>
     <message>
         <source>Select</source>
@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>Core Options</source>
-        <translation>核心选项</translation>
+        <translation>内核选项</translation>
     </message>
     <message>
         <source>Override underlying DNS</source>
@@ -157,7 +157,7 @@ For NekoRay, this rewrites the underlying(localhost) DNS in Tun Mode.
 For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mode, and also URL Test.</source>
         <translation>建议留空，但有时会出现问题，这时可以设置这个选项。
 对于 NekoRay 来说，在 Tun 模式下会重写 underlying(localhost) DNS。
-对于 NekoBox 来说，在 Tun 模式、正常模式和 URL 测试中会重写 underlying(localhost) DNS。</translation>
+对于 NekoBox 来说，在 Tun 模式、正常模式和 URL 测试延迟中会重写 underlying(localhost) DNS。</translation>
     </message>
     <message>
         <source>Default On</source>
@@ -169,7 +169,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Latency Test URL</source>
-        <translation>延迟测试 URL</translation>
+        <translation>测试延迟 URL</translation>
     </message>
     <message>
         <source>Automatic update</source>
@@ -233,7 +233,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Geo Assets and Rule-sets</source>
-        <translation>Geo资源和规则集</translation>
+        <translation>Geo 资源和规则集</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the currently generated rule-sets so that they can be regenerated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -269,7 +269,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Download and Replace Geo files</source>
-        <translation>下载并替换geo文件</translation>
+        <translation>下载并替换 Geo 文件</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Socks + HTTP Proxy&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -439,7 +439,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Custom (Extra Core)</source>
-        <translation>自定义 (其他核心)</translation>
+        <translation>自定义 (外部内核)</translation>
     </message>
     <message>
         <source>TLS Security Settings</source>
@@ -581,7 +581,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation>分组</translation>
+        <translation>分组设置</translation>
     </message>
     <message>
         <source>New group</source>
@@ -787,14 +787,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation>名称 不能为空</translation>
+        <translation>名称不能为空</translation>
     </message>
 </context>
 <context>
     <name>EditCustom</name>
     <message>
         <source>Core</source>
-        <translation>核心</translation>
+        <translation>内核</translation>
     </message>
     <message>
         <source>Command</source>
@@ -806,7 +806,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Please pick a core.</source>
-        <translation>请选择一个核心。</translation>
+        <translation>请选择一个内核。</translation>
     </message>
     <message>
         <source>Outbound JSON, please read the documentation.</source>
@@ -838,7 +838,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation>名称 不能为空</translation>
+        <translation>名称不能为空</translation>
     </message>
 </context>
 <context>
@@ -1220,7 +1220,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>分组</translation>
+        <translation>分组设置</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -1244,7 +1244,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Scan QR Code</source>
-        <translation>扫描 QR Code</translation>
+        <translation>扫描二维码</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -1304,7 +1304,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>QR Code not found</source>
-        <translation>未扫描到 QR Code</translation>
+        <translation>未扫描到二维码</translation>
     </message>
     <message>
         <source>Move</source>
@@ -1340,7 +1340,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>QR Code and link</source>
-        <translation>显示 QR Code 和分享链接</translation>
+        <translation>显示二维码和分享链接</translation>
     </message>
     <message>
         <source>Active Server</source>
@@ -1448,7 +1448,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation>打开配置目录</translation>
+        <translation>配置目录</translation>
     </message>
     <message>
         <source>Set ignore keyword</source>
@@ -1542,7 +1542,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Url Test Selected</source>
-        <translation>选择的 URL 测试</translation>
+        <translation>选择的 URL 测试延迟</translation>
     </message>
     <message>
         <source>Ctrl+Shift+S</source>
@@ -1550,7 +1550,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Url Test Group</source>
-        <translation>URL 测试组</translation>
+        <translation>URL 测试组延迟</translation>
     </message>
     <message>
         <source>Ctrl+Shift+G</source>
