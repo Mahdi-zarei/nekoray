@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>User Agent</source>
-        <translation></translation>
+        <translation>UA 标识</translation>
     </message>
     <message>
         <source>Common</source>
@@ -89,11 +89,11 @@
     </message>
     <message>
         <source>Please input the core name.</source>
-        <translation>请输入核心名.</translation>
+        <translation>请输入内核名称.</translation>
     </message>
     <message>
         <source>Please select the core name.</source>
-        <translation>请选择核心名.</translation>
+        <translation>请选择内核名称.</translation>
     </message>
     <message>
         <source>Connection statistics</source>
@@ -129,7 +129,7 @@
     </message>
     <message>
         <source>Hide dashboard at startup</source>
-        <translation>启动时不显示仪表盘</translation>
+        <translation>启动时隐藏仪表盘</translation>
     </message>
     <message>
         <source>Max log lines</source>
@@ -173,11 +173,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Automatic update</source>
-        <translation>自动更新订阅</translation>
+        <translation>自动更新</translation>
     </message>
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
-        <translation>时间间隔（分钟，少于 30 分钟无效）</translation>
+        <translation>时间间隔 (分钟，少于 30 分钟无效)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Might Improve Ping and Performance&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -403,7 +403,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
-        <translation>开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</translation>
+        <translation>开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性 (安全性相当于明文)</translation>
     </message>
     <message>
         <source>Server name indication, clear text.</source>
@@ -648,11 +648,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Use DNS Object</source>
-        <translation>使用 DNS Object</translation>
+        <translation>使用 DNS 对象</translation>
     </message>
     <message>
         <source>DNS Object Settings</source>
-        <translation>DNS Object 设置</translation>
+        <translation>DNS 对象设置</translation>
     </message>
     <message>
         <source>Query Strategy</source>
@@ -715,7 +715,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
 when set, domain destinations are resolved to IP before connect,
 also if the connection cannot be established with the current address family (ipv4, ipv6), a fallback connection is created shortly after, with the other address family.</source>
         <translation>outbound.domain_strategy
-设置后，域名目的地在连接前解析为 IP。如果无法通过当前地址（IPv4、IPv6）建立连接，则会在稍后使用另一地址创建备用连接。</translation>
+设置后，域名目的地在连接前解析为 IP。如果无法通过当前地址 (IPv4、IPv6)建立连接，则会在稍后使用另一地址创建备用连接。</translation>
     </message>
     <message>
         <source>Outbound Domain Strategy</source>
@@ -727,7 +727,7 @@ also if the connection cannot be established with the current address family (ip
     </message>
     <message>
         <source>Enable FakeIP</source>
-        <translation>启用FakeIP</translation>
+        <translation>启用 FakeIP</translation>
     </message>
 </context>
 <context>
@@ -783,7 +783,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Traffic order is from top to bottom</source>
-        <translation>流量顺序是从上到下（最后一个配置为流量的出口）</translation>
+        <translation>流量顺序是从上到下 (最后一个配置为流量的出口)</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
@@ -960,7 +960,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation>强制使用外部核心</translation>
+        <translation>强制使用外部内核</translation>
     </message>
 </context>
 <context>
@@ -1137,7 +1137,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation>Json 编辑器</translation>
+        <translation>JSON 编辑器</translation>
     </message>
     <message>
         <source>Structure Preview</source>
@@ -1328,7 +1328,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Remove Unavailable</source>
-        <translation>删除不可用的配置</translation>
+        <translation>移除不可用配置</translation>
     </message>
     <message>
         <source>New profile</source>
@@ -1360,7 +1360,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Remove Duplicates</source>
-        <translation>删除重复的配置</translation>
+        <translation>移除重复配置</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -1384,7 +1384,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Tun Settings changed</source>
-        <translation>Tun 设置改变</translation>
+        <translation>Tun 设置已改变</translation>
     </message>
     <message>
         <source>Restart Tun to take effect.</source>
@@ -1400,7 +1400,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation>批量复制选中项目的分享链接</translation>
+        <translation>复制选中项目的分享链接</translation>
     </message>
     <message>
         <source>Clone</source>
@@ -1416,7 +1416,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Copy links of selected (Neko Links)</source>
-        <translation>批量复制选中项目的分享链接 (Neko Links)</translation>
+        <translation>复制选中项目的分享链接 (Neko Links)</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
@@ -1478,7 +1478,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Settings changed</source>
-        <translation>设置改变</translation>
+        <translation>设置已改变</translation>
     </message>
     <message>
         <source>Restart the program to take effect.</source>
@@ -1530,11 +1530,11 @@ Split by line.</source>
     </message>
     <message>
         <source>Delete selected Group</source>
-        <translation>删除选定组</translation>
+        <translation>删除分组</translation>
     </message>
     <message>
         <source>Edit selected Group</source>
-        <translation>编辑选定组</translation>
+        <translation>编辑分组</translation>
     </message>
     <message>
         <source>Remove %1?</source>
@@ -1542,7 +1542,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Url Test Selected</source>
-        <translation>选择的 URL 测试延迟</translation>
+        <translation>URL 测试选中配置延迟</translation>
     </message>
     <message>
         <source>Ctrl+Shift+S</source>
@@ -1550,7 +1550,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Url Test Group</source>
-        <translation>URL 测试组延迟</translation>
+        <translation>URL 测试分组延迟</translation>
     </message>
     <message>
         <source>Ctrl+Shift+G</source>
@@ -1566,7 +1566,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Remove Invalid</source>
-        <translation>移除无效项</translation>
+        <translation>移除无效配置</translation>
     </message>
     <message>
         <source>Ctrl+Alt+I</source>
@@ -1653,7 +1653,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Core not found: %1</source>
-        <translation>找不到 &quot;%1&quot; 核心。请前往设置</translation>
+        <translation>找不到 &quot;%1&quot; 内核。请前往设置</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1665,7 +1665,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Open in browser</source>
-        <translation>浏览器打开</translation>
+        <translation>在浏览器打开</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1733,11 +1733,11 @@ Release note:
     </message>
     <message>
         <source>As Subscription (create new group)</source>
-        <translation>作为订阅（创建新组）</translation>
+        <translation>作为订阅 (创建新组)</translation>
     </message>
     <message>
         <source>As Subscription (add to this group)</source>
-        <translation>作为订阅（添加到该组）</translation>
+        <translation>作为订阅 (添加到该组)</translation>
     </message>
     <message>
         <source>Default</source>
@@ -1799,7 +1799,7 @@ Release note:
     </message>
     <message>
         <source>Import JSON</source>
-        <translation>导入json</translation>
+        <translation>导入 JSON</translation>
     </message>
 </context>
 </TS>
