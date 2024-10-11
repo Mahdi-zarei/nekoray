@@ -127,7 +127,7 @@ namespace NekoGui {
         QString vpn_implementation = "gvisor";
         int vpn_mtu = 1500;
         bool vpn_ipv6 = false;
-        bool vpn_strict_route = false;
+        bool vpn_strict_route = true;
 
         // NTP
         bool enable_ntp = false;
