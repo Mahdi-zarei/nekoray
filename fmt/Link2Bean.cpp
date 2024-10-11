@@ -111,6 +111,7 @@ namespace NekoGui_fmt {
         // protocol
         if (proxy_type == proxy_VLESS) {
             flow = GetQueryValue(query, "flow", "");
+            stream->packet_encoding = GetQueryValue(query, "packetEncoding", "xudp");
         }
 
         return !(password.isEmpty() || serverAddress.isEmpty());

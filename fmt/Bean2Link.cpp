@@ -77,6 +77,9 @@ namespace NekoGui_fmt {
             if (!flow.isEmpty()) {
                 query.addQueryItem("flow", flow);
             }
+            if (!stream->packet_encoding.isEmpty()) {
+                query.addQueryItem("packetEncoding", stream->packet_encoding);
+            }
             query.addQueryItem("encryption", "none");
         }
 
