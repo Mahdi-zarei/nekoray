@@ -381,6 +381,7 @@ namespace NekoGui {
         search << "/usr/share/sing-geoip";
         search << "/usr/share/sing-geosite";
         search << "/usr/share/v2ray";
+        search << "/usr/share/sing-box";
         search << "/usr/local/share/v2ray";
         search << "/opt/v2ray";
         for (const auto &dir: search) {
