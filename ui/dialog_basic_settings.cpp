@@ -100,10 +100,23 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     connect(ui->language, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
         CACHE.needRestart = true;
     });
-    ui->font->addItems(QFontDatabase::families());
-    ui->font->setCurrentText(qApp->font().family());
     connect(ui->font, &QComboBox::currentTextChanged, this, [=](const QString &font) {
-        CACHE.needRestart = true;
+        qApp->setFont(font);
+        NekoGui::dataStore->font = font;
+        NekoGui::dataStore->Save();
+        adjustSize();
+    });
+    for (int i=7;i<=26;i++) {
+        ui->font_size->addItem(Int2String(i));
+    }
+    ui->font_size->setCurrentText(Int2String(qApp->font().pointSize()));
+    connect(ui->font_size, &QComboBox::currentTextChanged, this, [=](const QString &sizeStr) {
+        auto font = qApp->font();
+        font.setPointSize(sizeStr.toInt());
+        qApp->setFont(font);
+        NekoGui::dataStore->font_size = sizeStr.toInt();
+        NekoGui::dataStore->Save();
+        adjustSize();
     });
     //
     ui->theme->addItems(QStyleFactory::keys());
@@ -136,32 +149,15 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->groupBox_core->setTitle(software_core_name);
 
     // Assets
-    ui->geoip_url->setText(NekoGui::dataStore->geoip_download_url);
-    ui->geosite_url->setText(NekoGui::dataStore->geosite_download_url);
-    connect(ui->geoip_auto_btn, &QPushButton::clicked, this, [=](){
-        bool success;
-        auto resp = NetworkRequestHelper::GetLatestDownloadURL("https://api.github.com/repos/SagerNet/sing-geoip/releases/latest", "geoip.db", &success);
-        if (!success) {
-            runOnUiThread([=](){
-                MessageBoxWarning("Error", resp);
-            });
-            return;
-        }
-        ui->geoip_url->setText(resp);
-    });
-    connect(ui->geosite_auto_btn, &QPushButton::clicked, this, [=](){
-        bool success;
-        auto resp = NetworkRequestHelper::GetLatestDownloadURL("https://api.github.com/repos/SagerNet/sing-geosite/releases/latest", "geosite.db", &success);
-        if (!success) {
-            runOnUiThread([=](){
-                MessageBoxWarning("Error", resp);
-            });
-            return;
-        }
-        ui->geosite_url->setText(resp);
-    });
+    ui->geoip_url->setEditable(true);
+    ui->geosite_url->setEditable(true);
+    ui->geoip_url->addItems(NekoGui::GeoAssets::GeoIPURLs);
+    ui->geosite_url->addItems(NekoGui::GeoAssets::GeoSiteURLs);
+    ui->geoip_url->setCurrentText(NekoGui::dataStore->geoip_download_url);
+    ui->geosite_url->setCurrentText(NekoGui::dataStore->geosite_download_url);
+
     connect(ui->download_geo_btn, &QPushButton::clicked, this, [=]() {
-        MW_dialog_message(Dialog_DialogBasicSettings, "DownloadAssets;"+ui->geoip_url->text()+";"+ui->geosite_url->text());
+        MW_dialog_message(Dialog_DialogBasicSettings, "DownloadAssets;"+ui->geoip_url->currentText()+";"+ui->geosite_url->currentText());
     });
     connect(ui->remove_srs_btn, &QPushButton::clicked, this, [=](){
        auto rsDir = QDir(RULE_SETS_DIR);
@@ -259,7 +255,6 @@ void DialogBasicSettings::accept() {
     // Style
 
     NekoGui::dataStore->language = ui->language->currentIndex();
-    NekoGui::dataStore->font = ui->font->currentText();
     D_SAVE_BOOL(start_minimal)
     D_SAVE_INT(max_log_line)
 
@@ -300,8 +295,8 @@ void DialogBasicSettings::accept() {
     NekoGui::dataStore->disable_traffic_stats = ui->disable_stats->isChecked();
 
     // Assets
-    NekoGui::dataStore->geoip_download_url = ui->geoip_url->text();
-    NekoGui::dataStore->geosite_download_url = ui->geosite_url->text();
+    NekoGui::dataStore->geoip_download_url = ui->geoip_url->currentText();
+    NekoGui::dataStore->geosite_download_url = ui->geosite_url->currentText();
 
     // Mux
     D_SAVE_INT(mux_concurrency)

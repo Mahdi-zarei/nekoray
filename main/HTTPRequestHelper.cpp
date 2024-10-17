@@ -47,33 +47,6 @@ namespace NekoGui_network {
         return "";
     }
 
-    QString NetworkRequestHelper::GetLatestDownloadURL(const QString &url, const QString &assetName, bool* success) {
-        cpr::Session session;
-        session.SetUrl(cpr::Url{url.toStdString()});
-        session.SetTimeout(3000);
-        if (NekoGui::dataStore->spmode_system_proxy) {
-            session.SetProxies({{"http", "127.0.0.1:" + QString(Int2String(NekoGui::dataStore->inbound_socks_port)).toStdString()},
-                                {"https", "127.0.0.1:" + QString(Int2String(NekoGui::dataStore->inbound_socks_port)).toStdString()}});
-        }
-        cpr::Response r = session.Get();
-        if (r.status_code != 200) {
-            *success = false;
-            return {r.status_line.c_str()};
-        }
-        auto respObj = QString2QJsonObject(QString(r.text.c_str()));
-        auto assets = respObj["assets"].toArray();
-        for (const auto &asset: assets) {
-            auto assetObj = asset.toObject();
-            if (assetObj["name"] == assetName) {
-                *success = true;
-                return assetObj["browser_download_url"].toString();
-            }
-        }
-
-        *success = false;
-        return "not found";
-    }
-
     QString NetworkRequestHelper::DownloadGeoAsset(const QString &url, const QString &fileName) {
         cpr::Session session;
         session.SetUrl(cpr::Url{url.toStdString()});
@@ -83,6 +56,7 @@ namespace NekoGui_network {
         }
         auto filePath = qApp->applicationDirPath()+ "/" + fileName;
         std::ofstream fout;
+        QFile::remove(QString(filePath + ".1"));
         fout.open(QString(filePath + ".1").toStdString(), std::ios::trunc | std::ios::out | std::ios::binary);
         auto r = session.Download(fout);
         fout.close();

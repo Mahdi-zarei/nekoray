@@ -8,16 +8,16 @@ require (
 	github.com/matsuridayo/libneko v0.0.0-20230913024055-5277a5bfc889
 	github.com/oschwald/maxminddb-golang v1.13.1
 	github.com/sagernet/sing v0.5.0-rc.2
-	github.com/sagernet/sing-box v1.10.0-beta.12
+	github.com/sagernet/sing-box v1.10.0
 	github.com/sagernet/sing-dns v0.3.0-rc.2
-	github.com/sagernet/sing-tun v0.4.0-rc.3.0.20241014141023-07278fb4705b
+	github.com/sagernet/sing-tun v0.4.0-rc.4
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/sys v0.25.0
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20230429144221-925a1e7659e6
 	grpc_server v1.0.0
 )
 
-replace github.com/sagernet/sing-box => github.com/Mahdi-zarei/sing-box v1.3.5-0.20241016190733-d626a7470382
+replace github.com/sagernet/sing-box => github.com/Mahdi-zarei/sing-box v1.3.5-0.20241017140058-b3e4d700db51
 
 replace github.com/sagernet/sing-dns => github.com/Mahdi-zarei/sing-dns v0.3.0-beta.14.0.20241016191038-09d232d0a8a9
 

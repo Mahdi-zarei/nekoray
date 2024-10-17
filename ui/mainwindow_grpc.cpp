@@ -364,7 +364,7 @@ void MainWindow::neko_start(int _id) {
 
     runOnNewThread([=] {
         // stop current running
-        if (NekoGui::dataStore->started_id >= 0) {
+        if (running != nullptr) {
             runOnUiThread([=] { neko_stop(false, true, true); });
             sem_stopped.acquire();
         }

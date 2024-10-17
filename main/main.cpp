@@ -232,6 +232,11 @@ int main(int argc, char* argv[]) {
     if (!NekoGui::dataStore->font.isEmpty()) {
         qApp->setFont(NekoGui::dataStore->font);
     }
+    if (NekoGui::dataStore->font_size != 0) {
+        auto font = qApp->font();
+        font.setPointSize(NekoGui::dataStore->font_size);
+        qApp->setFont(font);
+    }
 
     // Signals
     signal(SIGTERM, signal_handler);
