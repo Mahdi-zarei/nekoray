@@ -109,7 +109,7 @@ namespace NekoGui {
                     obj["outbound"] = "block";
                     break;
                 case -4:
-                    obj["outbound"] = "dns_out";
+                    obj["outbound"] = "dns-out";
                     break;
                 default:
                     auto prof = NekoGui::profileManager->GetProfile(outboundID);
@@ -304,8 +304,11 @@ namespace NekoGui {
     bool isOutboundIDValid(int id) {
         switch (id) {
             case -1:
+                return true;
             case -2:
+                return true;
             case -3:
+                return true;
             case -4:
                 return true;
             default:
@@ -317,7 +320,7 @@ namespace NekoGui {
         if (name == "proxy") return -1;
         if (name == "direct") return -2;
         if (name == "block") return -3;
-        if (name == "dns-out") return -4;
+        if (name == "dns-out" || name == "dns_out") return -4;
         for (const auto& item: profileManager->profiles) {
             if (item.second->bean->name == name) return item.first;
         }
@@ -363,8 +366,10 @@ namespace NekoGui {
                     }
                 } else if (val.isArray()) {
                     rule->set_field_value(key, QJsonArray2QListString(val.toArray()));
-                } else if (val.isString() || val.isBool()) {
+                } else if (val.isString()) {
                     rule->set_field_value(key, {val.toString()});
+                } else if (val.isBool()) {
+                    rule->set_field_value(key, {val.toBool() ? "true":"false"});
                 }
             }
             if (hasOutbound) {

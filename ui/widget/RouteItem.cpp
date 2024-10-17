@@ -30,11 +30,11 @@ int RouteItem::getIndexOf(const QString& name) const {
 }
 
 QString get_outbound_name(int id) {
-    // -1 is proxy -2 is direct -3 is block -4 is dns_out
+    // -1 is proxy -2 is direct -3 is block -4 is dns-out
     if (id == -1) return "proxy";
     if (id == -2) return "direct";
     if (id == -3) return "block";
-    if (id == -4) return "dns_out";
+    if (id == -4) return "dns-out";
     auto profiles = NekoGui::profileManager->profiles;
     if (profiles.count(id)) return profiles[id]->bean->name;
     return "INVALID OUTBOUND";
@@ -106,7 +106,7 @@ RouteItem::RouteItem(QWidget *parent, const std::shared_ptr<NekoGui::RoutingChai
         ui->route_items->addItem(item->name);
     }
 
-    QStringList outboundOptions = {"proxy", "direct", "block", "dns_out"};
+    QStringList outboundOptions = {"proxy", "direct", "block", "dns-out"};
     outboundOptions << get_all_outbounds();
     // init outbound map
     outboundMap[0] = -1;
