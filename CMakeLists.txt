@@ -195,6 +195,8 @@ set(PROJECT_SOURCES
         ui/edit/edit_ssh.h
         ui/edit/edit_ssh.ui
         fmt/SSHBean.h
+        include/modules/proxy/base.h
+        include/global.h
 )
 
 # Qt exe
