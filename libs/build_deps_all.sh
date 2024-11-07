@@ -36,6 +36,19 @@ ninja && ninja install
 
 cd ../..
 
+#### nlohmann/json ####
+curl -L -o dl.zip https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.zip
+unzip dl.zip
+
+cd json*
+mkdir -p build
+cd build
+
+$cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DJSON_BuildTests=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
+ninja && ninja install
+
+cd ../..
+
 #### yaml-cpp ####
 curl -L -o dl.zip https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.zip
 unzip dl.zip
@@ -106,6 +119,7 @@ if [[ "$(uname -s)" == *"NT"* ]]; then
 
     cd ../..
 fi
+
 
 ####
 clean

@@ -58,6 +58,9 @@ list(APPEND NKR_EXTERNAL_TARGETS myproto)
 find_package(yaml-cpp CONFIG REQUIRED) # only Release is built
 list(APPEND NKR_EXTERNAL_TARGETS yaml-cpp)
 
+find_package(nlohmann_json 3.11.3 REQUIRED)
+list(APPEND NKR_EXTERNAL_TARGETS nlohmann_json::nlohmann_json)
+
 find_package(ZXing CONFIG REQUIRED)
 list(APPEND NKR_EXTERNAL_TARGETS ZXing::ZXing)
 
@@ -195,8 +198,12 @@ set(PROJECT_SOURCES
         ui/edit/edit_ssh.h
         ui/edit/edit_ssh.ui
         fmt/SSHBean.h
-        include/modules/proxy/base.h
+        include/proxy/base.h
         include/global.h
+        include/proxy/socks.h
+        src/proxy/socks.cpp
+        include/common/json/qt_to_stl.h
+        include/common/json/stl_to_qt.h
 )
 
 # Qt exe

@@ -24,17 +24,34 @@ namespace Constants
             Socks, HTTP, ShadowSocks, Trojan, VMess, VLESS, ShadowTLS, Hysteria, Hysterya2, Tuic, WireGuard, SSH, Chain
         };
 
-        inline bool validate(QString const &str)
+        inline bool validate(QString const& str)
         {
             return proxyTypes.contains(str);
         }
     }
 
+    namespace DomainStrategyTypes
+    {
+        inline const QString PreferV4 = "prefer_ipv4";
+        inline const QString PreferV6 = "prefer_ipv6";
+        inline const QString OnlyV4 = "ipv4_only";
+        inline const QString OnlyV6 = "ipv6_only";
+
+        inline const QStringList domainStrategyTypes = {PreferV4, PreferV6, OnlyV4, OnlyV6};
+    }
+
     namespace MuxEnableModes
     {
-        inline int MuxDefault = 0;
-        inline int MuxOn = 1;
-        inline int MuxOff = 2;
+        inline QString MuxDefault = "default";
+        inline QString MuxOn = "on";
+        inline QString MuxOff = "off";
+
+        inline const QStringList muxEnableModes = {MuxDefault, MuxOn, MuxOff};
+
+        inline bool validate(QString const &str)
+        {
+            return muxEnableModes.contains(str);
+        }
     }
 
     namespace MuxTypes
