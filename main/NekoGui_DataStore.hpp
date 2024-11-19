@@ -126,7 +126,7 @@ namespace NekoGui {
         bool fake_dns = false;
         bool enable_gso = false;
         bool auto_redirect = false;
-        QString vpn_implementation = "gvisor";
+        QString vpn_implementation = "system";
         int vpn_mtu = 1500;
         bool vpn_ipv6 = false;
         bool vpn_strict_route = true;
