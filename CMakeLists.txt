@@ -204,6 +204,9 @@ set(PROJECT_SOURCES
         src/proxy/socks.cpp
         include/common/json/qt_to_stl.h
         include/common/json/stl_to_qt.h
+        include/db/profiles.h
+        src/db/profiles.cpp
+        include/db/parse.h
 )
 
 # Qt exe

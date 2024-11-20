@@ -4,6 +4,10 @@
 
 namespace Constants
 {
+    namespace DefaultPaths
+    {
+        inline const QString ProfilesPath = "config/profiles";
+    }
     namespace ProxyTypes
     {
         inline const QString Socks = "socks";
