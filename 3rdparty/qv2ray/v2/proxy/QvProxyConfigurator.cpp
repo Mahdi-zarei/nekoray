@@ -237,7 +237,7 @@ namespace Qv2ray::components::proxy {
     }
 #endif
 
-    void SetSystemProxy(int httpPort, int socksPort, QString scheme) {
+    void SetSystemProxy(int httpPort, int socksPort, QString scheme, bool setSocksSystemProxy) {
         const QString &address = "127.0.0.1";
         bool hasHTTP = (httpPort > 0 && httpPort < 65536);
         bool hasSOCKS = (socksPort > 0 && socksPort < 65536);
@@ -290,12 +290,18 @@ namespace Qv2ray::components::proxy {
         QString kwriteconfigCmd = qEnvironmentVariable("KDE_SESSION_VERSION") == "5" ? "kwriteconfig5" : qEnvironmentVariable("KDE_SESSION_VERSION") == "6" ? "kwriteconfig6" : "kwriteconfig";
 
         //
-        // Configure HTTP Proxies for HTTP, FTP and HTTPS
+        // Configure HTTP Proxies for HTTP, FTP and HTTPS.
+        //
+        // GNOME and KDE encode "use an HTTP proxy for FTP" differently. KDE's ftpProxy
+        // takes the http:// URL below and works fine, but GNOME's ftp schema means "a
+        // real FTP proxy lives here", which is never true of the mixed inbound, and the
+        // session exports it as ftp_proxy=ftp://... where curl and friends choke on it.
+        // So the ftp entry is written for KDE only.
         if (hasHTTP) {
             // iterate over protocols...
             for (const auto &protocol: QStringList{"http", "ftp", "https"}) {
                 // for GNOME:
-                {
+                if (protocol != "ftp") {
                     actions << ProcessArgument{"gsettings",
                                                {"set", "org.gnome.system.proxy." + protocol, "host", address}};
                     actions << ProcessArgument{"gsettings",
@@ -313,28 +319,44 @@ namespace Qv2ray::components::proxy {
             }
         }
 
-        // Configure SOCKS5 Proxies
-        if (hasSOCKS) {
-            // for GNOME:
-            {
-                actions << ProcessArgument{"gsettings", {"set", "org.gnome.system.proxy.socks", "host", address}};
-                actions << ProcessArgument{"gsettings",
-                                           {"set", "org.gnome.system.proxy.socks", "port", QSTRN(socksPort)}};
+        // Drop any ftp entry an older version wrote, so it stops generating ftp_proxy.
+        actions << ProcessArgument{"gsettings", {"reset", "org.gnome.system.proxy.ftp", "host"}};
+        actions << ProcessArgument{"gsettings", {"reset", "org.gnome.system.proxy.ftp", "port"}};
 
-                // for KDE:
-                if (isKDE) {
-                    actions << ProcessArgument{kwriteconfigCmd,
-                                               {"--file", configPath + "/kioslaverc", //
-                                                "--group", "Proxy Settings",          //
-                                                "--key", "socksProxy",                //
-                                                "socks://" + address + " " + QSTRN(socksPort)}};
-                }
-            }
+        // Configure SOCKS5 Proxies
+        //
+        // for GNOME: opt-in only. The entry itself is valid, but the session exports it
+        // as all_proxy=socks://..., a scheme several CLI tools reject. Non-HTTP traffic
+        // still reaches the tunnel without it, through use-same-proxy below. Anything
+        // else -- opted out, or no socks port -- means the entry should not be there.
+        if (hasSOCKS && setSocksSystemProxy) {
+            actions << ProcessArgument{"gsettings", {"set", "org.gnome.system.proxy.socks", "host", address}};
+            actions << ProcessArgument{"gsettings",
+                                       {"set", "org.gnome.system.proxy.socks", "port", QSTRN(socksPort)}};
+        } else {
+            actions << ProcessArgument{"gsettings", {"reset", "org.gnome.system.proxy.socks", "host"}};
+            actions << ProcessArgument{"gsettings", {"reset", "org.gnome.system.proxy.socks", "port"}};
         }
+
+        // for KDE: always. kioslaverc is read by KIO and never becomes an environment
+        // variable, so the problem above does not exist here.
+        if (hasSOCKS && isKDE) {
+            actions << ProcessArgument{kwriteconfigCmd,
+                                       {"--file", configPath + "/kioslaverc", //
+                                        "--group", "Proxy Settings",          //
+                                        "--key", "socksProxy",                //
+                                        "socks://" + address + " " + QSTRN(socksPort)}};
+        }
+
         // Setting Proxy Mode to Manual
         {
             // for GNOME:
             {
+                // use-same-proxy makes GLib fall back to the HTTP proxy for schemes with
+                // no entry of their own. Without it a user who turned it off gets
+                // direct:// for everything non-HTTP, leaking traffic past the tunnel.
+                actions << ProcessArgument{"gsettings",
+                                           {"set", "org.gnome.system.proxy", "use-same-proxy", "true"}};
                 actions << ProcessArgument{"gsettings", {"set", "org.gnome.system.proxy", "mode", "manual"}};
             }
 

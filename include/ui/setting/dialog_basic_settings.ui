@@ -1103,6 +1103,16 @@ QTabBar::tab:hover:!selected {
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="set_socks_system_proxy">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Also write the SOCKS system proxy entry, which makes the desktop export the &lt;span style=&quot; font-family:'monospace';&quot;&gt;all_proxy&lt;/span&gt; environment variable. Some terminal tools want it, but the &lt;span style=&quot; font-family:'monospace';&quot;&gt;socks://&lt;/span&gt; scheme it uses is rejected by others such as curl. Traffic is proxied either way, so leave this off unless you need the variable.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="text">
+             <string>Set SOCKS system proxy entry</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="net_use_proxy">
             <property name="toolTip">

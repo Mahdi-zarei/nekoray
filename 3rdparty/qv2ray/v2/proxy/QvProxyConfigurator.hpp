@@ -5,7 +5,7 @@
 //
 namespace Qv2ray::components::proxy {
     void ClearSystemProxy();
-    void SetSystemProxy(int http_port, int socks_port, QString scheme);
+    void SetSystemProxy(int http_port, int socks_port, QString scheme, bool setSocksSystemProxy = false);
 } // namespace Qv2ray::components::proxy
 
 using namespace Qv2ray::components;

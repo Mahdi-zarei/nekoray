@@ -256,7 +256,8 @@ bool MainWindow::get_elevated_permissions(ExitReason reason) {
 void MainWindow::set_system_proxy(bool enable) {
     if (enable) {
         auto socks_port = Configs::dataManager->settingsRepo->inbound_socks_port;
-        SetSystemProxy(socks_port, socks_port, Configs::dataManager->settingsRepo->proxy_scheme);
+        SetSystemProxy(socks_port, socks_port, Configs::dataManager->settingsRepo->proxy_scheme,
+                       Configs::dataManager->settingsRepo->set_socks_system_proxy);
     } else {
         ClearSystemProxy();
     }
