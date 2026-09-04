@@ -489,6 +489,10 @@ private:
 
     void setupConnectionSortMenu();
 
+    void onConnectionContextMenu(const QPoint &pos);
+
+    bool addRuleToCurrentRoute(const QString &rawRule, int action, QString *error = nullptr);
+
     void setupConnectionFilter();
 
     void restoreConnectionSort();

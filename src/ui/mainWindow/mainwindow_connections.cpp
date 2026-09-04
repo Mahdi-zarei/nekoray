@@ -1,10 +1,15 @@
 #include "include/ui/mainwindow.h"
 #include "include/api/RPC.h"
+#include "include/database/entities/RouteProfile.h"
+#include "include/database/RoutesRepo.h"
+#include "include/database/SettingsRepo.h"
 #include "include/global/LocalNetwork.hpp"
 #include "include/ui/utils/ConnectionCloseDelegate.h"
 #include "include/ui/utils/ConnectionsFilterHeader.h"
 #include "include/ui/utils/ConnectionsFilterProxyModel.h"
 #include "include/ui/utils/ConnectionsTableModel.h"
+
+#include <QHostAddress>
 
 #include <QAbstractItemView>
 #include <QApplication>
@@ -75,6 +80,9 @@ void MainWindow::setupConnectionList()
     restoreConnectionSort();
     setupConnectionSortMenu();
     setupConnectionFilter();
+
+    ui->connections->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->connections, &QWidget::customContextMenuRequested, this, &MainWindow::onConnectionContextMenu);
 
     connect(ui->connections, &QAbstractItemView::clicked, this, [this](const QModelIndex& index)
     {
@@ -263,4 +271,126 @@ void MainWindow::UpdateConnectionList(const QList<Stats::ConnectionMetadata>& co
 {
     if (connectionsModel == nullptr) return;
     connectionsModel->setConnections(connections);
+}
+
+bool MainWindow::addRuleToCurrentRoute(const QString& rawRule, int actionInt, QString* error)
+{
+    auto setError = [error](const QString& msg) {
+        MW_show_log(msg);
+        if (error) *error = msg;
+    };
+
+    const auto action = static_cast<Configs::simpleAction>(actionInt);
+    auto& dm = Configs::dataManager;
+    auto currentRoute = dm->routesRepo->GetRouteProfile(dm->settingsRepo->current_route_id);
+    if (!currentRoute)
+    {
+        setError(tr("No active routing profile found."));
+        return false;
+    }
+    if (currentRoute->preventModifications)
+    {
+        setError(tr("Current routing profile is locked against modifications."));
+        return false;
+    }
+    if (currentRoute->isRaw)
+    {
+        setError(tr("Cannot add rules to raw JSON routing profiles."));
+        return false;
+    }
+    if (currentRoute->isRemote && currentRoute->autoUpdate)
+    {
+        setError(tr("Cannot add rules to remote routing profiles with auto-update enabled."));
+        return false;
+    }
+
+    if (!currentRoute->AppendSimpleRule(rawRule, action))
+    {
+        setError(tr("Failed to add routing rule: %1").arg(rawRule));
+        return false;
+    }
+
+    dm->routesRepo->Save(currentRoute);
+
+    MW_show_log(tr("Rule added: %1 -> %2 (restart core to apply)").arg(rawRule, Configs::simpleActionToString(action)));
+    return true;
+}
+
+void MainWindow::onConnectionContextMenu(const QPoint& pos)
+{
+    const QModelIndex proxyIndex = ui->connections->indexAt(pos);
+    if (!proxyIndex.isValid()) return;
+
+    const QModelIndex sourceIndex = connectionsFilterModel->mapToSource(proxyIndex);
+    if (!sourceIndex.isValid()) return;
+
+    const auto* meta = connectionsModel->metaAt(sourceIndex.row());
+    if (!meta) return;
+
+    const QString dest = meta->dest.trimmed();
+    const QString domain = meta->domain.trimmed();
+    const QString process = meta->process.trimmed();
+
+    QString host = domain;
+    if (host.isEmpty())
+    {
+        if (QHostAddress h(dest); !h.isNull())
+        {
+            host = dest;
+        }
+        else if (dest.startsWith('['))
+        {
+            const int endBracket = dest.indexOf(']');
+            if (endBracket != -1) host = dest.mid(1, endBracket - 1);
+        }
+        else
+        {
+            host = dest.section(':', 0, -2);
+            if (host.isEmpty()) host = dest;
+        }
+    }
+
+    const bool isDomain = QHostAddress(host).isNull();
+    const QString addressRule = isDomain ? ("suffix:" + host) : ("ip:" + host);
+    const QString processRule = !process.isEmpty() ? ("processName:" + process) : QString();
+
+    QMenu menu(this);
+    const QPoint globalPos = ui->connections->viewport()->mapToGlobal(pos);
+
+    auto showTip = [this](const QString& text) {
+        QToolTip::showText(QCursor::pos(), text, this);
+        auto r = ++toolTipID;
+        QTimer::singleShot(2000, this, [=, this] {
+            if (r == toolTipID) QToolTip::hideText();
+        });
+    };
+
+    struct RouteAction { Configs::simpleAction action; QString label; };
+    const RouteAction routeActions[] = {
+        { Configs::bypass, tr("Direct") },
+        { Configs::proxy,  tr("Proxy") },
+        { Configs::block,  tr("Block") },
+    };
+
+    auto addRouteSubmenu = [&](const QString& title, const QString& rule) {
+        auto* sub = menu.addMenu(title);
+        for (const auto& ra : routeActions)
+        {
+            auto* act = sub->addAction(ra.label);
+            connect(act, &QAction::triggered, this, [this, rule, ra, showTip] {
+                QString error;
+                if (addRuleToCurrentRoute(rule, static_cast<int>(ra.action), &error))
+                    showTip(tr("Added to %1:\n%2\n(Restart core to apply)").arg(ra.label, rule));
+                else if (!error.isEmpty())
+                    showTip(error);
+            });
+        }
+    };
+
+    if (!host.isEmpty()) addRouteSubmenu(tr("Add \"%1\" to").arg(host), addressRule);
+    if (!process.isEmpty()) addRouteSubmenu(tr("Add process \"%1\" to").arg(process), processRule);
+
+    if (menu.isEmpty()) return;
+
+    menu.exec(globalPos);
 }

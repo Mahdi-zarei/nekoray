@@ -91,6 +91,8 @@ namespace Configs {
 
         QString UpdateSimpleRules(const QString& content, simpleAction action);
 
+        bool AppendSimpleRule(const QString& rawRule, simpleAction action);
+
         void FilterEmptyRules();
     private:
         static bool add_simple_rule(const QString& content, const std::shared_ptr<RouteRule>& rule, ruleType type);
