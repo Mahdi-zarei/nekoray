@@ -14,6 +14,7 @@ import (
 	"github.com/sagernet/sing-box/option"
 	E "github.com/sagernet/sing/common/exceptions"
 	"github.com/sagernet/sing/common/json"
+	"github.com/sagernet/sing/service/filemanager"
 	"github.com/spf13/cobra"
 )
 
@@ -96,7 +97,27 @@ func Create(configContent []byte, onCreated func(*boxbox.Box)) (*boxbox.Box, con
 		cancel()
 		return nil, nil, E.Cause(err, "start service")
 	}
+	adoptCacheFile(ctx, options)
 	return instance, cancel, nil
+}
+
+// filemanager.WithDefault compares the target against the real uid, which under setuid is already the user, so it never chowns.
+func adoptCacheFile(ctx context.Context, options *option.Options) {
+	if os.Geteuid() != 0 || os.Getuid() == 0 {
+		return
+	}
+	experimental := options.Experimental
+	if experimental == nil || experimental.CacheFile == nil || !experimental.CacheFile.Enabled {
+		return
+	}
+	path := experimental.CacheFile.Path
+	if path == "" {
+		path = "cache.db"
+	}
+	path = filemanager.BasePath(ctx, path)
+	if err := os.Lchown(path, os.Getuid(), os.Getgid()); err != nil {
+		log.Warn(E.Cause(err, "chown cache file"))
+	}
 }
 
 func run() error {
