@@ -2,9 +2,80 @@
 
 #include "include/database/ProfilesRepo.h"
 #include "include/global/Configs.hpp"
+#include <QRegularExpression> 
 
 namespace Configs
 {
+    SubUserInfo ParseSubUserInfo(const QString &info) {
+        SubUserInfo result;
+        if (info.trimmed().isEmpty()) return result;
+
+        static const QRegularExpression totalRe(R"((?:^|[;,\s])total=(\d+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression uploadRe(R"((?:^|[;,\s])upload=(\d+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression downloadRe(R"((?:^|[;,\s])download=(\d+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression expireRe(R"((?:^|[;,\s])expire=(\d+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression titleRe(R"((?:^|[;\s])title=([^;\n]+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression webUrlRe(R"((?:^|[;\s])(?:web_url|url)=([^;\n\s]+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression supportUrlRe(R"((?:^|[;\s])support_url=([^;\n\s]+))", QRegularExpression::CaseInsensitiveOption);
+        static const QRegularExpression announceRe(R"((?:^|[;\s])announce=(.+)$)", QRegularExpression::CaseInsensitiveOption);
+
+        auto mTotal = totalRe.match(info);
+        if (mTotal.hasMatch()) {
+            result.total = mTotal.captured(1).toLongLong();
+            result.valid = true;
+        }
+
+        auto mUpload = uploadRe.match(info);
+        if (mUpload.hasMatch()) {
+            result.upload = mUpload.captured(1).toLongLong();
+            result.valid = true;
+        }
+
+        auto mDownload = downloadRe.match(info);
+        if (mDownload.hasMatch()) {
+            result.download = mDownload.captured(1).toLongLong();
+            result.valid = true;
+        }
+
+        auto mExpire = expireRe.match(info);
+        if (mExpire.hasMatch()) {
+            result.expire = mExpire.captured(1).toLongLong();
+            if (result.expire > 1000000000000LL) {
+                result.expire /= 1000; // Convert ms to seconds
+            }
+            result.valid = true;
+        }
+
+        auto mTitle = titleRe.match(info);
+        if (mTitle.hasMatch()) {
+            result.title = mTitle.captured(1).trimmed();
+            result.valid = true;
+        }
+
+        auto mWeb = webUrlRe.match(info);
+        if (mWeb.hasMatch()) {
+            result.web_url = mWeb.captured(1).trimmed();
+            result.valid = true;
+        }
+
+        auto mSup = supportUrlRe.match(info);
+        if (mSup.hasMatch()) {
+            result.support_url = mSup.captured(1).trimmed();
+            result.valid = true;
+        }
+
+        auto mAnnounce = announceRe.match(info);
+        if (mAnnounce.hasMatch()) {
+            QString ann = mAnnounce.captured(1).trimmed();
+            if (!ann.isEmpty() && ann.compare("base64:", Qt::CaseInsensitive) != 0) {
+                result.announce = ann;
+                result.valid = true;
+            }
+        }
+
+        return result;
+    }
+
     void Group::clearCalculatedColumnWidth() {
         calculated_column_width.clear();
     }

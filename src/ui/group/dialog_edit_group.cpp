@@ -12,7 +12,6 @@
 #include "include/database/GroupsRepo.h"
 #include "include/database/ProfilesRepo.h"
 
-
 #define ADJUST_SIZE runOnThread([=,this] { adjustSize(); adjustPosition(mainwindow); }, this);
 
 DialogEditGroup::DialogEditGroup(const std::shared_ptr<Configs::Group> &ent, QWidget *parent) : QDialog(parent), ui(new Ui::DialogEditGroup) {
@@ -28,6 +27,12 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<Configs::Group> &ent, QWi
     ui->auto_clear_unavailable->setChecked(ent->auto_clear_unavailable);
     ui->skip_auto_update->setChecked(ent->skip_auto_update);
     ui->url->setText(ent->url);
+
+    ui->sub_update_interval->setRange(0, 720);
+    ui->sub_update_interval->setValue(ent->sub_update_interval);
+    ui->sub_update_interval->setSpecialValueText(tr("Default (Auto / Global)"));
+    ui->sub_update_interval->setSuffix(tr(" hours"));
+
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
     ui->cat_share->setVisible(false);
@@ -216,6 +221,7 @@ void DialogEditGroup::accept() {
     ent->auto_clear_unavailable = ui->auto_clear_unavailable->isChecked();
     ent->url = ui->url->text().trimmed();
     ent->skip_auto_update = ui->skip_auto_update->isChecked();
+    ent->sub_update_interval = ui->sub_update_interval->value();
     ent->front_proxy_id = resolve_proxy_selection(ui->front_proxy, CACHE.front_proxy);
     ent->landing_proxy_id = resolve_proxy_selection(ui->landing_proxy, LANDING.landing_proxy);
     QDialog::accept();
