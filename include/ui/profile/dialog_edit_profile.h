@@ -67,6 +67,8 @@ private:
 
     void queueRefreshDialogLayout();
 
+    void fitToScreen();
+
     bool validateHeaders();
 
     bool validateXrayXHTTPSettings();

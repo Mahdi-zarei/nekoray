@@ -23,6 +23,7 @@
 
 #include <QInputDialog>
 #include <QLabel>
+#include <QScreen>
 #include <QSet>
 
 #include "include/configs/common/TLS.h"
@@ -95,10 +96,19 @@ void rebuildTabOrder(const QList<QWidget *> &tabOrder) {
 }
 
 void DialogEditProfile::queueRefreshDialogLayout() {
-    runOnThread([=,this] {
-        adjustSize();
-        adjustPosition(mainwindow);
-    }, this);
+    runOnThread([=,this] { fitToScreen(); }, this);
+}
+
+void DialogEditProfile::fitToScreen() {
+    // adjustSize() clamps to 2/3 of the screen; size to the content and let the editor scroll only once the work area is smaller.
+    layout()->activate();
+    QSize want = sizeHint();
+    if (const QScreen *scr = parentWidget() ? parentWidget()->screen() : screen()) {
+        const QRect avail = scr->availableGeometry();
+        want = want.boundedTo(QSize(avail.width() - 24, avail.height() - 72));
+    }
+    resize(want);
+    adjustPosition(mainwindow);
 }
 
 void DialogEditProfile::toggleSingboxWidgets(bool show) {
@@ -662,12 +672,12 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->brutal_u_speed->setText(Int2String(mux->brutal->up_mbps));
     }
 
-    auto old = ui->bean->layout()->itemAt(0)->widget();
-    ui->bean->layout()->removeWidget(old);
     innerWidget->layout()->setContentsMargins(0, 0, 0, 0);
-    ui->bean->layout()->addWidget(innerWidget);
+    ui->bean_scroll->setWidget(innerWidget); // deletes the previous editor
+    // setWidget() does not announce the new size hint, and cached hints refresh one nesting level per event loop
+    // pass, so invalidate up to the dialog before fitToScreen() measures it.
+    for (QWidget *w = ui->bean_scroll; w != this; w = w->parentWidget()) w->updateGeometry();
     ui->bean->setTitle(ent->outbound->DisplayType());
-    delete old;
 
     const auto innerTabOrder = collectTabOrder(this, innerWidget);
     if (!innerTabOrder.isEmpty() && innerTabOrderIndex >= 0 && innerTabOrderIndex <= outerTabOrder.size()) {
@@ -736,8 +746,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
 
     editor_cache_updated_impl();
     runOnThread([=,this] {
-        adjustSize();
-        adjustPosition(mainwindow);
+        fitToScreen();
         if (isHidden()) show();
     }, this);
 }

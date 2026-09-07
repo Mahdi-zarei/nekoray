@@ -123,7 +123,18 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QWidget" name="fake" native="true"/>
+          <widget class="ContentSizedScrollArea" name="bean_scroll">
+           <property name="focusPolicy">
+            <enum>Qt::FocusPolicy::NoFocus</enum>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Shape::NoFrame</enum>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="fake" native="true"/>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1527,6 +1538,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>ContentSizedScrollArea</class>
+   <extends>QScrollArea</extends>
+   <header>include/ui/utils/ContentSizedScrollArea.h</header>
+  </customwidget>
   <customwidget>
    <class>MyLineEdit</class>
    <extends>QLineEdit</extends>
