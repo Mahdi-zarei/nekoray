@@ -66,6 +66,7 @@ QVariant ConnectionsTableModel::data(const QModelIndex &index, int role) const {
 
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
+        case ColSource: return c.sourceDisplay;
         case ColDest: return destText(row);
         case ColProcess: return c.process;
         case ColProtocol: return protocolText(row);
@@ -88,6 +89,7 @@ QVariant ConnectionsTableModel::headerData(int section, Qt::Orientation orientat
 
     if (role == Qt::DisplayRole) {
         switch (section) {
+        case ColSource: return mwTr("Source");
         case ColDest: return mwTr("Destination (Domain)");
         case ColProcess: return mwTr("Process");
         case ColProtocol: return mwTr("Protocol");
@@ -100,6 +102,7 @@ QVariant ConnectionsTableModel::headerData(int section, Qt::Orientation orientat
 
     if (role == Qt::ToolTipRole) {
         switch (section) {
+        case ColSource: return mwTr("Click To Sort By Source");
         case ColDest: return mwTr("Click To Disable Sorting");
         case ColProcess: return mwTr("Click To Sort By Process");
         case ColProtocol: return mwTr("Click To Sort By Protocol");

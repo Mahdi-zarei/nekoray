@@ -604,10 +604,10 @@
          <item row="1" column="1">
           <widget class="QLineEdit" name="connectivity_url">
            <property name="placeholderText">
-            <string>optional</string>
+            <string>optional — inherits the Direct Test URL</string>
            </property>
            <property name="toolTip">
-            <string>Fetched WITHOUT the proxy to tell a dead internet connection apart from dead servers. Leave empty to rely on the operating system's network state, which is the safer default on a censored network where any fixed address may be blocked.</string>
+            <string>Fetched WITHOUT the proxy to tell a dead internet connection apart from dead servers, and to notice the moment it comes back. Leave empty to inherit the Direct Test URL from Basic Settings, and empty there too to rely on the operating system's network state. A URL that turns out to be blocked can only delay a resume by a few minutes; it can never keep the selector paused.</string>
            </property>
           </widget>
          </item>

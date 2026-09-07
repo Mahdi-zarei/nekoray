@@ -13,7 +13,8 @@ public:
     enum { ConnIdRole = Qt::UserRole };
 
     enum Column {
-        ColDest = 0,
+        ColSource = 0,
+        ColDest,
         ColProcess,
         ColProtocol,
         ColOutbound,

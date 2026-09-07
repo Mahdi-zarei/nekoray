@@ -55,6 +55,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->random_listen_port->setChecked(Configs::dataManager->settingsRepo->random_inbound_port);
     D_LOAD_INT(test_concurrent)
     D_LOAD_STRING(test_latency_url)
+    D_LOAD_STRING(direct_test_url)
     D_LOAD_BOOL(disable_tray)
     ui->reset_proxy_on_disable_sp->setChecked(Configs::dataManager->settingsRepo->reset_proxy_on_disable_sp);
     ui->url_timeout->setText(Int2String(Configs::dataManager->settingsRepo->url_test_timeout_ms));
@@ -344,6 +345,7 @@ void DialogBasicSettings::accept() {
     Configs::dataManager->settingsRepo->random_inbound_port = ui->random_listen_port->isChecked();
     D_SAVE_INT(test_concurrent)
     D_SAVE_STRING(test_latency_url)
+    Configs::dataManager->settingsRepo->direct_test_url = ui->direct_test_url->text().trimmed();
     D_SAVE_BOOL(disable_tray)
     Configs::dataManager->settingsRepo->proxy_scheme = ui->proxy_scheme->currentText().toLower();
     Configs::dataManager->settingsRepo->speed_test_mode = ui->speedtest_mode->currentIndex();

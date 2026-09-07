@@ -220,6 +220,7 @@ message ConnectionMetaData {
   optional string process_path = 11 [default = ""]; // full path (icon lookup etc.)
   repeated string chain = 12;                        // outbound chain, for later use
   optional int64 closed_at = 13 [default = 0];       // 0 while live
+  optional string source = 14 [default = ""];        // client address "ip:port", empty when unknown
 }
 
 // Ids come from a previous QueryConnections; ones that already closed are a

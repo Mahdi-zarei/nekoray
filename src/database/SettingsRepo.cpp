@@ -125,6 +125,7 @@ namespace Configs {
         stringMap = {
             {"user_agent2",                &user_agent},
             {"test_url",                   &test_latency_url},
+            {"direct_test_url",            &direct_test_url},
             {"inbound_address",            &inbound_address},
             {"log_level",                  &log_level},
             {"log_file_level",             &log_file_level},

@@ -8,6 +8,11 @@
 #include "include/configs/common/utils.h"
 
 namespace Configs {
+    // QUrlQuery defaults to PrettyDecoded, which keeps %2F/%2B/%2C encoded and corrupts base64 keys and CIDRs.
+    static QString QueryValue(const QUrlQuery& query, const QString& key) {
+        return query.queryItemValue(key, QUrl::FullyDecoded);
+    }
+
     static bool ParseAmneziaBool(const QString& value) {
         auto trimmed = value.trimmed().toLower();
         return trimmed == "true" || trimmed == "1" || trimmed == "on" || trimmed == "yes";
@@ -20,17 +25,17 @@ namespace Configs {
 
         address = url.host();
         port = url.port(51820);
-        if (query.hasQueryItem("public_key")) public_key = query.queryItemValue("public_key");
-        else if (query.hasQueryItem("publickey")) public_key = query.queryItemValue("publickey");
-        else if (query.hasQueryItem("peer_public_key")) public_key = query.queryItemValue("peer_public_key");
+        if (query.hasQueryItem("public_key")) public_key = QueryValue(query, "public_key");
+        else if (query.hasQueryItem("publickey")) public_key = QueryValue(query, "publickey");
+        else if (query.hasQueryItem("peer_public_key")) public_key = QueryValue(query, "peer_public_key");
 
-        if (query.hasQueryItem("pre_shared_key")) pre_shared_key = query.queryItemValue("pre_shared_key");
-        else if (query.hasQueryItem("preshared_key")) pre_shared_key = query.queryItemValue("preshared_key");
-        else if (query.hasQueryItem("presharedkey")) pre_shared_key = query.queryItemValue("presharedkey");
-        else if (query.hasQueryItem("psk")) pre_shared_key = query.queryItemValue("psk");
+        if (query.hasQueryItem("pre_shared_key")) pre_shared_key = QueryValue(query, "pre_shared_key");
+        else if (query.hasQueryItem("preshared_key")) pre_shared_key = QueryValue(query, "preshared_key");
+        else if (query.hasQueryItem("presharedkey")) pre_shared_key = QueryValue(query, "presharedkey");
+        else if (query.hasQueryItem("psk")) pre_shared_key = QueryValue(query, "psk");
 
         if (query.hasQueryItem("reserved")) {
-            QString rawReserved = query.queryItemValue("reserved");
+            QString rawReserved = QueryValue(query, "reserved");
             if (!rawReserved.isEmpty()) {
                 rawReserved.replace(',', '-');
                 for (const auto& item : rawReserved.split("-", Qt::SkipEmptyParts)) {
@@ -40,9 +45,9 @@ namespace Configs {
                 }
             }
         }
-        if (query.hasQueryItem("persistent_keepalive_interval")) persistent_keepalive = query.queryItemValue("persistent_keepalive_interval");
-        else if (query.hasQueryItem("persistent_keepalive")) persistent_keepalive = query.queryItemValue("persistent_keepalive");
-        else if (query.hasQueryItem("keepalive")) persistent_keepalive = query.queryItemValue("keepalive");
+        if (query.hasQueryItem("persistent_keepalive_interval")) persistent_keepalive = QueryValue(query, "persistent_keepalive_interval");
+        else if (query.hasQueryItem("persistent_keepalive")) persistent_keepalive = QueryValue(query, "persistent_keepalive");
+        else if (query.hasQueryItem("keepalive")) persistent_keepalive = QueryValue(query, "keepalive");
 
         return true;
     }
@@ -184,8 +189,8 @@ namespace Configs {
 
         outbound::ParseFromLink(link);
 
-        if (query.hasQueryItem("private_key")) private_key = query.queryItemValue("private_key");
-        else if (query.hasQueryItem("privatekey")) private_key = query.queryItemValue("privatekey");
+        if (query.hasQueryItem("private_key")) private_key = QueryValue(query, "private_key");
+        else if (query.hasQueryItem("privatekey")) private_key = QueryValue(query, "privatekey");
         else if (!url.userName().isEmpty()) private_key = url.userName();
 
         peer->ParseFromLink(link);
@@ -193,46 +198,46 @@ namespace Configs {
         server_port = peer->port;
         
         if (query.hasQueryItem("local_address")) {
-            address = query.queryItemValue("local_address").split("-", Qt::SkipEmptyParts);
+            address = QueryValue(query, "local_address").split("-", Qt::SkipEmptyParts);
         } else if (query.hasQueryItem("address")) {
-            address = query.queryItemValue("address").replace(" ", "").split(",", Qt::SkipEmptyParts);
+            address = QueryValue(query, "address").replace(" ", "").split(",", Qt::SkipEmptyParts);
         } else if (query.hasQueryItem("ip")) {
-            address = query.queryItemValue("ip").replace(" ", "").split(",", Qt::SkipEmptyParts);
+            address = QueryValue(query, "ip").replace(" ", "").split(",", Qt::SkipEmptyParts);
         }
         
-        if (query.hasQueryItem("mtu")) mtu = query.queryItemValue("mtu").toInt();
-        if (query.hasQueryItem("use_system_interface")) system = query.queryItemValue("use_system_interface") == "true";
-        if (query.hasQueryItem("workers")) worker_count = query.queryItemValue("workers").toInt();
-        if (query.hasQueryItem("udp_timeout")) udp_timeout = query.queryItemValue("udp_timeout");
+        if (query.hasQueryItem("mtu")) mtu = QueryValue(query, "mtu").toInt();
+        if (query.hasQueryItem("use_system_interface")) system = QueryValue(query, "use_system_interface") == "true";
+        if (query.hasQueryItem("workers")) worker_count = QueryValue(query, "workers").toInt();
+        if (query.hasQueryItem("udp_timeout")) udp_timeout = QueryValue(query, "udp_timeout");
 
-        if (query.queryItemValue("enable_amnezia") == "true") enable_amnezia = true;
-        if (query.hasQueryItem("jc")) jc = query.queryItemValue("jc").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("jmin")) jmin = query.queryItemValue("jmin").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("jmax")) jmax = query.queryItemValue("jmax").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("s1")) s1 = query.queryItemValue("s1").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("s2")) s2 = query.queryItemValue("s2").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("s3")) s3 = query.queryItemValue("s3").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("s4")) s4 = query.queryItemValue("s4").toInt(), enable_amnezia = true;
-        if (query.hasQueryItem("h1")) h1 = query.queryItemValue("h1"), enable_amnezia = true;
-        if (query.hasQueryItem("h2")) h2 = query.queryItemValue("h2"), enable_amnezia = true;
-        if (query.hasQueryItem("h3")) h3 = query.queryItemValue("h3"), enable_amnezia = true;
-        if (query.hasQueryItem("h4")) h4 = query.queryItemValue("h4"), enable_amnezia = true;
-        if (query.hasQueryItem("i1")) i1 = query.queryItemValue("i1"), enable_amnezia = true;
-        if (query.hasQueryItem("i2")) i2 = query.queryItemValue("i2"), enable_amnezia = true;
-        if (query.hasQueryItem("i3")) i3 = query.queryItemValue("i3"), enable_amnezia = true;
-        if (query.hasQueryItem("i4")) i4 = query.queryItemValue("i4"), enable_amnezia = true;
-        if (query.hasQueryItem("i5")) i5 = query.queryItemValue("i5"), enable_amnezia = true;
-        if (query.hasQueryItem("header_protection_key")) header_protection_key = query.queryItemValue("header_protection_key"), enable_amnezia = true;
-        else if (query.hasQueryItem("headerprotectionkey")) header_protection_key = query.queryItemValue("headerprotectionkey"), enable_amnezia = true;
-        if (query.hasQueryItem("content_padding_addition")) content_padding_addition = query.queryItemValue("content_padding_addition"), enable_amnezia = true;
-        else if (query.hasQueryItem("contentpaddingaddition")) content_padding_addition = query.queryItemValue("contentpaddingaddition"), enable_amnezia = true;
-        if (query.hasQueryItem("rekey_after_time")) rekey_after_time = query.queryItemValue("rekey_after_time"), enable_amnezia = true;
-        if (query.hasQueryItem("rekey_timeout")) rekey_timeout = query.queryItemValue("rekey_timeout"), enable_amnezia = true;
-        if (query.hasQueryItem("reject_after_time")) reject_after_time = query.queryItemValue("reject_after_time"), enable_amnezia = true;
-        if (query.hasQueryItem("keepalive_timeout")) keepalive_timeout = query.queryItemValue("keepalive_timeout"), enable_amnezia = true;
-        if (query.hasQueryItem("max_handshake_attempts")) max_handshake_attempts = query.queryItemValue("max_handshake_attempts"), enable_amnezia = true;
-        if (query.hasQueryItem("random_trailers")) random_trailers = ParseAmneziaBool(query.queryItemValue("random_trailers")), enable_amnezia = true;
-        if (query.hasQueryItem("disable_cookies")) disable_cookies = ParseAmneziaBool(query.queryItemValue("disable_cookies")), enable_amnezia = true;
+        if (QueryValue(query, "enable_amnezia") == "true") enable_amnezia = true;
+        if (query.hasQueryItem("jc")) jc = QueryValue(query, "jc").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("jmin")) jmin = QueryValue(query, "jmin").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("jmax")) jmax = QueryValue(query, "jmax").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("s1")) s1 = QueryValue(query, "s1").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("s2")) s2 = QueryValue(query, "s2").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("s3")) s3 = QueryValue(query, "s3").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("s4")) s4 = QueryValue(query, "s4").toInt(), enable_amnezia = true;
+        if (query.hasQueryItem("h1")) h1 = QueryValue(query, "h1"), enable_amnezia = true;
+        if (query.hasQueryItem("h2")) h2 = QueryValue(query, "h2"), enable_amnezia = true;
+        if (query.hasQueryItem("h3")) h3 = QueryValue(query, "h3"), enable_amnezia = true;
+        if (query.hasQueryItem("h4")) h4 = QueryValue(query, "h4"), enable_amnezia = true;
+        if (query.hasQueryItem("i1")) i1 = QueryValue(query, "i1"), enable_amnezia = true;
+        if (query.hasQueryItem("i2")) i2 = QueryValue(query, "i2"), enable_amnezia = true;
+        if (query.hasQueryItem("i3")) i3 = QueryValue(query, "i3"), enable_amnezia = true;
+        if (query.hasQueryItem("i4")) i4 = QueryValue(query, "i4"), enable_amnezia = true;
+        if (query.hasQueryItem("i5")) i5 = QueryValue(query, "i5"), enable_amnezia = true;
+        if (query.hasQueryItem("header_protection_key")) header_protection_key = QueryValue(query, "header_protection_key"), enable_amnezia = true;
+        else if (query.hasQueryItem("headerprotectionkey")) header_protection_key = QueryValue(query, "headerprotectionkey"), enable_amnezia = true;
+        if (query.hasQueryItem("content_padding_addition")) content_padding_addition = QueryValue(query, "content_padding_addition"), enable_amnezia = true;
+        else if (query.hasQueryItem("contentpaddingaddition")) content_padding_addition = QueryValue(query, "contentpaddingaddition"), enable_amnezia = true;
+        if (query.hasQueryItem("rekey_after_time")) rekey_after_time = QueryValue(query, "rekey_after_time"), enable_amnezia = true;
+        if (query.hasQueryItem("rekey_timeout")) rekey_timeout = QueryValue(query, "rekey_timeout"), enable_amnezia = true;
+        if (query.hasQueryItem("reject_after_time")) reject_after_time = QueryValue(query, "reject_after_time"), enable_amnezia = true;
+        if (query.hasQueryItem("keepalive_timeout")) keepalive_timeout = QueryValue(query, "keepalive_timeout"), enable_amnezia = true;
+        if (query.hasQueryItem("max_handshake_attempts")) max_handshake_attempts = QueryValue(query, "max_handshake_attempts"), enable_amnezia = true;
+        if (query.hasQueryItem("random_trailers")) random_trailers = ParseAmneziaBool(QueryValue(query, "random_trailers")), enable_amnezia = true;
+        if (query.hasQueryItem("disable_cookies")) disable_cookies = ParseAmneziaBool(QueryValue(query, "disable_cookies")), enable_amnezia = true;
         
         FixAddress();
 

@@ -12,12 +12,15 @@ ConnectionsTableModel *ConnectionsFilterProxyModel::connectionsModel() const {
 }
 
 bool ConnectionsFilterProxyModel::hasActiveFilter() const {
-    return !m_dest.isEmpty() || !m_process.isEmpty() || !m_protocol.isEmpty() || !m_outbound.isEmpty();
+    return !m_source.isEmpty() || !m_dest.isEmpty() || !m_process.isEmpty()
+           || !m_protocol.isEmpty() || !m_outbound.isEmpty();
 }
 
-void ConnectionsFilterProxyModel::setFilters(const QString &dest, const QString &process,
+void ConnectionsFilterProxyModel::setFilters(const QString &source, const QString &dest, const QString &process,
                                              const QString &protocol, const QString &outbound) {
-    if (m_dest == dest && m_process == process && m_protocol == protocol && m_outbound == outbound) return;
+    if (m_source == source && m_dest == dest && m_process == process
+        && m_protocol == protocol && m_outbound == outbound) return;
+    m_source = source;
     m_dest = dest;
     m_process = process;
     m_protocol = protocol;
@@ -34,6 +37,7 @@ bool ConnectionsFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIn
     const auto *meta = model->metaAt(sourceRow);
     if (meta == nullptr) return false;
 
+    if (!m_source.isEmpty() && !meta->sourceDisplay.contains(m_source, Qt::CaseInsensitive)) return false;
     if (!m_process.isEmpty() && !meta->process.contains(m_process, Qt::CaseInsensitive)) return false;
     if (!m_outbound.isEmpty() && !meta->outbound.contains(m_outbound, Qt::CaseInsensitive)) return false;
     // Composed strings last: only these two can cost an allocation on first touch.

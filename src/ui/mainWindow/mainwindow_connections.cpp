@@ -1,5 +1,6 @@
 #include "include/ui/mainwindow.h"
 #include "include/api/RPC.h"
+#include "include/global/LocalNetwork.hpp"
 #include "include/ui/utils/ConnectionCloseDelegate.h"
 #include "include/ui/utils/ConnectionsFilterHeader.h"
 #include "include/ui/utils/ConnectionsFilterProxyModel.h"
@@ -53,6 +54,7 @@ void MainWindow::setupConnectionList()
 
     auto* header = ui->connections->horizontalHeader();
     header->setHighlightSections(false);
+    header->setSectionResizeMode(ConnectionsTableModel::ColSource, QHeaderView::ResizeToContents);
     header->setSectionResizeMode(ConnectionsTableModel::ColDest, QHeaderView::Stretch);
     header->setSectionResizeMode(ConnectionsTableModel::ColProcess, QHeaderView::Stretch);
     header->setSectionResizeMode(ConnectionsTableModel::ColProtocol, QHeaderView::ResizeToContents);
@@ -64,7 +66,7 @@ void MainWindow::setupConnectionList()
     ui->connections->setColumnWidth(ConnectionsTableModel::ColClose, ConnectionCloseDelegate::ColumnWidth);
     ui->connections->verticalHeader()->hide();
 
-    // Otherwise the four content-sized columns re-measure up to 1000 rows whenever a poll changes the count.
+    // Otherwise the five content-sized columns re-measure up to 1000 rows whenever a poll changes the count.
     header->setResizeContentsPrecision(20);
     ui->connections->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->connections->setWordWrap(false);
@@ -92,13 +94,17 @@ void MainWindow::setupConnectionList()
             QToolTip::hideText();
         });
     });
+
+    syncConnectionSourceColumn();
 }
 
 void MainWindow::restoreConnectionSort()
 {
     const auto* settings = Configs::dataManager->settingsRepo.get();
-    const int stored = settings->connection_sort;
-    if (stored < Stats::Default || stored > Stats::BySpeed) return;
+    int stored = settings->connection_sort;
+    if (stored < Stats::Default || stored > Stats::BySource) return;
+    // The Source header is unreachable while its column is hidden, so that sort would be stuck for good.
+    if (stored == Stats::BySource && !LocalNetwork::LanInboundEnabled()) stored = Stats::Default;
     // Runs before setup_rpc() spawns the lister thread, so writing the pair unguarded is safe.
     Stats::connection_lister->restoreSort(static_cast<Stats::ConnectionSort>(stored), settings->connection_sort_asc);
 }
@@ -150,7 +156,25 @@ void MainWindow::setupConnectionFilter()
 void MainWindow::applyConnectionFilters()
 {
     const auto filters = connectionFilterHeader->filters();
-    connectionsFilterModel->setFilters(filters.dest, filters.process, filters.protocol, filters.outbound);
+    connectionsFilterModel->setFilters(filters.source, filters.dest, filters.process, filters.protocol,
+                                       filters.outbound);
+}
+
+void MainWindow::syncConnectionSourceColumn()
+{
+    if (connectionsModel == nullptr) return;
+    const bool show = LocalNetwork::LanInboundEnabled();
+    // refresh_status() drives this on a 2s tick, so bail out unless the state actually flipped.
+    if (ui->connections->isColumnHidden(ConnectionsTableModel::ColSource) == !show) return;
+
+    ui->connections->setColumnHidden(ConnectionsTableModel::ColSource, !show);
+    connectionFilterHeader->adjustPositions();
+    // Both must be cleared here: a hidden header can be reached by neither the filter field nor a sort click.
+    if (!show) {
+        connectionFilterHeader->clearFilterFor(ConnectionsTableModel::ColSource);
+        if (Stats::connection_lister->getSort() == Stats::BySource) applyConnectionSort(Stats::Default);
+    }
+    applyConnectionFilters();
 }
 
 void MainWindow::setupConnectionSortMenu()

@@ -387,8 +387,8 @@ github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976 h1:U
 github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976/go.mod h1:agQPE6y6ldqCOui2gkIh7ZMztTkIQKH049tv8siLuNQ=
 github.com/tc-hib/winres v0.2.1 h1:YDE0FiP0VmtRaDn7+aaChp1KiF4owBiJa5l964l5ujA=
 github.com/tc-hib/winres v0.2.1/go.mod h1:C/JaNhH3KBvhNKVbvdlDWkbMDO9H4fKKDaN7/07SSuk=
-github.com/throneproj/sing-box v1.11.16-0.20260903224730-4db236a56cd3 h1:kms6oscNW3ZGBZukPSc/kzdimNklObBBuSDPLWKZ/qA=
-github.com/throneproj/sing-box v1.11.16-0.20260903224730-4db236a56cd3/go.mod h1:SSxJ256XTTEbA+1O/qkKQyEEzqCh8NbdB2kQLGkazs4=
+github.com/throneproj/sing-box v1.11.16-0.20260906114802-5f81f934b1f7 h1:5EWfMPG38XBL62N3ua1ZiblYJIuNK0yldDAN7Z/rGXY=
+github.com/throneproj/sing-box v1.11.16-0.20260906114802-5f81f934b1f7/go.mod h1:SSxJ256XTTEbA+1O/qkKQyEEzqCh8NbdB2kQLGkazs4=
 github.com/throneproj/wireguard-go v0.0.0-20260831224840-cdac29e5a25e h1:EMC5csnQ9PwrKXZ5LhlF8wPp+fgyXcjwG5nysIc6LCs=
 github.com/throneproj/wireguard-go v0.0.0-20260831224840-cdac29e5a25e/go.mod h1:er10sELpmzLXq7S7Pbc1Zsbyapcr+/gxNAHKTo6fzVA=
 github.com/throneproj/xray-core v1.251015.1-0.20260831012233-c659cc0ab233 h1:G7CTjwJW38bznIALNvVgtF59eNEbZLOBWZbLyvunW9o=

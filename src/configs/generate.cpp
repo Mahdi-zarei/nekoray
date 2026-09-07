@@ -1695,10 +1695,11 @@ namespace Configs {
             if (!warm.isEmpty()) groupObject["warm"] = warm;
             if (!pinnedTag.isEmpty()) groupObject["pinned"] = pinnedTag;
             if (selector->maxRTTms > 0) groupObject["max_rtt"] = Int2String(selector->maxRTTms) + "ms";
-            // Without an independent endpoint the core cannot tell a dead link from dead servers.
-            groupObject["connectivity_url"] = selector->connectivityURL.isEmpty()
-                                                  ? settings.test_latency_url
-                                                  : selector->connectivityURL;
+            // Never the latency test URL: that one is fetched through the proxy, and is routinely
+            // blocked directly. Omitted when unset, so the core uses the OS network state.
+            const auto connectivityURL = selector->connectivityURL.isEmpty() ? settings.direct_test_url
+                                                                             : selector->connectivityURL;
+            if (!connectivityURL.isEmpty()) groupObject["connectivity_url"] = connectivityURL;
             if (selector->balance)
             {
                 groupObject["balance"] = true;

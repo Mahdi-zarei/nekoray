@@ -277,6 +277,11 @@ void EditAutoSelector::refreshPlanSummary() {
         }
         lines << tr("Skipped: %1.").arg(reasons.join(tr(", ")));
     }
+    if (plan.keptUnavailable > 0) {
+        lines << tr("Every profile's last test failed, which usually means the network was down "
+                    "rather than the servers, so all %1 are kept and will be re-checked.")
+                     .arg(plan.keptUnavailable);
+    }
     if (plan.truncated) {
         lines << tr("More than %1 profiles match, so only the best-ranked ones are kept.").arg(plan.poolCapUsed);
     }

@@ -9,6 +9,7 @@
 
 namespace Stats
 {
+    // The integer values are persisted in settings: append only, never insert mid-enum.
     enum ConnectionSort
     {
         Default,
@@ -20,7 +21,8 @@ namespace Stats
         ByProtocol,
         ByDownloadSpeed,
         ByUploadSpeed,
-        BySpeed // total speed = uploadSpeed + downloadSpeed
+        BySpeed, // total speed = uploadSpeed + downloadSpeed
+        BySource
     };
 
     class ConnectionMetadata
@@ -37,6 +39,8 @@ namespace Stats
         QString domain;
         QString process;     // basename, e.g. chrome.exe
         QString processPath;
+        QString source;        // raw "ip:port" reported by the core, empty when unknown
+        QString sourceDisplay; // tr("Local") for this machine, else the client's bare IP
         long long closedAtMs = 0; // 0 while live
         long long uploadSpeed = 0;   // bytes/sec
         long long downloadSpeed = 0;
