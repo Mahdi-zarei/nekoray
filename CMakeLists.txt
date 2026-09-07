@@ -94,6 +94,8 @@ set(PROJECT_SOURCES
         src/global/HTTPRequestHelper.cpp
         src/global/DeviceDetailsHelper.cpp
         src/global/CountryHelper.cpp
+        include/global/LocalNetwork.hpp
+        src/global/LocalNetwork.cpp
         include/global/OTP.hpp
         src/global/OTP.cpp
         include/global/OtpPlaceholder.hpp
@@ -182,6 +184,8 @@ set(PROJECT_SOURCES
         src/ui/widget/TrayProfileSelector.cpp
         include/ui/widget/TrayOtpCodes.hpp
         src/ui/widget/TrayOtpCodes.cpp
+        include/ui/widget/SubscriptionInfoCard.hpp
+        src/ui/widget/SubscriptionInfoCard.cpp
         include/ui/widget/json/JsonTree.h
         src/ui/widget/json/JsonTree.cpp
         include/ui/widget/json/JsonValidator.h

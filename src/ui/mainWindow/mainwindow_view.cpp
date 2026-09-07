@@ -12,6 +12,7 @@
 #include "include/database/ProfilesRepo.h"
 #include "include/database/RoutesRepo.h"
 #include "include/database/SettingsRepo.h"
+#include "include/global/LocalNetwork.hpp"
 #include "include/stats/autoselector/AutoSelectorMonitor.hpp"
 #include "include/ui/setting/Icon.hpp"
 #include "include/ui/stats/dialog_auto_selector.h"
@@ -67,7 +68,21 @@ void MainWindow::UpdateDataView(bool force)
     }
     auto html = dataViewHtmlGenerator_.buildHtml();
     runOnUiThread([=, this] {
-        ui->data_view->setHtml(html);
+        if (m_topBarStack != nullptr) {
+            if (!html.isEmpty()) {
+                // Active Speedtest / URL test / Download report -> Show data_view
+                m_topBarStack->setCurrentWidget(ui->data_view);
+                ui->data_view->setHtml(html);
+            } else {
+                // Idle -> Show native Subscription card
+                m_topBarStack->setCurrentWidget(m_subInfoCard);
+                if (auto group = Configs::dataManager->groupsRepo->CurrentGroup()) {
+                    m_subInfoCard->setGroup(group);
+                }
+            }
+        } else {
+            ui->data_view->setHtml(html);
+        }
     }, true);
     lastUpdatedMs.store(QDateTime::currentMSecsSinceEpoch());
 }
@@ -155,10 +170,19 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         }
         ui->label_running->setText(runningLabelText);
     }
-    const auto display_socks = DisplayAddress(settings->inbound_address, settings->inbound_socks_port);
     const auto inbound_disabled = settings->disable_mixed_inbound;
-    const auto inbound_txt = QString("Mixed: %1").arg(inbound_disabled ? "Disabled" : display_socks);
-    ui->label_inbound->setText(inbound_txt);
+    auto display_socks = DisplayAddress(settings->inbound_address, settings->inbound_socks_port);
+    QString inbound_tip;
+    // A wildcard bind is not something a LAN client can dial, so show the interface it actually reaches instead.
+    if (!inbound_disabled && LocalNetwork::LanInboundIsWildcard()) {
+        if (const auto lan = LocalNetwork::LanAddress(); !lan.isEmpty()) {
+            inbound_tip = tr("Listening on all interfaces (%1)").arg(display_socks);
+            display_socks = DisplayAddress(lan, settings->inbound_socks_port);
+        }
+    }
+    ui->label_inbound->setText(QString("Mixed: %1").arg(inbound_disabled ? "Disabled" : display_socks));
+    ui->label_inbound->setToolTip(inbound_tip);
+    syncConnectionSourceColumn();
     ui->checkBox_VPN->setChecked(settings->spmode_vpn);
     ui->checkBox_SystemProxy->setChecked(settings->spmode_system_proxy);
     if (select_mode) {

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QStackedWidget>
+#include "include/ui/widget/SubscriptionInfoCard.hpp"
+
 #include <include/global/HTTPRequestHelper.hpp>
 #ifndef Q_MOC_RUN
 #include <core/server/gen/libcore.pb.h>
@@ -279,6 +282,9 @@ private:
     std::atomic<qint64> lastUpdatedMs = QDateTime::currentMSecsSinceEpoch();
     DataViewHtmlGenerator dataViewHtmlGenerator_;
 
+    QStackedWidget *m_topBarStack = nullptr;       
+    SubscriptionInfoCard *m_subInfoCard = nullptr; 
+
     QList<QShortcut*> hiddenMenuShortcuts;
 
     QString addressFilterString;
@@ -496,6 +502,8 @@ private:
     void applyConnectionSort(Stats::ConnectionSort sort);
 
     void applyConnectionFilters();
+
+    void syncConnectionSourceColumn();
 
     // Rows are rewritten on every poll, so ids are read at click time, never captured.
     void closeConnections(const QStringList &ids);

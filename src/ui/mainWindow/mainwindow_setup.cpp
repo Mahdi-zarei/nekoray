@@ -5,6 +5,7 @@
 #include "include/ui/mainWindow/TestRunner.h"
 
 #include <QMenu>
+#include <QStackedWidget>
 
 #include "include/configs/sub/GroupUpdater.hpp"
 #include "include/configs/sub/RouteUpdater.hpp"
@@ -23,6 +24,7 @@
 #include "include/ui/stats/dialog_traffic_stats.h"
 #include "include/ui/stats/dialog_runtime_stats.h"
 #include "include/ui/widget/StartStopButton.hpp"
+#include "include/ui/widget/SubscriptionInfoCard.hpp"
 
 #include "include/configs/generate.h"
 #include "include/database/GroupsRepo.h"
@@ -382,6 +384,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
             switch (index)
             {
+            case ConnectionsTableModel::ColSource:   sortType = Stats::BySource; break;
             case ConnectionsTableModel::ColProcess:  sortType = Stats::ByProcess; break;
             case ConnectionsTableModel::ColProtocol: sortType = Stats::ByProtocol; break;
             case ConnectionsTableModel::ColOutbound: sortType = Stats::ByOutbound; break;
@@ -676,6 +679,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     });
     connect(filterHeader, &ProfilesTableFilterHeader::focusTableRequested, this,
             [this](bool selectFirst) { focusProfilesTable(selectFirst); });
+
+    // (Page 0: Subscription Card, Page 1: Live test reports)
+    m_topBarStack = new QStackedWidget(this);
+    m_subInfoCard = new SubscriptionInfoCard(this);
+
+    ui->horizontalLayout_2->removeWidget(ui->data_view);
+    m_topBarStack->addWidget(m_subInfoCard);
+    m_topBarStack->addWidget(ui->data_view);
+    ui->horizontalLayout_2->addWidget(m_topBarStack);
 
     this->refresh_groups();
 
@@ -1109,4 +1121,3 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
     delete ui;
 }
-
