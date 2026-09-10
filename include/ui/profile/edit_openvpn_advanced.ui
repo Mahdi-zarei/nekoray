@@ -56,7 +56,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QComboBox" name="mode"/>
+              <widget class="NoWheelComboBox" name="mode"/>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="topology_l">
@@ -69,7 +69,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="topology"/>
+              <widget class="NoWheelComboBox" name="topology"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="auth_retry_l">
@@ -82,7 +82,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="auth_retry"/>
+              <widget class="NoWheelComboBox" name="auth_retry"/>
              </item>
              <item row="3" column="0" colspan="2">
               <widget class="QCheckBox" name="remote_random">
@@ -261,7 +261,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="key_direction"/>
+              <widget class="NoWheelComboBox" name="key_direction"/>
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="cipher_l">
@@ -315,7 +315,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="tls_server_name_type"/>
+              <widget class="NoWheelComboBox" name="tls_server_name_type"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="tls_certificate_path_l">
@@ -436,7 +436,7 @@
               </widget>
              </item>
              <item row="10" column="1">
-              <widget class="QComboBox" name="tls_remote_certificate_tls"/>
+              <widget class="NoWheelComboBox" name="tls_remote_certificate_tls"/>
              </item>
              <item row="11" column="0">
               <widget class="QLabel" name="tls_certificate_profile_l">
@@ -449,7 +449,7 @@
               </widget>
              </item>
              <item row="11" column="1">
-              <widget class="QComboBox" name="tls_certificate_profile"/>
+              <widget class="NoWheelComboBox" name="tls_certificate_profile"/>
              </item>
              <item row="12" column="0">
               <widget class="QLabel" name="tls_ns_certificate_type_l">
@@ -462,7 +462,7 @@
               </widget>
              </item>
              <item row="12" column="1">
-              <widget class="QComboBox" name="tls_ns_certificate_type"/>
+              <widget class="NoWheelComboBox" name="tls_ns_certificate_type"/>
              </item>
              <item row="13" column="0">
               <widget class="QLabel" name="tls_version_min_l">
@@ -475,7 +475,7 @@
               </widget>
              </item>
              <item row="13" column="1">
-              <widget class="QComboBox" name="tls_version_min"/>
+              <widget class="NoWheelComboBox" name="tls_version_min"/>
              </item>
              <item row="14" column="0">
               <widget class="QLabel" name="tls_version_max_l">
@@ -488,7 +488,7 @@
               </widget>
              </item>
              <item row="14" column="1">
-              <widget class="QComboBox" name="tls_version_max"/>
+              <widget class="NoWheelComboBox" name="tls_version_max"/>
              </item>
              <item row="15" column="0">
               <widget class="QLabel" name="tls_cipher_l">
@@ -608,7 +608,7 @@
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QComboBox" name="mss_fix_mode"/>
+              <widget class="NoWheelComboBox" name="mss_fix_mode"/>
              </item>
              <item row="6" column="0">
               <widget class="QLabel" name="fragment_l">
@@ -679,7 +679,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QComboBox" name="compression"/>
+              <widget class="NoWheelComboBox" name="compression"/>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="compression_lzo_l">
@@ -692,7 +692,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="compression_lzo"/>
+              <widget class="NoWheelComboBox" name="compression_lzo"/>
              </item>
              <item row="2" column="0">
               <widget class="QLabel" name="allow_compression_l">
@@ -705,7 +705,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="allow_compression"/>
+              <widget class="NoWheelComboBox" name="allow_compression"/>
              </item>
             </layout>
            </widget>
@@ -1035,6 +1035,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoWheelComboBox</class>
+   <extends>QComboBox</extends>
+   <header>include/ui/utils/NoWheelComboBox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>mode</tabstop>
   <tabstop>topology</tabstop>

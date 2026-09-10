@@ -11,6 +11,7 @@
 
 #include <algorithm>
 
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QGuiApplication>
@@ -392,7 +393,7 @@ void RouteItem::setupEndpointsSection() {
     for (const int profileId : chain->endpointProfileIDs) {
         if (listed.contains(profileId)) continue;
         listed.insert(profileId);
-        addEndpointRow(profileId);
+        addEndpointRow(profileId, chain->innerHopEndpointIDs.contains(profileId));
     }
 
     syncEndpointRules();
@@ -405,7 +406,7 @@ void RouteItem::setupEndpointsSection() {
     connect(ui->endpointAddBtn, &QPushButton::clicked, this, [this] {
         const int idx = ui->endpointPicker->currentIndex();
         if (idx < 0) return;
-        addEndpointRow(ui->endpointPicker->itemData(idx).toInt());
+        addEndpointRow(ui->endpointPicker->itemData(idx).toInt(), false);
         refreshEndpointCandidates();
         syncEndpointRules();
     });
@@ -438,16 +439,39 @@ void RouteItem::refreshEndpointCandidates() const {
     ui->endpointRemoveBtn->setEnabled(ui->endpointList->currentRow() >= 0);
 }
 
-void RouteItem::addEndpointRow(int profileId) const {
+void RouteItem::addEndpointRow(int profileId, bool innerHops) {
+    const auto ent = Configs::dataManager->profilesRepo->GetProfile(profileId);
+    const bool alive = ent != nullptr && ent->outbound != nullptr;
+    const bool hasInnerHops = alive && !Configs::AuxEndpointInnerHops(profileId).isEmpty();
+
     auto* row = new QListWidgetItem(ui->endpointList);
     row->setData(Qt::UserRole, profileId);
-    const auto ent = Configs::dataManager->profilesRepo->GetProfile(profileId);
-    if (ent != nullptr && ent->outbound != nullptr) {
-        row->setText(ent->outbound->DisplayTypeAndName());
-        return;
+    row->setData(Qt::UserRole + 1, innerHops && hasInnerHops);
+
+    auto* holder = new QWidget(ui->endpointList);
+    auto* rowLayout = new QHBoxLayout(holder);
+    rowLayout->setContentsMargins(4, 2, 4, 2);
+    auto* label = new QLabel(alive ? ent->outbound->DisplayTypeAndName()
+                                   : tr("Profile #%1 — deleted, dropped when you save").arg(profileId), holder);
+    if (!alive) {
+        QPalette pal = label->palette();
+        pal.setColor(QPalette::WindowText, QColor(0xc6, 0x28, 0x28));
+        label->setPalette(pal);
     }
-    row->setText(tr("Profile #%1 — deleted, dropped when you save").arg(profileId));
-    row->setForeground(QColor(0xc6, 0x28, 0x28));
+    rowLayout->addWidget(label);
+    rowLayout->addStretch(1);
+    if (hasInnerHops) {
+        auto* toggle = new QCheckBox(tr("Allow routing to inner hops"), holder);
+        toggle->setChecked(innerHops);
+        toggle->setToolTip(tr("Give each OpenVPN/OpenConnect hop behind the exit its own rule, so traffic can be routed to it as well."));
+        connect(toggle, &QCheckBox::toggled, this, [this, row](const bool on) {
+            row->setData(Qt::UserRole + 1, on);
+            syncEndpointRules();
+        });
+        rowLayout->addWidget(toggle);
+    }
+    row->setSizeHint(holder->sizeHint());
+    ui->endpointList->setItemWidget(row, holder);
 }
 
 void RouteItem::removeEndpointRow(int profileId) {
@@ -472,8 +496,46 @@ QList<int> RouteItem::listedEndpointIDs() const {
     return ids;
 }
 
-void RouteItem::syncEndpointRules() {
+QList<int> RouteItem::listedInnerHopEndpointIDs() const {
+    QList<int> ids;
     const QList<int> listed = listedEndpointIDs();
+    for (int i = 0; i < ui->endpointList->count(); i++) {
+        const auto* item = ui->endpointList->item(i);
+        const int id = item->data(Qt::UserRole).toInt();
+        if (!item->data(Qt::UserRole + 1).toBool() || ids.contains(id) || !listed.contains(id)) continue;
+        ids << id;
+    }
+    return ids;
+}
+
+int RouteItem::innerHopOwner(int profileId) const {
+    for (const int id : listedInnerHopEndpointIDs()) {
+        if (Configs::AuxEndpointInnerHops(id).contains(profileId)) return id;
+    }
+    return -1;
+}
+
+void RouteItem::setEndpointRowInnerHops(int profileId, bool innerHops) {
+    for (int i = 0; i < ui->endpointList->count(); i++) {
+        auto* item = ui->endpointList->item(i);
+        if (item->data(Qt::UserRole).toInt() != profileId) continue;
+        auto* holder = ui->endpointList->itemWidget(item);
+        auto* toggle = holder == nullptr ? nullptr : holder->findChild<QCheckBox*>();
+        // Its own toggled handler writes the row data back and re-syncs.
+        if (toggle != nullptr && toggle->isChecked() != innerHops) {
+            toggle->setChecked(innerHops);
+            return;
+        }
+        item->setData(Qt::UserRole + 1, innerHops);
+        syncEndpointRules();
+        return;
+    }
+}
+
+void RouteItem::syncEndpointRules() {
+    chain->endpointProfileIDs = listedEndpointIDs();
+    chain->innerHopEndpointIDs = listedInnerHopEndpointIDs();
+    const QList<int> targets = chain->endpointRuleTargets();
     const auto selected = currentIndex >= 0 && currentIndex < chain->Rules.size()
                               ? chain->Rules[currentIndex]
                               : nullptr;
@@ -483,7 +545,7 @@ void RouteItem::syncEndpointRules() {
     QList<std::shared_ptr<Configs::RouteRule>> kept;
     for (const auto& rule : chain->Rules) {
         if (routeItemIsEndpointRule(rule)) {
-            if (!listed.contains(rule->outboundID) || paired.contains(rule->outboundID)) continue;
+            if (!targets.contains(rule->outboundID) || paired.contains(rule->outboundID)) continue;
             paired.insert(rule->outboundID);
         } else {
             names.insert(rule->name);
@@ -492,7 +554,7 @@ void RouteItem::syncEndpointRules() {
     }
     chain->Rules = kept;
 
-    for (const int id : listed) {
+    for (const int id : targets) {
         if (!paired.contains(id)) chain->Rules << routeItemMakeEndpointRule(id);
     }
 
@@ -564,9 +626,7 @@ void RouteItem::accept() {
     chain->FilterEmptyRules();
 
     // Endpoints whose profile is gone drop out here, and syncEndpointRules() drops their rules with them.
-    const QList<int> endpointIDs = listedEndpointIDs();
-    const int missingEndpoints = static_cast<int>(ui->endpointList->count() - endpointIDs.size());
-    chain->endpointProfileIDs = endpointIDs;
+    const int missingEndpoints = static_cast<int>(ui->endpointList->count() - listedEndpointIDs().size());
     syncEndpointRules();
 
     // A remote profile may be saved before its first fetch; only plain profiles must be non-empty.
@@ -647,6 +707,7 @@ QWidget* RouteItem::makeAttributeEditorPage(const QString& attr) {
         case Configs::select: {
             auto* cb = new QComboBox(container);
             if (attr == QStringLiteral("outbound")) {
+                cb->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
                 cb->addItems(outbounds);
                 cb->setCurrentText(get_outbound_name(rule->outboundID));
                 connect(cb, &QComboBox::currentTextChanged, this, [this, cb] {
@@ -932,6 +993,17 @@ void RouteItem::on_delete_route_item_clicked() {
     if (currentIndex == -1) return;
     if (currentRuleIsEndpoint()) {
         const int endpointID = chain->Rules[currentIndex]->outboundID;
+        if (const int owner = innerHopOwner(endpointID); owner >= 0) {
+            if (QMessageBox::question(this, tr("Endpoint rule"),
+                                      tr("This rule belongs to \"%1\", an inner hop of the endpoint \"%2\".\n\n"
+                                         "Stop routing to that endpoint's inner hops?")
+                                          .arg(routeItemEndpointName(endpointID), routeItemEndpointName(owner)))
+                != QMessageBox::StandardButton::Yes) {
+                return;
+            }
+            setEndpointRowInnerHops(owner, false);
+            return;
+        }
         if (QMessageBox::question(this, tr("Endpoint rule"),
                                   tr("This rule belongs to the endpoint \"%1\" and cannot be deleted on its own.\n\n"
                                      "Remove that endpoint from this routing profile as well?")

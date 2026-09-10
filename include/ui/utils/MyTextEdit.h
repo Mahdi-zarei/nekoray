@@ -9,7 +9,6 @@ public:
     explicit MyTextEdit(QWidget *parent = nullptr) : QTextEdit(parent) {
     }
 
-    // <= 0 restores QTextEdit's default hint.
     int visibleLines() const {
         return m_visibleLines;
     }

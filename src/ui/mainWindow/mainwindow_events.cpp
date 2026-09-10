@@ -48,10 +48,7 @@ void MainWindow::changeEvent(QEvent *event) {
         for (QWidget *w : allChildren) {
             refreshStylesheetCache(w);
         }
-        // Tab chrome lives in the app sheet now (ThemeManager owns it), and the loop above only
-        // reaches widget-level ones, so the tab bars would keep their stale metrics without this.
-        // Re-setting the same sheet only repolishes; clearing it first would run setStyle() and
-        // refill Qt's per-class platform font table over the font we are reacting to (#1829).
+        // Never clear the app sheet first: that runs setStyle() and refills Qt's per-class font table over the new font (#1829).
         const QString appSheet = qApp->styleSheet();
         if (!appSheet.isEmpty()) {
             qApp->setStyleSheet(appSheet);
@@ -69,7 +66,6 @@ void MainWindow::changeEvent(QEvent *event) {
         };
         forceFontReapply(ui->profilesTableView);
 
-        // Redo the widths now that the stylesheet caches above are clean.
         applyTopBarMetrics();
     }
     if (type == QEvent::FontChange ||

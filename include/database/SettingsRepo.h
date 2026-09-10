@@ -180,6 +180,7 @@ namespace Configs {
         int dns_cache_capacity = 65536;
         bool dns_disable_cache = false;
         bool dns_disable_expire = false;
+        bool dns_persist_cache = false;
         bool dns_reverse_mapping = false;
         bool enable_dns_routing = true;
         bool use_dns_object = false;
@@ -291,6 +292,9 @@ namespace Configs {
         // Fetched on demand into GetBasePath(), which the core exposes to Xray via XRAY_LOCATION_ASSET.
         QString xray_geoip_url = "https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat";
         QString xray_geosite_url = "https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat";
+        // Last 5 hand-typed URLs per field, offered alongside the built-in providers.
+        QStringList xray_geoip_url_history = {};
+        QStringList xray_geosite_url_history = {};
 
         // Extra Core Paths
         QStringList extraCorePaths = {};

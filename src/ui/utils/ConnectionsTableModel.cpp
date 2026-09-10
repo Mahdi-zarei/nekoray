@@ -5,11 +5,6 @@
 
 namespace {
     const QString kEmptyText;
-
-    // These moved out of mainwindow.ui; plain tr() here would orphan every existing .ts entry.
-    QString mwTr(const char *source) {
-        return QCoreApplication::translate("MainWindow", source);
-    }
 }
 
 ConnectionsTableModel::ConnectionsTableModel(QObject *parent)
@@ -78,7 +73,7 @@ QVariant ConnectionsTableModel::data(const QModelIndex &index, int role) const {
     }
 
     if (role == Qt::ToolTipRole && index.column() == ColClose) {
-        return mwTr("Close this connection");
+        return tr("Close this connection");
     }
 
     return {};
@@ -89,26 +84,26 @@ QVariant ConnectionsTableModel::headerData(int section, Qt::Orientation orientat
 
     if (role == Qt::DisplayRole) {
         switch (section) {
-        case ColSource: return mwTr("Source");
-        case ColDest: return mwTr("Destination (Domain)");
-        case ColProcess: return mwTr("Process");
-        case ColProtocol: return mwTr("Protocol");
-        case ColOutbound: return mwTr("Outbound");
-        case ColTraffic: return mwTr("Traffic");
-        case ColSpeed: return mwTr("Speed");
+        case ColSource: return tr("Source");
+        case ColDest: return tr("Destination (Domain)");
+        case ColProcess: return tr("Process");
+        case ColProtocol: return tr("Protocol");
+        case ColOutbound: return tr("Outbound");
+        case ColTraffic: return tr("Traffic");
+        case ColSpeed: return tr("Speed");
         default: return {};
         }
     }
 
     if (role == Qt::ToolTipRole) {
         switch (section) {
-        case ColSource: return mwTr("Click To Sort By Source");
-        case ColDest: return mwTr("Click To Disable Sorting");
-        case ColProcess: return mwTr("Click To Sort By Process");
-        case ColProtocol: return mwTr("Click To Sort By Protocol");
-        case ColOutbound: return mwTr("Click To Sort By Outbound");
-        case ColTraffic: return mwTr("Click to sort by traffic; right-click to choose total/down/up");
-        case ColSpeed: return mwTr("Click to sort by speed; right-click to choose total/down/up");
+        case ColSource: return tr("Click To Sort By Source");
+        case ColDest: return tr("Click To Disable Sorting");
+        case ColProcess: return tr("Click To Sort By Process");
+        case ColProtocol: return tr("Click To Sort By Protocol");
+        case ColOutbound: return tr("Click To Sort By Outbound");
+        case ColTraffic: return tr("Click to sort by traffic; right-click to choose total/down/up");
+        case ColSpeed: return tr("Click to sort by speed; right-click to choose total/down/up");
         default: return {};
         }
     }

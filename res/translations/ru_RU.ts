@@ -2,6 +2,84 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ConnectionsFilterHeader</name>
+    <message>
+        <source>Disable Filter</source>
+        <translation>Выключить фильтр</translation>
+    </message>
+    <message>
+        <source>Enable Filter</source>
+        <translation>Включить фильтр</translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Фильтр...</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionsTableModel</name>
+    <message>
+        <source>Close this connection</source>
+        <translation>Закрыть это соединение</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>Источник</translation>
+    </message>
+    <message>
+        <source>Destination (Domain)</source>
+        <translation>Пункт назначения (Домен)</translation>
+    </message>
+    <message>
+        <source>Process</source>
+        <translation>Процесс</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>Протокол</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>Outbound</translation>
+    </message>
+    <message>
+        <source>Traffic</source>
+        <translation>Трафик</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Source</source>
+        <translation>Нажмите для сортировки по источнику</translation>
+    </message>
+    <message>
+        <source>Click To Disable Sorting</source>
+        <translation>Нажмите для отключения сортировки</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Process</source>
+        <translation>Нажмите для сортировки по процессу</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Protocol</source>
+        <translation>Нажмите для сортировки по протоколу</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Outbound</source>
+        <translation>Нажмите для сортировки по Outbound</translation>
+    </message>
+    <message>
+        <source>Click to sort by traffic; right-click to choose total/down/up</source>
+        <translation>Нажмите, чтобы отсортировать по трафику; щелкните правой кнопкой мыши, чтобы настроить сортировку</translation>
+    </message>
+    <message>
+        <source>Click to sort by speed; right-click to choose total/down/up</source>
+        <translation>Нажмите, чтобы отсортировать по скорости; щелкните правой кнопкой мыши, чтобы настроить сортировку</translation>
+    </message>
+</context>
+<context>
     <name>DialogAutoSelector</name>
     <message>
         <source>Auto Selector Stats</source>
@@ -263,18 +341,6 @@ It stays a preference, not a lock: if that profile stops working the selector st
         <translation>Ядро</translation>
     </message>
     <message>
-        <source>Multiplex (mux)</source>
-        <translation>Протокол мультиплексирования</translation>
-    </message>
-    <message>
-        <source>concurrency</source>
-        <translation>Кол-во потоков</translation>
-    </message>
-    <message>
-        <source>Default On</source>
-        <translation>Вкл. по умолчанию</translation>
-    </message>
-    <message>
         <source>outbound</source>
         <translation>outbound</translation>
     </message>
@@ -285,14 +351,6 @@ It stays a preference, not a lock: if that profile stops working the selector st
     <message>
         <source>Xray Core</source>
         <translation>Ядро Xray</translation>
-    </message>
-    <message>
-        <source>Mux Concurrency</source>
-        <translation>Кол-во одновременных соединений (mux)</translation>
-    </message>
-    <message>
-        <source>Default Mux On</source>
-        <translation>Вкл. mux по умолчанию</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When to choose Xray when importing vless profiles&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -355,6 +413,10 @@ It stays a preference, not a lock: if that profile stops working the selector st
         <translation>Настройки</translation>
     </message>
     <message>
+        <source>OTP profiles</source>
+        <translation>OTP профили</translation>
+    </message>
+    <message>
         <source>Create Backup...</source>
         <translation>Создать резервную копию</translation>
     </message>
@@ -373,10 +435,6 @@ It stays a preference, not a lock: if that profile stops working the selector st
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
         <translation>Пропустить проверку подлинности TLS-сертификатов по умолчанию (allowInsecure)</translation>
-    </message>
-    <message>
-        <source>Default uTLS Fingerprint</source>
-        <translation>Отпечаток uTLS по умолчанию</translation>
     </message>
     <message>
         <source>Always Start as Standard User</source>
@@ -421,6 +479,34 @@ It stays a preference, not a lock: if that profile stops working the selector st
     <message>
         <source>Concurrency</source>
         <translation>Кол-во потоков</translation>
+    </message>
+    <message>
+        <source>URL Scheme</source>
+        <translation>Схема URL</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Registers Throne as the handler for throne:// links and adds it to the &quot;Open with&quot; list for config files, re-applying the registration whenever the install is moved.&lt;/p&gt;&lt;p&gt;Turning this off does not undo an existing registration: use Uninstall for that.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрирует Throne в качестве обработчика ссылок throne:// и добавляет его в список &quot;Открыть с помощью&quot; для конфигурационных файлов, повторно применяя регистрацию при каждом перемещении установки.&lt;/p&gt;&lt;p&gt;Отключение этой опции не отменяет существующую регистрацию: для этого воспользуйтесь функцией &quot;Удалить&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Register throne:// links at startup</source>
+        <translation>Зарегистрировать ссылки throne:// при запуске</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Registers the handler now, without waiting for the next start.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрирует обработчик прямо сейчас, не дожидаясь следующего запуска.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Установить</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Removes every entry Throne wrote for the handler and the config file associations. Entries owned by other applications are left alone.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Удаляет все записи, созданные Throne для обработчика, и связи с конфигурационными файлами. Записи, принадлежащие другим приложениям, остаются без изменений.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Uninstall</source>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Logging</source>
@@ -483,6 +569,14 @@ It stays a preference, not a lock: if that profile stops working the selector st
         <translation>Отображать безопасность конфигураций</translation>
     </message>
     <message>
+        <source>Follow the connection status icon in the dock/taskbar. When off, it always shows the Throne icon</source>
+        <translation>Показывать иконку статуса в доке/панели. При отключении отображается иконка Throne</translation>
+    </message>
+    <message>
+        <source>Follow Status Icon in Taskbar</source>
+        <translation>Использовать иконку статуса на панели</translation>
+    </message>
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, a window listing added / updated / deleted profiles is shown after a manual subscription update. The same information is always written to the log.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если эта опция включена, после обновления подписки вручную отображается окно со списком добавленных, обновленных и удаленных профилей. Эта же информация всегда записывается в журнал.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -519,6 +613,18 @@ It stays a preference, not a lock: if that profile stops working the selector st
         <translation>Secret</translation>
     </message>
     <message>
+        <source>sing-box API / Dashboard</source>
+        <translation>sing-box API / Веб-панель</translation>
+    </message>
+    <message>
+        <source>Loopback only. Leave the port empty to keep the web dashboard off.</source>
+        <translation>Только loopback. Оставьте Порт пустым, чтобы отключить веб-панель.</translation>
+    </message>
+    <message>
+        <source>Regenerate Secret</source>
+        <translation>Сгенерировать секрет</translation>
+    </message>
+    <message>
         <source>Miscellaneous</source>
         <translation>Прочее</translation>
     </message>
@@ -537,42 +643,6 @@ It stays a preference, not a lock: if that profile stops working the selector st
     <message>
         <source>DNS Server Port</source>
         <translation>Порт DNS-сервера</translation>
-    </message>
-    <message>
-        <source>TLS Fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which TLS fragmentation implementation profiles use: built-in (sing-box tls.fragment) or custom (Hiddify dialer-level ClientHello fragmentation).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fragment profiles whose Fragment setting is left on &amp;quot;Keep Default&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom implementation only: bytes per ClientHello fragment, as a range min-max (e.g. 10-100).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sleep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom implementation only: milliseconds to sleep between fragment bursts, as a range min-max (e.g. 2-5).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable mixed-case SNI for profiles whose TLS Tricks setting is left on &amp;quot;Keep Default&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TLS Tricks Default On</source>
-        <translation>TLS Tricks вкл. по умолчанию</translation>
     </message>
     <message>
         <source>NTP Settings</source>
@@ -757,6 +827,22 @@ Select which parts to restore:</source>
         <translation>неизвестная дата</translation>
     </message>
     <message>
+        <source>Could not register the handler for throne:// links.</source>
+        <translation>Не удалось зарегистрировать обработчик ссылок throne://.</translation>
+    </message>
+    <message>
+        <source>Not available for this installation</source>
+        <translation>Недоступно в текущей среде</translation>
+    </message>
+    <message>
+        <source>Installed</source>
+        <translation>Установлено</translation>
+    </message>
+    <message>
+        <source>Not installed</source>
+        <translation>Не установлено</translation>
+    </message>
+    <message>
         <source>Download geo asset</source>
         <translation>Загрузка гео-файла</translation>
     </message>
@@ -895,6 +981,109 @@ Throne will restart to complete the restore.</source>
     </message>
 </context>
 <context>
+    <name>DialogEditOtp</name>
+    <message>
+        <source>OTP Profile</source>
+        <translation>OTP профиль</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <source>How you will refer to this OTP</source>
+        <translation>Как вы будете называть этот OTP</translation>
+    </message>
+    <message>
+        <source>Secret</source>
+        <translation>Секрет</translation>
+    </message>
+    <message>
+        <source>Base32 secret</source>
+        <translation>Base32 секрет</translation>
+    </message>
+    <message>
+        <source>Show secret</source>
+        <translation>Показать секрет</translation>
+    </message>
+    <message>
+        <source>Issuer</source>
+        <translation>Издатель</translation>
+    </message>
+    <message>
+        <source>Optional, kept for import and export</source>
+        <translation>Необязательное поле, хранится для импорта и экспорта</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <source>TOTP (time based)</source>
+        <translation>TOTP (на основе времени)</translation>
+    </message>
+    <message>
+        <source>HOTP (counter based)</source>
+        <translation>HOTP (на основе счетчика)</translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation>Алгоритм</translation>
+    </message>
+    <message>
+        <source>SHA1</source>
+        <translation>SHA1</translation>
+    </message>
+    <message>
+        <source>SHA256</source>
+        <translation>SHA256</translation>
+    </message>
+    <message>
+        <source>SHA512</source>
+        <translation>SHA512</translation>
+    </message>
+    <message>
+        <source>Digits</source>
+        <translation>Цифры</translation>
+    </message>
+    <message>
+        <source>Period (seconds)</source>
+        <translation>Период (секунды)</translation>
+    </message>
+    <message>
+        <source>Counter</source>
+        <translation>Счетчик</translation>
+    </message>
+    <message>
+        <source>Hide secret</source>
+        <translation>Скрыть секрет</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty</source>
+        <translation>Название не может быть пустым</translation>
+    </message>
+    <message>
+        <source>Secret is empty</source>
+        <translation>Пустой секрет</translation>
+    </message>
+    <message>
+        <source>Secret is not valid base32</source>
+        <translation>Недействительный Base32 секрет</translation>
+    </message>
+    <message>
+        <source>No code yet</source>
+        <translation>Код пока отсутствует</translation>
+    </message>
+    <message>
+        <source>Current code: %1</source>
+        <translation>Текущий код: %1</translation>
+    </message>
+    <message>
+        <source>Current code: %1 (%2s)</source>
+        <translation>Текущий код: %1 (%2 сек.)</translation>
+    </message>
+</context>
+<context>
     <name>DialogEditProfile</name>
     <message>
         <source>Edit</source>
@@ -979,6 +1168,10 @@ Throne will restart to complete the restore.</source>
     <message>
         <source>Advanced Settings</source>
         <translation>Доп. настройки</translation>
+    </message>
+    <message>
+        <source>Finalmask</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Network Settings (%1)</source>
@@ -1560,6 +1753,77 @@ Throne will restart to complete the restore.</source>
     </message>
 </context>
 <context>
+    <name>DialogEndpointDetails</name>
+    <message>
+        <source>Endpoint Details</source>
+        <translation>Сведения о конечной точке</translation>
+    </message>
+    <message>
+        <source>Endpoint — %1</source>
+        <translation>Конечная точка — %1</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Cостояние</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <source>Transport</source>
+        <translation>Транспорт</translation>
+    </message>
+    <message>
+        <source>Cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTU</source>
+        <translation>MTU</translation>
+    </message>
+    <message>
+        <source>Connected for</source>
+        <translation>Подключено</translation>
+    </message>
+    <message>
+        <source>IPv4 address</source>
+        <translation>Адрес IPv4</translation>
+    </message>
+    <message>
+        <source>IPv6 address</source>
+        <translation>Адрес IPv6</translation>
+    </message>
+    <message>
+        <source>All domains — every DNS query goes through this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Routes through this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kept outside this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DNS servers pushed by the server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Domains routed to this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No longer running</source>
+        <translation>Уже не работает</translation>
+    </message>
+</context>
+<context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
@@ -1700,20 +1964,8 @@ Throne will restart to complete the restore.</source>
         <translation>Включить DNS-маршрутизацию</translation>
     </message>
     <message>
-        <source>Query Strategy</source>
-        <translation>Стратегия запросов</translation>
-    </message>
-    <message>
         <source>Remote DNS</source>
         <translation>Удалённый DNS</translation>
-    </message>
-    <message>
-        <source>DNS Object Settings</source>
-        <translation>Дополнительные настройки DNS</translation>
-    </message>
-    <message>
-        <source>Use DNS Object</source>
-        <translation>Использовать DNS-объект</translation>
     </message>
     <message>
         <source>Format</source>
@@ -1844,6 +2096,42 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
         <translation>Настройки перенаправления</translation>
     </message>
     <message>
+        <source>Answer AAAA queries sent to this server with an empty result.</source>
+        <translation>Отвечать на запросы AAAA, отправленные на этот сервер, пустым результатом.</translation>
+    </message>
+    <message>
+        <source>Disable IPv6</source>
+        <translation>Отключить IPv6</translation>
+    </message>
+    <message>
+        <source>Hand out no fake IPv6 addresses; AAAA queries are answered empty.</source>
+        <translation>Не выдавать поддельные IPv6-адреса; на запросы AAAA даются пустые ответы.</translation>
+    </message>
+    <message>
+        <source>FakeIP Disable IPv6</source>
+        <translation>Отключить подделку IP для IPv6</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Дополнительно</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cache behaviour, optimistic cache and query timeout.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Поведение кэша, оптимистичный кэш и таймаут запроса.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Advanced Settings</source>
+        <translation>Доп. настройки</translation>
+    </message>
+    <message>
+        <source>Use Custom DNS Object</source>
+        <translation>Использовать собст. объект DNS</translation>
+    </message>
+    <message>
+        <source>Edit DNS Object</source>
+        <translation>Редактировать объект DNS</translation>
+    </message>
+    <message>
         <source>Clone</source>
         <translation>Клонировать</translation>
     </message>
@@ -1860,8 +2148,83 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
         <translation>Список профилей маршрутизации пуст. Это состояние не должно быть достижимо, поэтому сейчас могут происходить сбои и вылеты приложения</translation>
     </message>
     <message>
+        <source>Predefined DNS Answers</source>
+        <translation>Предопределенные DNS-ответы</translation>
+    </message>
+    <message>
+        <source>Enable predefined answers</source>
+        <translation>Включить предопределенные ответы</translation>
+    </message>
+    <message>
+        <source>One entry per line, hosts-file syntax:
+
+127.0.0.1 localhost
+10.0.0.5 nas.lan files.lan
+::1 localhost6
+
+A domain listed with only one address family is answered NXDOMAIN for the other, so the override cannot be bypassed.</source>
+        <translation>По одной записи в строке, синтаксис как в файле hosts:
+
+127.0.0.1 localhost
+10.0.0.5 nas.lan files.lan
+::1 localhost6
+
+Для домена, указанного только с одним семейством адресов, для остальных семейств возвращается ответ NXDOMAIN, поэтому переопределение не может быть обойдено.</translation>
+    </message>
+    <message>
+        <source>Not a valid predefined DNS entry:
+</source>
+        <translation>Недопустимая предопределённая запись DNS:</translation>
+    </message>
+    <message>
+        <source>Advanced DNS Settings</source>
+        <translation>Доп. настройки DNS</translation>
+    </message>
+    <message>
+        <source>10s (default)</source>
+        <translation>10s (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>Query Timeout</source>
+        <translation>Таймаут запроса</translation>
+    </message>
+    <message>
+        <source>Optimistic Cache</source>
+        <translation>Оптимистичный кэш</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep serving an expired answer while it is refreshed in the background. Cannot be combined with Disable Cache or Disable Expire.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Продолжать выдавать ответ с истекшим сроком действия(expired answer), пока он обновляется в фоновом режиме. Не может сочетаться с параметрами Отключить кэш или Отключить Expire.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>3d (default)</source>
+        <translation>3d (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>Optimistic Timeout</source>
+        <translation>Оптимистичный таймаут</translation>
+    </message>
+    <message>
         <source>Invalid settings</source>
         <translation>Неверные настройки</translation>
+    </message>
+    <message>
+        <source>Not a valid duration: </source>
+        <translation>Недопустимый интервал времени: </translation>
+    </message>
+    <message>
+        <source>
+Use a number followed by ns, us, ms, s, m, h or d.</source>
+        <translation>
+Укажите число, за которым следует ns, us, ms, s, m, h или d.</translation>
+    </message>
+    <message>
+        <source>DNS Object</source>
+        <translation>DNS объект</translation>
+    </message>
+    <message>
+        <source>The DNS object is not a valid JSON object</source>
+        <translation>DNS объект не является допустимым объектом JSON</translation>
     </message>
     <message>
         <source>Routing profile cannot be empty</source>
@@ -1870,6 +2233,10 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <message>
         <source>DNS Rules are not valid</source>
         <translation>Правила DNS недействительны</translation>
+    </message>
+    <message>
+        <source>Exported with warnings</source>
+        <translation>Экспортировано с предупреждениями</translation>
     </message>
     <message>
         <source>Copied!</source>
@@ -1902,6 +2269,10 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <message>
         <source>Import %1 from the clipboard?</source>
         <translation>Импортировать %1 из буфера обмена?</translation>
+    </message>
+    <message>
+        <source>Note:</source>
+        <translation>Примечание:</translation>
     </message>
     <message>
         <source>Import routing profile</source>
@@ -1966,6 +2337,18 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <message>
         <source>jsDelivr(CDN)</source>
         <translation>jsDelivr (CDN)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Answer A/AAAA queries from the system hosts file before consulting any DNS server. Only domains actually listed in the file are affected.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Отвечать на запросы A/AAAA из системного файла hosts, прежде чем обращаться к какому-либо DNS-серверу. Это касается только доменов, указанных в этом файле.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Respect Hosts File</source>
+        <translation>Учитывать файл Hosts</translation>
+    </message>
+    <message>
+        <source>Predefined Answers</source>
+        <translation>Предопределенные ответы</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Local DNS can not be used in some configurations, you will have to set an ip here to be used as local dns in such situations&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -2061,7 +2444,294 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
 </context>
 <context>
-    <name>DialogRuntimeStats</name>
+    <name>DialogOtpManager</name>
+    <message>
+        <source>OTP Manager</source>
+        <translation>Менеджер OTP</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Импорт</translation>
+    </message>
+    <message>
+        <source>Scan QR Code</source>
+        <translation>Сканировать QR-код</translation>
+    </message>
+    <message>
+        <source>OTP</source>
+        <translation>OTP</translation>
+    </message>
+    <message>
+        <source>No usable code; check the secret.</source>
+        <translation>Нет рабочего кода; проверьте секрет.</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>Скопировано</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Подтверждение</translation>
+    </message>
+    <message>
+        <source>Delete &quot;%1&quot;? Its secret cannot be recovered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to store the OTP profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This one as otpauth:// link and QR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All as otpauth-migration:// link and QR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All as JSON file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add manually...</source>
+        <translation>Добавить вручную...</translation>
+    </message>
+    <message>
+        <source>From link or text...</source>
+        <translation>Из ссылки или из текста...</translation>
+    </message>
+    <message>
+        <source>Import OTP</source>
+        <translation>Импорт OTP</translation>
+    </message>
+    <message>
+        <source>Paste otpauth:// links, an otpauth-migration:// link, a JSON export, or just a base32 secret.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From clipboard</source>
+        <translation>Из буфера обмена</translation>
+    </message>
+    <message>
+        <source>From QR image file...</source>
+        <translation>Из файла с изображением QR-кода...</translation>
+    </message>
+    <message>
+        <source>Unable to capture screen</source>
+        <translation>Невозможно захватить экран</translation>
+    </message>
+    <message>
+        <source>QR Code not found</source>
+        <translation>QR-код не найден</translation>
+    </message>
+    <message>
+        <source>No QR code found in the clipboard image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clipboard is empty.</source>
+        <translation>Буфер обмена пуст.</translation>
+    </message>
+    <message>
+        <source>QR images and exports (*.png *.jpg *.jpeg *.bmp *.gif *.json *.txt);;All files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1: cannot be opened</source>
+        <translation>%1: не удаётся открыть</translation>
+    </message>
+    <message>
+        <source>%1: larger than 50 MB, skipped</source>
+        <translation>%1: размер превышает 50 МБ, пропущено</translation>
+    </message>
+    <message>
+        <source>%1: no QR code found</source>
+        <translation>%1: QR-код не найден</translation>
+    </message>
+    <message>
+        <source>Nothing to import.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OTP %1</source>
+        <translation>OTP %1</translation>
+    </message>
+    <message>
+        <source>Imported %1 OTP profile(s).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skipped %1 duplicate or unusable entries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export OTP</source>
+        <translation>Экспорт OTP</translation>
+    </message>
+    <message>
+        <source>None of the selected profiles could be exported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON (*.json)</source>
+        <translation>JSON (*.json)</translation>
+    </message>
+    <message>
+        <source>Cannot write to: %1</source>
+        <translation>Невозможно записать в: %1</translation>
+    </message>
+    <message>
+        <source>Exported %1 OTP profile(s) to:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DialogPresetSettings</name>
+    <message>
+        <source>Preset Settings</source>
+        <translation>Предустановленные настройки</translation>
+    </message>
+    <message>
+        <source>Multiplex</source>
+        <translation>Мультиплексирование</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>Протокол</translation>
+    </message>
+    <message>
+        <source>Concurrency</source>
+        <translation>Кол-во потоков</translation>
+    </message>
+    <message>
+        <source>Default On</source>
+        <translation>Вкл. по умолчанию</translation>
+    </message>
+    <message>
+        <source>Default Mux On</source>
+        <translation>Вкл. mux по умолчанию</translation>
+    </message>
+    <message>
+        <source>TLS Fragment</source>
+        <translation>TLS фрагментация</translation>
+    </message>
+    <message>
+        <source>Implementation</source>
+        <translation>Реализация</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which TLS fragmentation implementation profiles use: built-in (sing-box tls.fragment) or custom (Hiddify dialer-level ClientHello fragmentation).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Какая реализация фрагментации TLS используются: встроенная built-in (tls.fragment в sing-box) или настраиваемая custom (Hiddify dialer-level ClientHello фрагментация).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom implementation only: bytes per ClientHello fragment, as a range min-max (e.g. 10-100).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sleep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom implementation only: milliseconds to sleep between fragment bursts, as a range min-max (e.g. 2-5).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fragment profiles whose Fragment setting is left on &amp;quot;Keep Default&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Tricks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable mixed-case SNI for profiles whose TLS Tricks setting is left on &amp;quot;Keep Default&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Fingerprint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Spoof</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inject a forged TLS ClientHello carrying this SNI before the real one, to pass SNI filtering that allows specific hostnames. Profiles that set their own Spoof SNI override this one.&lt;/p&gt;&lt;p&gt;Client only. Requires elevated privileges (root on macOS, CAP_NET_RAW and CAP_NET_ADMIN on Linux, Administrator on Windows for the WinDivert driver). Not supported on Windows ARM64. &amp;quot;wrong-timestamp&amp;quot; is not supported on macOS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spoof SNI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allowed SNI to forge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Method</source>
+        <translation>Метод</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;How the forged ClientHello is made invalid for the server, so only the filter acts on it. Empty keeps the core&apos;s default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Spoof profiles whose TLS Spoof setting is left on &amp;quot;Keep Default&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP/2 &amp;&amp; QUIC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP/2 parameters also apply to Hysteria, Hysteria2 and TUIC. Empty keeps the core&apos;s default.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP/2 Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Idle Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Alive Period</source>
+        <translation>Период поддерж. активности</translation>
+    </message>
+    <message>
+        <source>Stream Receive Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Receive Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Concurrent Streams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QUIC Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial Packet Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable Path MTU Discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RuntimeStatsWidget</name>
     <message>
         <source>%1 active   ·   %2 TCP   ·   %3 UDP</source>
         <translation>%1 активных   ·   %2 TCP   ·   %3 UDP</translation>
@@ -2089,6 +2759,10 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <message>
         <source>in %1</source>
         <translation>через %1</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Подробности</translation>
     </message>
     <message>
         <source>Unavailable</source>
@@ -2169,6 +2843,18 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <message>
         <source>Ping</source>
         <translation>Задержка</translation>
+    </message>
+    <message>
+        <source>VPN Endpoints</source>
+        <translation>Конечные точки VPN</translation>
+    </message>
+    <message>
+        <source>Endpoint</source>
+        <translation>Конечная точка</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Cостояние</translation>
     </message>
 </context>
 <context>
@@ -2265,8 +2951,32 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
         <translation>Вкл. IPv6 в TUN</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Address ranges handed straight to the physical NIC instead of being routed through the core, one CIDR per line. Uncheck to let the core hijack private range traffic instead. Loopback and broadcast are always bypassed and cannot be listed here.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Диапазоны адресов, передаваемые напрямую на физический сетевой адаптер вместо маршрутизации через ядро; по одному CIDR в строке. Снимите флажок, чтобы ядро перехватило трафик частного диапазона. Loopback и broadcast всегда обходятся и не могут быть указаны здесь.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Private Range Bypass</source>
+        <translation>Обход частного диапазона</translation>
+    </message>
+    <message>
+        <source>Restore default ranges</source>
+        <translation>Восстановить диапазоны по умолчанию</translation>
+    </message>
+    <message>
         <source>Troubleshooting</source>
         <translation>Диагностика</translation>
+    </message>
+    <message>
+        <source>Invalid Private Range</source>
+        <translation>Недопустимый частный диапазон</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is not a valid address or CIDR.</source>
+        <translation>&quot;%1&quot; — недопустимый адрес или CIDR.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; covers every address, which would stop Tun from routing anything.</source>
+        <translation>&quot;%1&quot; охватывает все адреса, что приведет к тому, что Tun перестанет маршрутизировать какие-либо данные.</translation>
     </message>
     <message>
         <source>If you have trouble starting VPN, you can force reset Core process here.
@@ -2299,20 +3009,20 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Вкл. TUN-маршрутизацию</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows traffics destined for private ranges to be hijacked into The Core&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Позволяет перенаправлять трафик, предназначенный для частных диапазонов, в Ядро&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Disable Private Range Bypass</source>
-        <translation>Отключить обход частного диапазона</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Required on newer Linux kernels for the system and mixed stacks to pass traffic. While enabled, this machine cannot be used as a network gateway for other devices.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Требуется в новых версиях ядра Linux для пропуска трафика через системный и смешанный стеки. При включении этой функции данный компьютер нельзя использовать в качестве сетевого шлюза для других устройств.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Auto Redirect</source>
         <translation>Автоматическое перенаправление</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Forwards bypassed traffic straight out of the network interface instead of rebuilding it as a new connection, which is faster and keeps NAT intact for games and P2P. Applies to UDP and ICMP only; TCP still needs to be sniffed and keeps taking the normal direct path.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Направляет обойдённый (bypassed) трафик напрямую через сетевой интерфейс без пересборки в новое соединение. Это быстрее и сохраняет исходный тип NAT для игр и P2P-сетей. Применяется только к UDP и ICMP; TCP-трафик по-прежнему перехватывается (sniffed) и направляется по обычному прямому маршруту.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>L3 Bridge Bypass</source>
+        <translation>L3 Bridge Bypass</translation>
     </message>
     <message>
         <source>Tun Address</source>
@@ -2341,6 +3051,69 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>IPv6 CIDR is invalid.</source>
         <translation>Некорректный IPv6 CIDR.</translation>
+    </message>
+</context>
+<context>
+    <name>DialogVpnAuth</name>
+    <message>
+        <source>VPN Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Endpoint: %1</source>
+        <translation>Конечная точка: %1</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The VPN server sent a message.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finish signing in at the address shown below, then close this window. The connection continues on its own once the server accepts it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open in Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This server requires single sign-on in a browser, which Throne does not support yet. Cancel here and use a profile with direct credentials, or supply an authentication cookie in the profile&apos;s advanced settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported authentication request: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expires in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Answer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This request expired.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submitting...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2386,12 +3159,104 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Фрагментирование UDP</translation>
     </message>
     <message>
+        <source>Interface</source>
+        <translation>Интерфейс</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Requires privilege and cannot conflict with existing system interfaces. The internal network stack is used when disabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use System Interface</source>
+        <translation>Исп. системный интерфейс</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom system interface name. A generated name is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interface Name</source>
+        <translation>Имя интерфейса</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;UDP NAT expiration time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP Timeout</source>
+        <translation>UDP Таймаут</translation>
+    </message>
+    <message>
+        <source>5m (default)</source>
+        <translation>5m (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;UDP NAT mapping behavior. endpoint_independent is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP Mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;UDP NAT filtering behavior. endpoint_independent is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP Filtering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum number of UDP NAT entries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP NAT Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>TLS</source>
         <translation>TLS</translation>
     </message>
     <message>
         <source>Enable ECH</source>
         <translation>Вкл. ECH</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whether this profile injects a forged ClientHello. &amp;quot;Keep Default&amp;quot; follows Preset Settings, unless a Spoof SNI is set below.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Spoof</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Default</source>
+        <translation>По умолчанию</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Вкл.</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Выкл.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inject a forged TLS ClientHello carrying this SNI before the real one, to pass SNI filtering that allows specific hostnames.&lt;/p&gt;&lt;p&gt;Client only. Requires elevated privileges (root / Administrator). Not supported on Windows ARM64. &amp;quot;wrong-timestamp&amp;quot; is not supported on macOS.&lt;/p&gt;&lt;p&gt;Leave empty to inherit the global value from Preset Settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spoof SNI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allowed SNI to forge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Method</source>
+        <translation>Метод</translation>
     </message>
     <message>
         <source>ECH Config</source>
@@ -2412,6 +3277,42 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Client Key</source>
         <translation>Ключ клиента</translation>
+    </message>
+    <message>
+        <source>QUIC Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty fields fall back to the global values in Preset Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Idle Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Alive Period</source>
+        <translation>Период поддерж. активности</translation>
+    </message>
+    <message>
+        <source>Stream Receive Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Receive Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Concurrent Streams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial Packet Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable Path MTU Discovery</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Disable SNI</source>
@@ -2938,12 +3839,48 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Загрузка (↑ Мбит/с)</translation>
     </message>
     <message>
+        <source>Hop Interval Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When set, each hop waits a random duration between Hop Interval and this value. Requires Hop Interval.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BBR Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Congestion control aggressiveness. Leave empty to use the default (standard).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Authentication Payload</source>
         <translation>Пейлоад авторизации</translation>
     </message>
     <message>
+        <source>Obfuscation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>salamander</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gecko</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Obfuscation Password</source>
         <translation>Пароль обфускации</translation>
+    </message>
+    <message>
+        <source>Minimum Packet Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum Packet Size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recv window</source>
@@ -2956,6 +3893,89 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Password</source>
         <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Parroting makes the QUIC handshake look like Chrome&apos;s. On by default.
+It overrides idle timeout, max concurrent streams,
+initial packet size and the initial receive windows.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable Chrome Parrot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reach a Hysteria2 server behind NAT through a Hysteria Realm
+rendezvous service. Replaces the server address and port.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm (NAT Traversal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm needs a URL, an ID and at least one STUN server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditHysteriaRealm</name>
+    <message>
+        <source>Realm (NAT Traversal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The realm is a rendezvous service: it hands out the server&apos;s current public addresses so the connection can be hole-punched directly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The slot the target Hysteria2 server registered on the realm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realm Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>STUN Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comma separated host or host:port entries used to discover this client&apos;s public addresses.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IP Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintain a UDP port mapping on the local gateway via UPnP or NAT-PMP.
+Improves hole-punching reliability. Requires IPv4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port Mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mapping Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mapping Lifetime</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3017,6 +4037,1366 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>QUIC</source>
         <translation>QUIC</translation>
+    </message>
+</context>
+<context>
+    <name>EditOpenConnect</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OpenConnect protocol flavor. Leave empty to use the core default (anyconnect).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flavor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Username used to fill matching authentication form fields.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Password used to fill matching authentication form fields.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Preselects a matching group, realm, domain or gateway choice when the flavor supports it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auth Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path part of the server URL, appended to the address above. Load-bearing on gp, f5 and fortinet portals.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Preferred tunnel MTU. Values below 576 are treated as 576; the maximum is 65535.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTU</source>
+        <translation>MTU</translation>
+    </message>
+    <message>
+        <source>OTP</source>
+        <translation>OTP</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traffic that falls through to this profile reaches the tunnel only when the destination is inside a subnet the VPN server advertises; anything else is blocked. Routing rules that name this profile explicitly are not affected and always win.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only route advertised network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve the names the VPN server claims - its split-DNS suffixes and search domains - through the resolvers it pushes. Turn this off if the server claims every domain and breaks public DNS. Kept on regardless while this profile carries all traffic with &quot;Only route advertised network&quot; enabled, since the pushed resolvers are then the only reachable ones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resolve through this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fail a lookup the tunnel cannot answer instead of retrying it directly. Leave this off for a management VPN: names it does not claim then still resolve through the direct resolver.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block outside DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Дополнительно</translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation>TLS</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disables verification of the server certificate and hostname. This lets an active attacker impersonate the VPN server; prefer a CA certificate or a peer fingerprint.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow insecure</source>
+        <translation>Разрешить небезопасные</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Server name used for TLS SNI and certificate hostname verification. The hostname from the address is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Additional trusted CA certificate content in PEM format, added to the system certificate pool.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not set</source>
+        <translation>Не задано</translation>
+    </message>
+    <message>
+        <source>Client Certificate</source>
+        <translation>Сертификат клиента</translation>
+    </message>
+    <message>
+        <source>Client Key</source>
+        <translation>Ключ клиента</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Password for the encrypted client private key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Key Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Binds an authenticator entry to this profile. %1 in the username, password, software token or form entry fields is replaced with a generated code at connect time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is replaced at connect time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already set</source>
+        <translation>Уже задано</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+</context>
+<context>
+    <name>EditOpenConnectAdvanced</name>
+    <message>
+        <source>OpenConnect Advanced</source>
+        <translation>OpenConnect доп. настройки</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Existing authentication session used to connect without first prompting for credentials. The accepted format depends on the flavor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cookie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Operating system identity reported to the server. anyconnect, gp and pulse accept linux, linux-64, win, mac-intel, android and apple-ios. The system platform is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reported OS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;User agent reported to the server. The default is flavor specific.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Agent</source>
+        <translation>User Agent</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Client version reported separately from the user agent. Currently used by AnyConnect XML authentication.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>Версия</translation>
+    </message>
+    <message>
+        <source>v9.21 (default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Local hostname reported to the server. The system hostname is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the token the core generates itself. To use a Throne OTP profile, bind it on the main editor instead.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Software Token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;totp and hotp are one-time password modes, stoken is an RSA SecurID software token and oidc is an access token used for HTTP Bearer authentication.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A Base32 secret, a base32: prefixed secret or an otpauth:// URI for totp and hotp; the encoded CTF content for stoken; the access token for oidc. Conflicts with the secret path.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret</source>
+        <translation>Secret</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path to the token secret or access token. Conflicts with the inline secret.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;RSA SecurID PIN for stoken mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Password for decrypting a password-protected RSA SecurID token.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Device ID for decrypting a device-bound RSA SecurID token.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Initial counter for hotp mode. Empty uses the counter from an otpauth:// URI, otherwise zero.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter</source>
+        <translation>Счетчик</translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation>TLS</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allowed server certificate fingerprints, one per line. Accepts a bare SHA-1 fingerprint or sha1:, sha256: and pin-sha256: values, abbreviated to at least four characters.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peer Fingerprint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not set</source>
+        <translation>Не задано</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a CA certificate or a peer fingerprint to establish trust when this is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable the system CA certificate pool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline CA certificate on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline client certificate on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline client key on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Key Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AnyConnect multiple-certificate authentication chain in PEM format. Conflicts with the MCA certificate path.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCA Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline MCA certificate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCA Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AnyConnect multiple-certificate authentication private key in PEM format. Conflicts with the MCA key path.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCA Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline MCA key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCA Key Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Password for the encrypted MCA private key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCA Key Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All three fields are required when a mobile identity is configured.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobile Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mobile operating system version reported to the AnyConnect server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Platform Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mobile device model or type reported to the AnyConnect server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mobile device identifier reported to the AnyConnect server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device Unique ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compliance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External AnyConnect CSD / host scan wrapper executable. Built-in handling is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSD Wrapper Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External GlobalProtect HIP report wrapper executable. Built-in reporting is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HIP Wrapper Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fortinet hostcheck result string, conventionally security-status,os-version such as 0100,10.0.19042. An empty value disables hostcheck.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fortinet Hostcheck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fortinet virtual desktop check result, conventionally colon separated MAC addresses joined by a vertical bar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fortinet Virtual Desktop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TNCC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External Network Connect TNCC wrapper executable. Conflicts with every other field in this group.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrapper Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Device ID reported by the built-in TNCC handler.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;User agent used by the built-in TNCC handler. Neoteris HC Http is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reports the platform, hostname and observed MAC addresses. Required before machine certificates are used.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable machine identification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Machine certificates used by the built-in TNCC handler to answer certificate requests. Requires machine identification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>Сертификат</translation>
+    </message>
+    <message>
+        <source>Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Edit Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;An entry matches by submission key when set, or by the combination of form ID and name. Later matching entries take precedence. Ask interactively conflicts with a value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Form ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submission Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask interactively</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transport</source>
+        <translation>Транспорт</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uses the TLS data channel only.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable the DTLS or ESP data channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Local UDP port used by the secondary data channel. An ephemeral port is selected by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DTLS Local Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Compression can weaken traffic confidentiality. Conflicts with the compression mode all.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable compression negotiation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;stateless is used by default. all additionally advertises stateful deflate for CSTP and carries extra confidentiality risk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compression Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable IPv6 tunnel configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Applies to authentication and configuration requests.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable HTTP connection reuse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts AnyConnect authentication with the legacy GET flow.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable XML POST authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External authentication is not advertised and any unexpected SSO or SAML request is rejected.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable external browser authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Matches OpenConnect --no-passwd. Does not affect other flavors or a session supplied by a cookie.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort on a non-success authentication form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled by default to match OpenConnect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable TCP keep alive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For TLS 1.2 and earlier. Disabled by default for servers that require RSA key exchange.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Require forward-secret cipher suites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enables weak cipher suites and TLS 1.0 compatibility. It does not disable server certificate verification.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow legacy TLS and DTLS crypto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Base path MTU used to calculate the tunnel MTU after outer IP, transport and protocol overhead. Values below 1280 are treated as 1280.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base MTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1406 (default)</source>
+        <translation>1406 (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Overrides the dead peer detection interval. Positive values below 2s are treated as 2s.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPD Interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum accumulated backoff time after failed reconnect attempts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reconnect Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>300s (default)</source>
+        <translation>300s (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Overrides the interval between GlobalProtect HIP reports or Network Connect TNCC checks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trojan Interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inbound and outbound packet queue length between the VPN transport and the tunnel interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Queue Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>32 (default)</source>
+        <translation>32 (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>Already set</source>
+        <translation>Уже задано</translation>
+    </message>
+    <message>
+        <source>TNCC Machine Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditOpenVPN</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Default transport network. Leave empty to use the core default (udp).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Сеть</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Static challenge text shown by the server when it asks for a second authentication response. When a challenge is set and an OTP profile is bound, Throne sends the answer itself and no interactive prompt appears.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Static Challenge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show the static challenge response as plain text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Echo challenge response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tunnel MTU. Empty uses 1500 until the server pushes a value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTU</source>
+        <translation>MTU</translation>
+    </message>
+    <message>
+        <source>OTP</source>
+        <translation>OTP</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traffic that falls through to this profile reaches the tunnel only when the destination is inside a subnet the VPN server advertises; anything else is blocked. Routing rules that name this profile explicitly are not affected and always win.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only route advertised network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve the names the VPN server claims - its split-DNS suffixes and search domains - through the resolvers it pushes. Turn this off if the server claims every domain and breaks public DNS. Kept on regardless while this profile carries all traffic with &quot;Only route advertised network&quot; enabled, since the pushed resolvers are then the only reachable ones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resolve through this tunnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fail a lookup the tunnel cannot answer instead of retrying it directly. Leave this off for a management VPN: names it does not claim then still resolve through the direct resolver.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block outside DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Дополнительно</translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation>TLS</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Trusted CA certificate content (PEM).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not set</source>
+        <translation>Не задано</translation>
+    </message>
+    <message>
+        <source>Client Certificate</source>
+        <translation>Сертификат клиента</translation>
+    </message>
+    <message>
+        <source>Client Key</source>
+        <translation>Ключ клиента</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OpenVPN tls-auth / tls-crypt / tls-crypt-v2 control channel wrapping. Disabled when the type is empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Channel Wrap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Ключ</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;tls-auth key direction. Only used when the type is tls_auth; the key is bidirectional when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Binds an authenticator entry to this profile. %1 in the username or password is replaced with a generated code at connect time, and a static challenge is answered with the same code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is replaced at connect time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Channel Wrap Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already set</source>
+        <translation>Уже задано</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
+</context>
+<context>
+    <name>EditOpenVPNAdvanced</name>
+    <message>
+        <source>OpenVPN Advanced</source>
+        <translation>OpenVPN доп. настройки</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OpenVPN session mode. tls is used by default; static_key is a deprecated mode without a TLS control channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tunnel topology. The topology pulled from the server is used when empty in TLS mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Topology</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Behavior after username/password authentication fails. none is used by default and treats a permanent failure as terminal.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auth Retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randomize the server list before connecting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Randomize server order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated local tunnel prefixes. At least one is required in static_key mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Address</source>
+        <translation>Локальный адрес</translation>
+    </message>
+    <message>
+        <source>10.8.0.2/24, fd00::2/64</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;IPv4 tunnel peer address and VPN gateway. Required with an IPv4 local address in static_key mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peer Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;IPv6 tunnel peer address and VPN gateway. Required with an IPv6 local address in static_key mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peer Address (IPv6)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Servers are tried in order and the client moves to the next one when a connection fails. Leave empty to use the address and port from the profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Сеть</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Static Key Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Static key content. Required in static_key mode. Conflicts with the static key path.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Static Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not set</source>
+        <translation>Не задано</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline static key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Static Key Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Static key direction. The key is used bidirectionally when empty. Only available in static_key mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data channel cipher used in static_key mode. The upstream default BF-CBC is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation>TLS</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Expected server certificate name. Name verification is disabled when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certificate field matched by the server name. name is used by default and matches the common name exactly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server Name Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline CA certificate on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline client certificate on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Certificate Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline client key on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client Key Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with the inline control channel wrap key on the main editor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Wrap Key Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allowed SHA-256 fingerprints of the server leaf certificate, one per line, 64 lowercase hexadecimal characters without separators.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peer Fingerprint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;PEM or DER certificate revocation list used to reject revoked server certificates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CRL Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated hexadecimal key usage masks in OpenVPN remote-cert-ku format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote Certificate KU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Required extended key usage. Conflicts with an explicit remote certificate TLS check.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote Certificate EKU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Peer certificate purpose check. server is used by default; none disables the check.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote Certificate TLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;legacy is used by default. insecure accepts MD5 and SHA-1 signed chains; preferred requires stronger signatures and keys.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deprecated Netscape certificate type check. Prefer Remote Certificate TLS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NS Certificate Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;1.2 is used by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min TLS Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The maximum supported version is used by default. It cannot be lower than the minimum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max TLS Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Colon separated OpenSSL cipher suite names allowed for TLS 1.2 and earlier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Colon separated key exchange groups in preference order: X25519, SECP256R1, SECP384R1, SECP521R1.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Channel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated allowed data channel ciphers. Only available in TLS mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Ciphers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES-256-GCM,AES-128-GCM,CHACHA20-POLY1305</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data channel cipher for peers that do not support cipher negotiation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Ciphers Fallback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Data channel authentication digest. SHA1 is used by default and only applies to non-AEAD ciphers and tls_auth.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auth Digest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum UDP packet size used to clamp the MSS of TCP connections sent through the tunnel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSS Fix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disables MSS clamping including the default clamp. Conflicts with MSS Fix and MSS Fix Mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable MSS clamping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;mtu also accounts for the outer IP and transport headers; fixed treats MSS Fix as an inner IPv4 packet size. Requires MSS Fix.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSS Fix Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum UDP packet size used for data channel fragmentation. A non-zero value must be at least 68. Conflicts with TCP transport.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fragment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;UDP replay window size. 64 is used by default and the maximum is 65536.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;UDP replay window duration in whole seconds. The maximum is 10m.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay Window Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>15s (default)</source>
+        <translation>15s (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>Compression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OpenVPN compress framing mode. Disabled by default. Compression can weaken traffic confidentiality.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;OpenVPN comp-lzo mode. Disabled by default. Enable it only when required by the server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compression LZO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Policy for compression pushed by the server. no is used by default and permits only stub framing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Compression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Routing</source>
+        <translation>Маршруты</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ignores routes, DNS, route metrics, redirect-gateway, redirect-private and block-ipv6 pushed by the server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore pushed routes, DNS and gateway options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated prefixes preferred for this endpoint, in addition to routes accepted from the server.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Routes</source>
+        <translation>Маршруты</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;IPv4 gateway for routes through the endpoint. The gateway received from the server is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Default metric for routes through the endpoint. The platform default is used when empty.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route Metric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Does not install an operating system default route.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefer this endpoint for all IPv4 destinations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma separated OpenVPN redirect-gateway flags, for example !ipv4, def1 or ipv6.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redirect Gateway Flags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept redirect gateway flags without a default route preference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reject IPv6 traffic locally instead of sending it through the VPN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ordered filters for options pushed by the server. The first filter whose text is a case-sensitive prefix of the complete pushed option is applied.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Действие</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whole seconds of silence before a data channel ping is sent. A server-pushed value overrides it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ping Interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whole seconds without a received packet before reconnecting. 120s is used for UDP with pull enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ping Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disables the initial 120s UDP pull timeout and any configured ping restart. Conflicts with Ping Restart.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable ping restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TLS renegotiation interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renegotiate Interval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1h (default)</source>
+        <translation>1h (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Conflicts with Renegotiate Interval.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable time based renegotiation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Renegotiate data channel keys after this many bytes. Empty uses the cipher-dependent default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renegotiate Bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Renegotiate data channel keys after this many packets. Empty uses the cipher-dependent default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Renegotiate Packets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Initial retransmission timeout for TLS control packets.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2s (default)</source>
+        <translation>2s (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximum time allowed for the initial handshake and each renegotiation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Handshake Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1m (default)</source>
+        <translation>1m (по умолчанию)</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of exit notifications sent one second apart when closing a UDP connection.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explicit Exit Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already set</source>
+        <translation>Уже задано</translation>
     </message>
 </context>
 <context>
@@ -3090,6 +5470,57 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Version</source>
         <translation>Версия</translation>
+    </message>
+</context>
+<context>
+    <name>EditSnell</name>
+    <message>
+        <source>Version</source>
+        <translation>Версия</translation>
+    </message>
+    <message>
+        <source>PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Per-user key on a multi-user server. Leave empty when the server only has a PSK.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restrict this outbound to one network. Leave empty to carry both TCP and UDP.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Сеть</translation>
+    </message>
+    <message>
+        <source>Obfuscation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obfuscation Host</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traffic shaping used by Snell v6. &quot;unsafe-raw&quot; disables padding and is faster but easier to fingerprint.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keep idle connections to the server open and reuse them for later requests.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reuse connections</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3328,6 +5759,18 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Локальный адрес</translation>
     </message>
     <message>
+        <source>Enable Amnezia</source>
+        <translation>Включить Amnezia</translation>
+    </message>
+    <message>
+        <source>Edit the AmneziaWG obfuscation parameters (junk packets, magic headers, signatures).</source>
+        <translation>Изменить параметры обфускации AmneziaWG (мусорные (junk) пакеты, магические заголовки, сигнатуры).</translation>
+    </message>
+    <message>
+        <source>Amnezia Options</source>
+        <translation>Параметры Amnezia</translation>
+    </message>
+    <message>
         <source>Generate a Cloudflare WARP account and fill the key, address and endpoint fields above.</source>
         <translation>Сгенерировать учетную запись Cloudflare WARP и заполнить поля «Ключ», «Адрес» и «Конечная точка» выше.</translation>
     </message>
@@ -3361,7 +5804,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Workers</source>
-        <translation>Workers</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3443,6 +5886,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Amnezia Options</source>
+        <translation>Параметры Amnezia</translation>
+    </message>
+    <message>
         <source>Transport Packet Junk Size (S4)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3514,6 +5961,22 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <source>Max Handshake Attempts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AmneziaWG 3.1. Appends a random trailer to every packet, so message types are no longer identifiable by size.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random Trailers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;AmneziaWG 3.1. Never send cookie replies, so an under-load peer stays silent instead of answering with a fixed-size message.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable Cookies</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditXrayVless</name>
@@ -3574,53 +6037,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
 </context>
 <context>
-    <name>JsonEditor</name>
-    <message>
-        <source>JSON Editor</source>
-        <translation>Редактор JSON</translation>
-    </message>
-    <message>
-        <source>Format JSON</source>
-        <translation>Форматирование JSON</translation>
-    </message>
-    <message>
-        <source>Remove All Comments</source>
-        <translation>Удалить все комментарии</translation>
-    </message>
-    <message>
-        <source>Json Editor</source>
-        <translation>Редактор JSON</translation>
-    </message>
-    <message>
-        <source>Structure Preview</source>
-        <translation>Предпросмотр структуры</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>ОК</translation>
-    </message>
-    <message>
-        <source>Json Contains Syntax Errors</source>
-        <translation>JSON содержит синтаксические ошибки</translation>
-    </message>
-    <message>
-        <source>Original Json may contain syntax errors. Json tree is disabled.</source>
-        <translation>Кажется, оригинальный JSON содержит синтаксические ошибки. Дерево JSON отключено.</translation>
-    </message>
-    <message>
-        <source>You must correct these errors before continuing.</source>
-        <translation>Исправьте эти ошибки, прежде чем продолжить.</translation>
-    </message>
-    <message>
-        <source>Syntax Errors</source>
-        <translation>Синтаксические ошибки</translation>
-    </message>
-    <message>
-        <source>Please fix the JSON errors or remove the comments before continue</source>
-        <translation>Пожалуйста, исправьте ошибки JSON или удалите комментарии, прежде чем продолжить</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Program</source>
@@ -3645,10 +6061,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Test Result</source>
         <translation>Результат теста</translation>
-    </message>
-    <message>
-        <source>Traffic</source>
-        <translation>Трафик</translation>
     </message>
     <message>
         <source>Share</source>
@@ -3735,14 +6147,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Утилиты</translation>
     </message>
     <message>
-        <source>Click to sort by traffic; right-click to choose total/down/up</source>
-        <translation>Нажмите, чтобы отсортировать по трафику; щелкните правой кнопкой мыши, чтобы настроить сортировку</translation>
-    </message>
-    <message>
-        <source>Click to sort by speed; right-click to choose total/down/up</source>
-        <translation>Нажмите, чтобы отсортировать по скорости; щелкните правой кнопкой мыши, чтобы настроить сортировку</translation>
-    </message>
-    <message>
         <source>Manage Groups</source>
         <translation>Управление группами</translation>
     </message>
@@ -3815,6 +6219,18 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Обновить подписку</translation>
     </message>
     <message>
+        <source>Preset Settings</source>
+        <translation>Предустановленные настройки</translation>
+    </message>
+    <message>
+        <source>OTP Manager</source>
+        <translation>Менеджер OTP</translation>
+    </message>
+    <message>
+        <source>Open Web dashboard</source>
+        <translation>Открыть веб-панель</translation>
+    </message>
+    <message>
         <source>Remove Insecure Configs</source>
         <translation>Удалить небезопасные конфигурации</translation>
     </message>
@@ -3877,6 +6293,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Error</source>
         <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Url Test selected Group</source>
+        <translation>Тест задержки выбранной группы</translation>
+    </message>
+    <message>
+        <source>Speed Test selected Group</source>
+        <translation>Тест скорости выбранной группы</translation>
     </message>
     <message>
         <source>Ignored deeplink with unknown command: %1</source>
@@ -3985,12 +6409,32 @@ URL: %2</translation>
         <translation>Не запущен</translation>
     </message>
     <message>
+        <source>Listening on all interfaces (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select</source>
         <translation>Выбор</translation>
     </message>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
         <translation>Режим выбора: дважды кликните или нажмите Enter для выбора профиля, нажмите ESC для выхода.</translation>
+    </message>
+    <message>
+        <source>Connect OK</source>
+        <translation>Подключение успешно</translation>
+    </message>
+    <message>
+        <source>Connecting</source>
+        <translation>Подключение</translation>
+    </message>
+    <message>
+        <source>Waiting for authentication</source>
+        <translation>Ожидание аутентификации</translation>
+    </message>
+    <message>
+        <source>Tunnel error</source>
+        <translation>Ошибка туннеля</translation>
     </message>
     <message>
         <source>Clone %1 item(s)</source>
@@ -4119,6 +6563,42 @@ Download them now?</source>
     <message>
         <source>Failed to stop, please restart the program.</source>
         <translation>Не удалось остановить, пожалуйста, перезапустите программу.</translation>
+    </message>
+    <message>
+        <source>[VPN] %1: %2</source>
+        <translation>[VPN] %1: %2</translation>
+    </message>
+    <message>
+        <source>VPN endpoint problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VPN endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[VPN] %1: the core did not answer the sign-in prompt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[VPN] %1: could not answer the sign-in prompt: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[VPN] %1: signed in again with a new one-time code.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[VPN] %1 rejected the saved credentials; restarting the profile with a new one-time code.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The server refused the credentials saved with this profile. Enter the ones to use for this session; the profile itself is left unchanged.</source>
+        <translation>Сервер отклонил учетные данные, сохраненные в этом профиле. Введите те, которые будут использоваться для данного сеанса; сам профиль останется без изменений.</translation>
+    </message>
+    <message>
+        <source>[VPN] %1 rejected the saved credentials.</source>
+        <translation>[VPN] %1 отклонил сохраненные учетные данные.</translation>
     </message>
     <message>
         <source>Stop Testing</source>
@@ -4257,6 +6737,10 @@ Error: %1</source>
         <translation>Результаты теста скопированы в буфер обмена!</translation>
     </message>
     <message>
+        <source>Config files (*.json *.conf *.txt *.yaml *.yml *.ini *.ovpn *.xml)</source>
+        <translation>Конфиг-файлы (*.json *.conf *.txt *.yaml *.yml *.ini *.ovpn *.xml)</translation>
+    </message>
+    <message>
         <source>No insecure configs found.</source>
         <translation>Небезопасных конфигураций не обнаружено.</translation>
     </message>
@@ -4277,14 +6761,6 @@ Error: %1</source>
         <translation>Подключения</translation>
     </message>
     <message>
-        <source>Click To Disable Sorting</source>
-        <translation>Нажмите для отключения сортировки</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>Протокол</translation>
-    </message>
-    <message>
         <source>Logs</source>
         <translation>Логи</translation>
     </message>
@@ -4301,24 +6777,28 @@ Error: %1</source>
         <translation>Введите пароль в открывшемся терминале и повторите попытку.</translation>
     </message>
     <message>
+        <source>The sing-box API is disabled. Set a listen port in Preferences &gt; Basic Settings &gt; Core.</source>
+        <translation>API sing-box отключен. Укажите прослушиваемый порт в разделе Настройки &gt; Основные настройки &gt; Ядро.</translation>
+    </message>
+    <message>
+        <source>Start a profile first; the dashboard is served by the running core.</source>
+        <translation>Сначала запустите профиль; веб-панель обслуживается запущенным ядром.</translation>
+    </message>
+    <message>
+        <source>Web dashboard</source>
+        <translation>Веб-панель</translation>
+    </message>
+    <message>
+        <source>The dashboard is not installed yet. Download it now?</source>
+        <translation>Веб-панель ещё не установлена. Загрузить сейчас?</translation>
+    </message>
+    <message>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <source>Routing</source>
         <translation>Маршруты</translation>
-    </message>
-    <message>
-        <source>Destination (Domain)</source>
-        <translation>Пункт назначения (Домен)</translation>
-    </message>
-    <message>
-        <source>Process</source>
-        <translation>Процесс</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Process</source>
-        <translation>Нажмите для сортировки по процессу</translation>
     </message>
     <message>
         <source>Operation Mode</source>
@@ -4405,6 +6885,18 @@ Please try again.</source>
         <translation>Невозможно запустить</translation>
     </message>
     <message>
+        <source>A dashboard download is already running</source>
+        <translation>Загрузка веб-панели уже выполняется</translation>
+    </message>
+    <message>
+        <source>The core did not answer.</source>
+        <translation>Ядро не ответило.</translation>
+    </message>
+    <message>
+        <source>Failed to install the dashboard</source>
+        <translation>Не удалось установить веб-панель</translation>
+    </message>
+    <message>
         <source>Last download request has not finished yet</source>
         <translation>Последняя попытка скачивания ещё не завершилась</translation>
     </message>
@@ -4453,20 +6945,8 @@ Please try again.</source>
         <translation>Невозможно захватить экран</translation>
     </message>
     <message>
-        <source>Outbound</source>
-        <translation>Outbound</translation>
-    </message>
-    <message>
         <source>Please run Throne as admin</source>
         <translation>Пожалуйста, запустите Throne от имени администратора</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Protocol</source>
-        <translation>Нажмите для сортировки по протоколу</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Outbound</source>
-        <translation>Нажмите для сортировки по Outbound</translation>
     </message>
     <message>
         <source>Add profile from File(s)</source>
@@ -4481,12 +6961,12 @@ Please try again.</source>
         <translation>Выбор маршрутизации</translation>
     </message>
     <message>
-        <source>All files (*)</source>
-        <translation>Все файлы (*)</translation>
+        <source>OTP Codes</source>
+        <translation>Коды OTP</translation>
     </message>
     <message>
-        <source>Config files (*.json *.conf *.txt *.yaml *.yml *.ini)</source>
-        <translation>Конфиг-файлы (*.json *.conf *.txt *.yaml *.yml *.ini)</translation>
+        <source>All files (*)</source>
+        <translation>Все файлы (*)</translation>
     </message>
     <message>
         <source>QR code images (*.png *.jpg *.jpeg *.bmp *.gif *.webp)</source>
@@ -4553,6 +7033,41 @@ Name: %1</source>
     <message>
         <source>Copied!</source>
         <translation>Скопировано!</translation>
+    </message>
+    <message>
+        <source>Close every connection listed below</source>
+        <translation>Закрыть все соединения, перечисленные ниже</translation>
+    </message>
+    <message>
+        <source>Failed to close connections: %1</source>
+        <translation>Не удалось закрыть соединения: %1</translation>
+    </message>
+    <message>
+        <source>IPC error</source>
+        <translation>IPC ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>OtpItem</name>
+    <message>
+        <source>Edit</source>
+        <translation>Редактировать</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Экспорт</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>invalid</source>
+        <translation>неверный</translation>
+    </message>
+    <message>
+        <source>%1s</source>
+        <translation>%1 сек.</translation>
     </message>
 </context>
 <context>
@@ -4626,6 +7141,10 @@ Name: %1</source>
         <translation>Запрос через прокси, но профиль не запущен.</translation>
     </message>
     <message>
+        <source>Response larger than %1 MB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Download failed: server returned HTTP status %1.</source>
         <translation>Загрузка не удалась: сервер вернул HTTP-статус %1.</translation>
     </message>
@@ -4694,6 +7213,30 @@ How to update?</source>
         <translation>Идёт обработка данных подписки...</translation>
     </message>
     <message>
+        <source>Failed to parse the Clash configuration.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to import the OpenVPN profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to import the OpenConnect profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decode the vpn:// link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No importable profile found in the vpn:// link.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subscription update already queued: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Process complete, applying...</source>
         <translation>Процесс завершён, применение...</translation>
     </message>
@@ -4710,6 +7253,11 @@ Deleted %5 Profiles:
 %4
 Удалено %5 профилей:
 %6</translation>
+    </message>
+    <message>
+        <source>Still in use, so kept instead of deleted:
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nothing</source>
@@ -4800,6 +7348,38 @@ Release note:
         <translation>По умолчанию</translation>
     </message>
     <message>
+        <source>The routing profile lists an endpoint profile (id %1) that no longer exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is listed as a routing profile endpoint but is empty or corrupted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is listed as a routing profile endpoint but a hop of it no longer exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is listed as a routing profile endpoint, so its last hop must be an OpenVPN or OpenConnect profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hops of the routing profile endpoint %1 cannot use an extra core, a full config, or be a chain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hops of the routing profile endpoint %1 cannot run on the Xray core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is used as an endpoint of the routing profile and by the started profile at the same time, remove it from one of them</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is listed twice in the endpoints of the routing profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Local DNS and Tun mode do not work together, please set an IP to be used as the Local DNS server in the Routing Settings -&gt; Local override</source>
         <translation>Локальный DNS и режим TUN не могут работать вместе. Пожалуйста, введите IP для использования в качестве локального DNS в меню «Настройки маршрутизации» → «Назначить локал. DNS»</translation>
     </message>
@@ -4870,6 +7450,14 @@ Release note:
         <translation>Небезопасный TLS</translation>
     </message>
     <message>
+        <source>Static Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unverified TLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>TLS</source>
         <translation>TLS</translation>
     </message>
@@ -4938,6 +7526,10 @@ Release note:
         <translation>Tailscale профиль</translation>
     </message>
     <message>
+        <source>OpenVPN or OpenConnect profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>filtered out by name</source>
         <translation>отфильтрованы по названию</translation>
     </message>
@@ -4948,6 +7540,10 @@ Release note:
     <message>
         <source>last test failed</source>
         <translation>последний тест завершился с ошибкой</translation>
+    </message>
+    <message>
+        <source>Xray full config cannot be combined with the group&apos;s proxies</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>never</source>
@@ -5097,6 +7693,470 @@ Release note:
         <source>%1 of %2 checks failed</source>
         <translation>%1 из %2 проверок завершились неудачно</translation>
     </message>
+    <message>
+        <source>Connect OK</source>
+        <translation>Подключение успешно</translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation>Недоступен</translation>
+    </message>
+    <message>
+        <source>%1 route prefer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Подключено</translation>
+    </message>
+    <message>
+        <source>Connecting…</source>
+        <translation>Подключение…</translation>
+    </message>
+    <message>
+        <source>Waiting for sign-in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Неизвестно</translation>
+    </message>
+    <message>
+        <source>Too much data to fit in a QR code.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>null</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>boolean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>array</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected content after the end of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document is nested too deeply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected end of document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected a property name in quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected a colon after the property name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trailing comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected a comma or a closing brace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected a comma or a closing bracket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unterminated string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unterminated escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incomplete unicode escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid unicode escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control character in string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The schema is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The schema has no definition at %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected %1, got %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> or </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected %1 here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is not valid here (expected: %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This option is deprecated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is not in the expected format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value must be at least %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value must be at most %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown field &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing required field &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown %1 %2 (expected: %3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value does not match any accepted form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty OpenVPN configuration.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;connection&gt; block without a remote, skipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored an unreadable peer fingerprint: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKCS#12 bundles are not supported; export the CA, certificate and key as PEM.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored inline block: &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is an OpenVPN server configuration (%1), not a client profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TAP (layer 2) tunnels are not supported; only `dev tun` profiles can be imported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is an OpenVPN server configuration (mode server), not a client profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`proto %1` is a server transport.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown transport: proto %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored an unreadable IPv6 interface address: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credentials live in %1; enter them in the profile editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A hash-directory CRL is not supported; point `crl-verify` at a PEM or DER file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored a symbolic route target: route %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored an unreadable route: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>redirect-gateway flag has no sing-box equivalent: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not supported by the OpenVPN endpoint, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown OpenVPN directive, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`%1` turns the client certificate off; it was dropped and the server has to accept password login.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`cert` without a `key`: add the private key, or `client-cert-not-required` for password-only login.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`key` without a `cert`: add the client certificate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No `remote` server in the OpenVPN configuration.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignored an unreadable interface address: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>`remote-cert-eku` replaces `remote-cert-tls`; the latter was dropped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported OpenConnect protocol, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown compression mode, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown reported OS, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported token mode, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected --form-entry=FORM:OPTION=VALUE, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configure a proxy through Throne&apos;s chain instead, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown OpenConnect option, ignored: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown OpenConnect option, ignored: -%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An AnyConnect profile carrying a DTD is not accepted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Malformed AnyConnect profile: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The AnyConnect profile lists no host entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skipped a host entry without an address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skipped &quot;%1&quot;: IKEv2/IPsec is not spoken by the OpenConnect endpoint.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skipped an unreadable host address: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty OpenConnect profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The AnyConnect profile has no host entry this endpoint can use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No OpenConnect options found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No OpenConnect server address found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret is empty</source>
+        <translation>Пустой секрет</translation>
+    </message>
+    <message>
+        <source>Secret is not valid base32</source>
+        <translation>Недействительный Base32 секрет</translation>
+    </message>
+    <message>
+        <source>Secret is too short</source>
+        <translation>Секрет слишком короткий</translation>
+    </message>
+    <message>
+        <source>Digits must be between %1 and %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period must be between %1 and %2 seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a readable OTP export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unreadable migration link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not an otpauth link or secret: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Endpoint</source>
+        <translation>Конечная точка (Endpoint)</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 failed: %2. Details are in the log file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Traffic statistics paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The statistics database is unusable (%1). Statistics are paused for this session and the file will be rebuilt when Throne restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing statistics keeps failing (%1). Statistics are paused until Throne restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty</source>
+        <translation>Пусто</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n problem(s)</source>
+        <translation>
+            <numerusform>%n проблема</numerusform>
+            <numerusform>%n проблемы</numerusform>
+            <numerusform>%n проблем</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n warning(s)</source>
+        <translation>
+            <numerusform>%n предупреждение</numerusform>
+            <numerusform>%n предупреждения</numerusform>
+            <numerusform>%n предупреждений</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Valid JSON</source>
+        <translation>Верный JSON</translation>
+    </message>
+    <message>
+        <source>Line %1: %2</source>
+        <translation>Строка %1: %2</translation>
+    </message>
+    <message>
+        <source>JSON Editor</source>
+        <translation>JSON Редактор</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation>Форматирование JSON</translation>
+    </message>
+    <message>
+        <source>Invalid JSON</source>
+        <translation>Неверный JSON</translation>
+    </message>
+    <message>
+        <source>Fix the errors before formatting the document.</source>
+        <translation>Исправьте ошибки перед форматированием документа.</translation>
+    </message>
+    <message>
+        <source>The document must be a JSON object.</source>
+        <translation>Документ должен представлять собой объект JSON.</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
@@ -5145,14 +8205,6 @@ outbounds and other Throne features may break. For advanced users only.</source>
         <translation>Использовать raw-профиль маршрутизации точно так, как написано (outbounds идентификаторы по-прежнему преобразуются в теги).
 В Throne не будут добавлены функции DNS-hijack или xray bridge, поэтому могут нарушаться функции DNS, chained/xray
 outbounds и другие функции Throne. Только для опытных пользователей.</translation>
-    </message>
-    <message>
-        <source>Valid JSON</source>
-        <translation>Верный JSON</translation>
-    </message>
-    <message>
-        <source>Invalid JSON: %1 (offset %2)</source>
-        <translation>Неверный JSON: %1 (символ %2)</translation>
     </message>
     <message>
         <source>Format JSON</source>
@@ -5232,6 +8284,22 @@ Your local edits are overwritten on each update.</source>
         <translation>Warp-bypass</translation>
     </message>
     <message>
+        <source>Endpoints</source>
+        <translation>Конечные точки</translation>
+    </message>
+    <message>
+        <source>OpenVPN / OpenConnect profiles started alongside this routing profile. Traffic for the networks they advertise goes through them; everything else follows this profile&apos;s rules. Each endpoint gets a rule in the Advanced tab that you can move among your own rules.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
         <source>Rules</source>
         <translation>Правила</translation>
     </message>
@@ -5250,6 +8318,10 @@ Your local edits are overwritten on each update.</source>
     <message>
         <source>Delete</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>This rule is managed by the Endpoints tab. You can only move it.</source>
+        <translation>Это правило управляется вкладкой «Конечные точки». Вы можете только перемещать его.</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -5302,6 +8374,14 @@ Your local edits are overwritten on each update.</source>
         <translation>Инструкция по простым правилам</translation>
     </message>
     <message>
+        <source>Profile #%1 — deleted, dropped when you save</source>
+        <translation type="unfinished">Профиль #%1 — удалён, будет отброшено при сохранении</translation>
+    </message>
+    <message>
+        <source>%1 route prefer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid operation</source>
         <translation>Неверная операция</translation>
     </message>
@@ -5318,8 +8398,32 @@ Your local edits are overwritten on each update.</source>
         <translation>В профиле нет доступных правил</translation>
     </message>
     <message>
+        <source>%1 endpoint profile(s) no longer exist and were removed from this routing profile.</source>
+        <translation type="unfinished">Профили конечных точек %1 больше не существуют и были удалены из этого профиля маршрутизации.</translation>
+    </message>
+    <message>
+        <source>Endpoint rule: move it to choose where the endpoint claims traffic. Managed by the Endpoints tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Check attributes to show as tabs; unchecking clears their values.</source>
         <translation>Отметьте атрибуты, чтобы отобразить их во вкладках; снятие отметки очистит их значения.</translation>
+    </message>
+    <message>
+        <source>This rule installs a &apos;preferred by&apos; rule so that the networks advertised by the endpoint %1 get routed into the endpoint tunnel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Endpoint rule</source>
+        <translation>Правило для конечной точки</translation>
+    </message>
+    <message>
+        <source>This rule belongs to the endpoint &quot;%1&quot; and cannot be deleted on its own.
+
+Remove that endpoint from this routing profile as well?</source>
+        <translation>Это правило относится к конечной точке &quot;%1&quot; и не может быть удалено отдельно.
+
+Удалить эту конечную точку из данного профиля маршрутизации?</translation>
     </message>
     <message>
         <source>Some rules could not be added, fix them before saving:
@@ -5435,6 +8539,25 @@ Your local edits are overwritten on each update.</source>
     <message>
         <source>No traffic recorded for this period</source>
         <translation>Нет данных о трафике за этот период</translation>
+    </message>
+</context>
+<context>
+    <name>TrayOtpCodes</name>
+    <message>
+        <source>No OTP profiles yet</source>
+        <translation>Профилей OTP пока нет</translation>
+    </message>
+    <message>
+        <source>No matches</source>
+        <translation>Нет совпадений</translation>
+    </message>
+    <message>
+        <source>Invalid secret</source>
+        <translation>Неверный секрет</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>Скопировано</translation>
     </message>
 </context>
 <context>

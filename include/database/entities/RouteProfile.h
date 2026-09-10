@@ -8,7 +8,8 @@
 namespace Configs {
     const int INVALID_ID = -99999;
 
-    enum simpleAction{bypass, block, proxy, warpBypass};
+    // Fixed underlying type so headers that only pass it around (mainwindow.h) can forward-declare it.
+    enum simpleAction : int {bypass, block, proxy, warpBypass};
     inline QString simpleActionToString(simpleAction action)
     {
         if (action == bypass) return {"direct"};
@@ -39,6 +40,9 @@ namespace Configs {
         // Profile ids of openvpn/openconnect profiles run alongside this routing profile.
         QList<int> endpointProfileIDs;
 
+        // Subset of endpointProfileIDs whose inner endpoint hops are routable too.
+        QList<int> innerHopEndpointIDs;
+
         RouteProfile() = default;
 
         RouteProfile(const RouteProfile& other);
@@ -65,7 +69,10 @@ namespace Configs {
         // The positional placeholder paired with an endpoint, correlated by type + outboundID.
         static std::shared_ptr<RouteRule> MakeEndpointRule(int endpointProfileID);
 
-        // One endpointPreferredBy rule per listed endpoint; prunes orphans, appends missing. Raw: no-op.
+        // Each listed endpoint, followed by its opened-up inner hops.
+        QList<int> endpointRuleTargets() const;
+
+        // One endpointPreferredBy rule per endpointRuleTargets() entry; prunes orphans, appends missing. Raw: no-op.
         void SyncEndpointRules();
 
         std::shared_ptr<QList<int>> get_used_outbounds();
@@ -90,6 +97,9 @@ namespace Configs {
         QString GetSimpleRules(simpleAction action);
 
         QString UpdateSimpleRules(const QString& content, simpleAction action);
+
+        // Adds one "prefix:value" line to the matching simple rule, creating it if the profile has none yet.
+        bool AppendSimpleRule(const QString& rawRule, simpleAction action);
 
         void FilterEmptyRules();
     private:

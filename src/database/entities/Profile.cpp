@@ -42,7 +42,7 @@ namespace Configs
             result = QObject::tr("Connect OK");
             return result;
         } else if (latency < 0) {
-            result = "Unavailable";
+            result = QObject::tr("Unavailable");
             return result;
         } else if (latency > 0) {
             result += QString("%1 ms").arg(latency);

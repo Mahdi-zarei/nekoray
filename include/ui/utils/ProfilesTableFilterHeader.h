@@ -120,7 +120,6 @@ public slots:
                 m_lastFilterColumn = columnOf(focused);
                 emit lastFilterColumnChanged(m_lastFilterColumn);
             }
-            // Hiding must clear, or the list stays filtered with nothing explaining why.
             for (QLineEdit *edit : filterEdits()) edit->clear();
         }
 

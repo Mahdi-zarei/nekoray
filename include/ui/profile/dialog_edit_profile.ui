@@ -1166,7 +1166,7 @@
                     </widget>
                    </item>
                    <item row="0" column="1">
-                    <widget class="QComboBox" name="xray_mode"/>
+                    <widget class="NoWheelComboBox" name="xray_mode"/>
                    </item>
                    <item row="0" column="2">
                     <widget class="QLabel" name="label_23">
@@ -1218,7 +1218,7 @@
                     </widget>
                    </item>
                    <item row="1" column="1">
-                    <widget class="QComboBox" name="xray_xpadding_method"/>
+                    <widget class="NoWheelComboBox" name="xray_xpadding_method"/>
                    </item>
                    <item row="1" column="2">
                     <widget class="QLabel" name="label_xpadding_placement">
@@ -1228,7 +1228,7 @@
                     </widget>
                    </item>
                    <item row="1" column="3">
-                    <widget class="QComboBox" name="xray_xpadding_placement"/>
+                    <widget class="NoWheelComboBox" name="xray_xpadding_placement"/>
                    </item>
                    <item row="2" column="0">
                     <widget class="QLabel" name="label_xpadding_key">
@@ -1303,7 +1303,7 @@
                     </widget>
                    </item>
                    <item row="2" column="3">
-                    <widget class="QComboBox" name="xray_uplink_http_method"/>
+                    <widget class="NoWheelComboBox" name="xray_uplink_http_method"/>
                    </item>
                    <item row="3" column="0">
                     <widget class="QLabel" name="xray_uplink_data_placement_l">
@@ -1313,7 +1313,7 @@
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QComboBox" name="xray_uplink_data_placement"/>
+                    <widget class="NoWheelComboBox" name="xray_uplink_data_placement"/>
                    </item>
                    <item row="3" column="2">
                     <widget class="QLabel" name="xray_uplink_data_key_l">
@@ -1367,7 +1367,7 @@
                     </widget>
                    </item>
                    <item row="6" column="1">
-                    <widget class="QComboBox" name="xray_session_placement"/>
+                    <widget class="NoWheelComboBox" name="xray_session_placement"/>
                    </item>
                    <item row="6" column="2">
                     <widget class="QLabel" name="xray_session_key_l">
@@ -1407,7 +1407,7 @@
                     </widget>
                    </item>
                    <item row="8" column="1">
-                    <widget class="QComboBox" name="xray_seq_placement"/>
+                    <widget class="NoWheelComboBox" name="xray_seq_placement"/>
                    </item>
                    <item row="8" column="2">
                     <widget class="QLabel" name="xray_seq_key_l">
@@ -1527,6 +1527,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>NoWheelComboBox</class>
+   <extends>QComboBox</extends>
+   <header>include/ui/utils/NoWheelComboBox.h</header>
+  </customwidget>
   <customwidget>
    <class>MyLineEdit</class>
    <extends>QLineEdit</extends>

@@ -35,7 +35,8 @@ func BatchIPTest(ctx context.Context, i *boxbox.Box, outboundTags []string, maxC
 
 	results := runBatch(ctx, i, outboundTags, maxConcurrency, batchProbe[IPTestResult]{
 		run: func(ctx context.Context, tag string, outbound adapter.Outbound) *IPTestResult {
-			client := outboundHTTPClient(ctx, outbound, timeout)
+			client, closeClient := outboundHTTPClient(ctx, outbound, timeout)
+			defer closeClient()
 			info, err := ipTest(ctx, client)
 			return &IPTestResult{Result: info, Tag: tag, Error: err}
 		},

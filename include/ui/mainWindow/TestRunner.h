@@ -28,7 +28,6 @@ public:
     TestRunner(const TestRunner&) = delete;
     TestRunner& operator=(const TestRunner&) = delete;
 
-    // `onFinished` fires on every exit path, so a caller may block on it.
     void runUrlTests(const QList<int>& profileIDs, const std::function<void()>& onFinished = {});
 
     void runIpTests(const QList<int>& profileIDs);
@@ -66,7 +65,6 @@ private:
 
     void runSpeedProbe(const Target& target);
 
-    // `vpnConnected` is empty on the progress poll; only the final pass has verdicts.
     void applyUrlResult(const std::shared_ptr<Configs::Profile>& ent, const libcore::URLTestResp& res,
                         const QHash<QString, bool>* vpnConnected = nullptr);
 
@@ -74,8 +72,6 @@ private:
 
     QString contextName(int entID) const;
 
-    // A poll's batch can end while its query is in flight, so `gen` is re-checked
-    // after every query and the result dropped if the batch it belongs to is gone.
     bool staleGen(quint64 gen) const { return sessionGen_.load() != gen; }
 
     void pollSpeedTest(const QMap<QString, int>& tag2entID, bool testCurrent, quint64 gen);

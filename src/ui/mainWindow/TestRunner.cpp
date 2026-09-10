@@ -17,7 +17,6 @@
 using namespace API;
 
 namespace {
-    // A batch shares one core instance, so this bounds config size, not concurrency.
     constexpr int kTestBatchSize = 100;
     constexpr int kLatencyPollIntervalMs = 200;
     constexpr int kSpeedPollIntervalMs = 100;
@@ -44,7 +43,6 @@ namespace {
 
     constexpr int kVpnStatusWaitMs = 10000;
 
-    // An empty tag map means a single-profile box, so the result must be `fallback`.
     int resolveEntID(const QMap<QString, int>& tag2entID, const std::string& tag, int fallback) {
         if (tag2entID.isEmpty()) return fallback;
         return tag2entID.value(QString::fromStdString(tag), -1);
@@ -165,13 +163,11 @@ void TestRunner::runUrlProbe(const Target& target) {
     QString coreError;
     libcore::TestResp result;
     {
-        // The core's buffer is global: a poll can take a sibling's results, reclaimed below.
         ResultPoller poller([this, gen = sessionGen_.load(), tag2entID = target.tag2entID] {
             if (staleGen(gen)) return;
             bool ok = false;
             const auto resp = defaultClient->QueryURLTest(&ok);
-            // Checked again: a poll can sit in this RPC while its batch ends and the next
-            // one zeroes the counter and reuses the positional tags.
+            // Checked again: this poll can sit in the RPC while its batch ends and the tags are reused.
             if (staleGen(gen)) return;
             if (!ok || resp.results.empty()) return;
 
@@ -195,7 +191,6 @@ void TestRunner::runUrlProbe(const Target& target) {
     }
 
     if (!rpcOK || result.results.empty()) {
-        // A failed Test RPC yields no per-result errors, so inspect it here.
         if (!rpcOK) mw_->handleXrayGeoAssetError(coreError, contextName(target.entID));
         return;
     }
@@ -317,10 +312,7 @@ void TestRunner::runLatencyGroup(LatencyKind kind, const QList<int>& requestedID
         mw_->UpdateDataView(true);
 
         auto runBatch = [this, isUrl](const QList<std::shared_ptr<Configs::Profile>>& profileSlice, const QList<int>& ids) {
-            // Per batch, not per probe: the probes of one batch run concurrently and
-            // drain each other's results from the core's global buffer, so they must
-            // share a generation. Outbound tags restart at every batch, so a poll left
-            // over from the previous one must not.
+            // Per batch, not per probe: a batch's probes drain each other's results, and tags restart each batch.
             sessionGen_.fetch_add(1);
             auto buildObject = Configs::BuildTestConfig(profileSlice);
             if (!buildObject->error.isEmpty()) {
@@ -328,7 +320,6 @@ void TestRunner::runLatencyGroup(LatencyKind kind, const QList<int>& requestedID
                 return;
             }
 
-            // xray-full tags live in outboundTags, so those configs add no separate tests.
             const int testCount = buildObject->fullConfigs.size() + (buildObject->outboundTags.empty() ? 0 : 1);
             if (testCount == 0) return;
 
@@ -380,10 +371,8 @@ void TestRunner::runLatencyGroup(LatencyKind kind, const QList<int>& requestedID
         mw_->dataViewHtmlGenerator_.clearTestSections();
         mw_->UpdateDataView(true);
         session_.unlock();
-        // Signalled with the session free so a waiter can start work of its own.
         finish();
 
-        // Auto-clear prunes on latency, so it is a URL-test notion only.
         if (currentGroup != nullptr && currentGroup->auto_clear_unavailable) {
             MW_show_log("URL test finished, clearing unavailable profiles...");
             runOnUiThread([=, this] {
@@ -442,7 +431,6 @@ void TestRunner::runSpeedTests(const QList<int>& requestedIDs, bool testCurrent)
                     runSpeedProbe(target);
                 }
             };
-            // A speed test saturates the link, so only country probes batch.
             const int stepSize = Configs::dataManager->settingsRepo->speed_test_mode == Configs::TestConfig::COUNTRY ? kTestBatchSize : 1;
             for (int i = 0; i < profileIDs.length(); i += stepSize) {
                 if (stopRequested_.load()) break;
@@ -562,8 +550,6 @@ void TestRunner::runSpeedProbe(const Target& target)
         return;
     }
 
-    // Per probe, unlike the latency path: speed probes never overlap, so none of them
-    // shares a result buffer with a sibling and each can retire its own late polls.
     sessionGen_.fetch_add(1);
 
     const auto speedtestConf = Configs::dataManager->settingsRepo->speed_test_mode;
@@ -578,7 +564,6 @@ void TestRunner::runSpeedProbe(const Target& target)
     req.only_country = speedtestConf == Configs::TestConfig::COUNTRY;
     req.country_concurrency = Configs::dataManager->settingsRepo->test_concurrent;
 
-    // A country sweep ticks per landed result instead; see pollCountryTest.
     if (speedtestConf != Configs::TestConfig::COUNTRY) {
         mw_->dataViewHtmlGenerator_.addTestProgress();
         mw_->UpdateDataView();
@@ -605,7 +590,6 @@ void TestRunner::runSpeedProbe(const Target& target)
     }
 
     for (const auto& res : result.results) {
-        // An xray-full config is its own box with no tag map, so it must be entID.
         const int entid = target.testCurrent
                               ? (mw_->running ? mw_->running->id : -1)
                               : resolveEntID(target.tag2entID, res.outbound_tag.value(), target.entID);

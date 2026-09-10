@@ -22,7 +22,6 @@ inline bool mw_sub_updating = false;
     });                                                  \
     dialog->show();
 
-// Tabs are ordered by the user, so a tab index is not a group id.
 inline int tabIndex2GroupId(int index) {
     auto tabOrder = Configs::dataManager->groupsRepo->GetGroupsTabOrder();
     if (tabOrder.length() <= index) return -1;

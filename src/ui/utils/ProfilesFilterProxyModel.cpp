@@ -7,7 +7,6 @@ namespace {
 
 ProfilesFilterProxyModel::ProfilesFilterProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent) {
-    // Re-tests a row on dataChanged, so a test result arriving mid-run moves it in or out of the filter.
     setDynamicSortFilter(true);
 }
 

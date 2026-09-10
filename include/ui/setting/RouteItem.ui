@@ -230,7 +230,7 @@
        <string>Endpoints</string>
       </attribute>
       <attribute name="toolTip">
-       <string>OpenVPN / OpenConnect profiles started alongside this routing profile. Traffic for the networks they advertise goes through them; everything else follows this profile's rules. Each endpoint gets a rule in the Advanced tab that you can move among your own rules.</string>
+       <string>OpenVPN / OpenConnect profiles started alongside this routing profile. Traffic for the networks they advertise goes through them; everything else follows this profile's rules. Each endpoint gets a rule in the Advanced tab that you can move among your own rules. A chain endpoint can hand out one rule per inner OpenVPN / OpenConnect hop too, so traffic can be routed to a hop before the exit.</string>
       </attribute>
       <layout class="QVBoxLayout" name="endpointsTabLayout">
        <item>
@@ -242,6 +242,9 @@
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon</enum>
            </property>
           </widget>
          </item>

@@ -206,7 +206,6 @@ void ProfilesTableModel::refreshTable(const QList<int> &ids, bool mayNeedReset) 
     if (needFullReset) {
         setProfileIds(ids);
     } else {
-        // A bulk refresh can rewrite filter fields (clearing tests wipes test_country).
         m_filterKeys.clear();
         m_filterIndexBuilt = false;
 
@@ -237,7 +236,6 @@ void ProfilesTableModel::emplaceProfiles(int row1, int row2) {
     if (row1 < row2) m_profileIds.remove(row1);
     else m_profileIds.remove(row1+1);
 
-    // Every row between the two shifted by one; id2row has to follow.
     const int from = std::max(std::min(row1, row2), 0);
     const int to = std::min(std::max(row1, row2), static_cast<int>(m_profileIds.size()) - 1);
     for (int i = from; i <= to; ++i) id2row[m_profileIds[i]] = i;

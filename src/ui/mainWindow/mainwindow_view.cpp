@@ -20,8 +20,7 @@
 #include "include/ui/utils/ProfilesTableModel.h"
 #include "include/ui/widget/StartStopButton.hpp"
 
-// Language setting -> locale, mirroring the switch in main.cpp; 0 follows the system locale.
-// QLocale() alone is not enough: explicit English leaves the default locale on the system one.
+// Mirrors the language switch in main.cpp; QLocale() alone follows the system, not an explicit setting.
 bool MainWindow::usesTightLabels() const {
     static const QStringList byLanguageSetting = {"", "en", "zh_CN", "fa_IR", "ru_RU"};
     const int language = Configs::dataManager->settingsRepo->language;
@@ -37,23 +36,18 @@ void MainWindow::applyTopBarMetrics() {
     // Drop the previous run's floor: a stale minimum gets baked into minimumSizeHint() below.
     for (auto* b : menuButtons) b->setMinimumWidth(0);
 
-    // Content width only: ::menu-indicator already clears the label, so no arrow padding.
     int uniformButtonWidth = 0;
     for (auto* b : menuButtons) {
         b->ensurePolished();
         uniformButtonWidth = qMax(uniformButtonWidth, b->sizeHint().width());
     }
 
-    // QToolButton's only slack is one space advance per side, which is clearance for Latin ink but
-    // not for CJK glyphs that fill their advance box, nor for RU labels long enough to sit at that
-    // bound on every button at once -- both run into the chevron. Buy those locales a second space
-    // advance per side rather than widening all five in every language (#1665, #1829).
+    // CJK glyphs and long RU labels fill QToolButton's one-space slack and run into the chevron (#1665, #1829).
     if (usesTightLabels()) {
         uniformButtonWidth += 2 * fontMetrics().horizontalAdvance(' ');
     }
     for (auto* b : menuButtons) b->setMinimumWidth(uniformButtonWidth);
 
-    // Translated labels outgrow the designed 800x600 floor, so follow what the layout needs (#1665).
     const QSize contentMin = minimumSizeHint();
     setMinimumSize(qMax(designMinimumSize.width(), contentMin.width()),
                    qMax(designMinimumSize.height(), contentMin.height()));
@@ -85,6 +79,20 @@ void MainWindow::UpdateDataView(bool force)
         }
     }, true);
     lastUpdatedMs.store(QDateTime::currentMSecsSinceEpoch());
+}
+
+void MainWindow::noteRestartNeeded(const QString& reason)
+{
+    if (Configs::dataManager->settingsRepo->started_id < 0) return;
+    dataViewHtmlGenerator_.addPendingRestartReason(reason);
+    UpdateDataView(true);
+}
+
+void MainWindow::clearRestartNeeded()
+{
+    if (!dataViewHtmlGenerator_.hasPendingRestart()) return;
+    dataViewHtmlGenerator_.clearPendingRestart();
+    UpdateDataView(true);
 }
 
 void MainWindow::setDownloadReport(const DownloadProgressReport& report, bool show)
@@ -153,7 +161,6 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (group != nullptr) group_name = group->name;
     }
 
-    // An endpoint profile never resolves a country, so its tunnel state takes that slot.
     const QString runningDetail = m_vpnEndpointState.isEmpty()
                                       ? (running ? running->runningCountryInfo : QString())
                                       : m_vpnEndpointState;
@@ -173,7 +180,6 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     const auto inbound_disabled = settings->disable_mixed_inbound;
     auto display_socks = DisplayAddress(settings->inbound_address, settings->inbound_socks_port);
     QString inbound_tip;
-    // A wildcard bind is not something a LAN client can dial, so show the interface it actually reaches instead.
     if (!inbound_disabled && LocalNetwork::LanInboundIsWildcard()) {
         if (const auto lan = LocalNetwork::LanAddress(); !lan.isEmpty()) {
             inbound_tip = tr("Listening on all interfaces (%1)").arg(display_socks);
@@ -297,7 +303,6 @@ void MainWindow::refresh_proxy_list_column_size() {
         const bool vBarBlocked = vBar->blockSignals(true);
         hHeader->blockSignals(true);
         constexpr int columnCount = ProfilesTableModel::ColumnCount;
-        // Widths saved before the column set changed no longer line up with the header.
         if (!group->column_width.isEmpty() && group->column_width.size() != columnCount) {
             group->column_width.clear();
         }

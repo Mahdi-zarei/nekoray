@@ -2,6 +2,69 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>ConnectionsTableModel</name>
+    <message>
+        <source>Close this connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination (Domain)</source>
+        <translation>目标（域名）</translation>
+    </message>
+    <message>
+        <source>Process</source>
+        <translation>进程</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>出站</translation>
+    </message>
+    <message>
+        <source>Traffic</source>
+        <translation>流量</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>速度</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click To Disable Sorting</source>
+        <translation>点击以“禁用排序”</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Process</source>
+        <translation>点击以“按进程排序”</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Protocol</source>
+        <translation>点击“按协议排序”</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Outbound</source>
+        <translation>点击“按出站排序”</translation>
+    </message>
+    <message>
+        <source>Click to sort by traffic; right-click to choose total/down/up</source>
+        <translation>点击按流量排序; 右击选择“合计/下载/上传”</translation>
+    </message>
+    <message>
+        <source>Click to sort by speed; right-click to choose total/down/up</source>
+        <translation>点击按速度排序; 右击选择“合计/下载/上传”</translation>
+    </message>
+</context>
+<context>
     <name>DialogAutoSelector</name>
     <message>
         <source>Auto Selector Stats</source>
@@ -2107,7 +2170,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
 </context>
 <context>
-    <name>DialogRuntimeStats</name>
+    <name>RuntimeStatsWidget</name>
     <message>
         <source>%1 active   ·   %2 TCP   ·   %3 UDP</source>
         <translation>活动: %1   ·   TCP: %2   ·   UDP: %3</translation>
@@ -3666,10 +3729,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>测试结果</translation>
     </message>
     <message>
-        <source>Traffic</source>
-        <translation>流量</translation>
-    </message>
-    <message>
         <source>Share</source>
         <translation>分享</translation>
     </message>
@@ -3752,14 +3811,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Tools</source>
         <translation>工具</translation>
-    </message>
-    <message>
-        <source>Click to sort by traffic; right-click to choose total/down/up</source>
-        <translation>点击按流量排序; 右击选择“合计/下载/上传”</translation>
-    </message>
-    <message>
-        <source>Click to sort by speed; right-click to choose total/down/up</source>
-        <translation>点击按速度排序; 右击选择“合计/下载/上传”</translation>
     </message>
     <message>
         <source>Manage Groups</source>
@@ -4324,14 +4375,6 @@ Please start your profile again.</source>
         <translation>连接</translation>
     </message>
     <message>
-        <source>Click To Disable Sorting</source>
-        <translation>点击以“禁用排序”</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>协议</translation>
-    </message>
-    <message>
         <source>Logs</source>
         <translation>日志</translation>
     </message>
@@ -4358,18 +4401,6 @@ Please start your profile again.</source>
     <message>
         <source>Routing</source>
         <translation>路由</translation>
-    </message>
-    <message>
-        <source>Destination (Domain)</source>
-        <translation>目标（域名）</translation>
-    </message>
-    <message>
-        <source>Process</source>
-        <translation>进程</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Process</source>
-        <translation>点击以“按进程排序”</translation>
     </message>
     <message>
         <source>Operation Mode</source>
@@ -4496,10 +4527,6 @@ Please start your profile again.</source>
         <translation>无法捕获屏幕</translation>
     </message>
     <message>
-        <source>Outbound</source>
-        <translation>出站</translation>
-    </message>
-    <message>
         <source>Invalid JSON Array</source>
         <translation>无效 JSON 数组</translation>
     </message>
@@ -4512,14 +4539,6 @@ Please start your profile again.</source>
     <message>
         <source>Please run Throne as admin</source>
         <translation>请以管理员身份运行 Throne</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Protocol</source>
-        <translation>点击“按协议排序”</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Outbound</source>
-        <translation>点击“按出站排序”</translation>
     </message>
     <message>
         <source>Add profile from File(s)</source>

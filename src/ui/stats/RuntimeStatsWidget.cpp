@@ -1,4 +1,4 @@
-#include "include/ui/stats/dialog_runtime_stats.h"
+#include "include/ui/stats/RuntimeStatsWidget.h"
 
 #include "include/ui/mainwindow.h"
 #include "include/ui/stats/dialog_endpoint_details.h"
@@ -16,13 +16,11 @@
 #include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
-#include <QGuiApplication>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointer>
-#include <QScreen>
 #include <QStringList>
 #include <QPushButton>
 #include <QTableWidget>
@@ -43,14 +41,15 @@ namespace {
     }
 }
 
-DialogRuntimeStats::DialogRuntimeStats(QWidget* parent) : QDialog(parent), ui(new Ui::DialogRuntimeStats) {
+RuntimeStatsWidget::RuntimeStatsWidget(QWidget* parent) : QWidget(parent), ui(new Ui::RuntimeStatsWidget) {
     ui->setupUi(this);
 
     ui->rootGrid->setColumnStretch(0, 1);
-    ui->rootGrid->setColumnStretch(1, 1);
     ui->rootGrid->setRowStretch(0, 1);
     ui->processLayout->setStretch(1, 1);
-    ui->processLayout->setStretch(2, 1);
+    // Without this the slack spreads over the label columns too, stranding each value far from its caption.
+    ui->formRunning->setColumnStretch(1, 1);
+    ui->formRunning->setColumnStretch(3, 1);
 
     ui->cpuChart->setColors(kRuntimeThroneColor, kRuntimeCoreColor);
     ui->ramChart->setColors(kRuntimeThroneColor, kRuntimeCoreColor);
@@ -79,16 +78,38 @@ DialogRuntimeStats::DialogRuntimeStats(QWidget* parent) : QDialog(parent), ui(ne
     timer_ = new QTimer(this);
     timer_->setInterval(1000);
     connect(timer_, &QTimer::timeout, this, [this]() { refreshLive(); });
-    timer_->start();
-
-    refreshLive();
 }
 
-DialogRuntimeStats::~DialogRuntimeStats() {
+RuntimeStatsWidget::~RuntimeStatsWidget() {
     delete ui;
 }
 
-void DialogRuntimeStats::refreshLive() {
+// A splitter collapses a pane by moving it off-screen, never by hiding it, so isVisible() alone still reads true.
+bool RuntimeStatsWidget::panelActive() const {
+    return isVisible() && !window()->isMinimized() && !visibleRegion().isEmpty();
+}
+
+void RuntimeStatsWidget::showEvent(QShowEvent *event) {
+    QWidget::showEvent(event);
+    // A hidden gap turns the next CPU delta into an average over that gap, and splices the sparklines.
+    metrics_.reset();
+    ui->cpuChart->clear();
+    ui->ramChart->clear();
+    // The panel outlives a visit now, so the egress snapshot has to go stale with it; lastProbeSecs_ still rate-limits.
+    egressSnapshotDone_ = false;
+    timer_->start();
+    refreshLive();
+}
+
+void RuntimeStatsWidget::hideEvent(QHideEvent *event) {
+    QWidget::hideEvent(event);
+    timer_->stop();
+    // Nothing refreshes it while the panel is away, and it would sit there showing a frozen endpoint.
+    if (details_) details_->close();
+}
+
+void RuntimeStatsWidget::refreshLive() {
+    if (!panelActive()) return;
     auto* mw = GetMainWindow();
 
     const auto selfSample = metrics_.sample(QCoreApplication::applicationPid());
@@ -120,12 +141,12 @@ void DialogRuntimeStats::refreshLive() {
     }
 
     const auto nextUpd = [](int interval, qint64 last) -> QString {
-        if (interval < 30) return DialogRuntimeStats::tr("Disabled");
+        if (interval < 30) return RuntimeStatsWidget::tr("Disabled");
         const qint64 remaining = last > 0
             ? last + static_cast<qint64>(interval) * 60 - QDateTime::currentSecsSinceEpoch()
             : 0;
-        if (remaining <= 0) return DialogRuntimeStats::tr("Due now");
-        return DialogRuntimeStats::tr("in %1").arg(Stats::HumanizeDuration(remaining));
+        if (remaining <= 0) return RuntimeStatsWidget::tr("Due now");
+        return RuntimeStatsWidget::tr("in %1").arg(Stats::HumanizeDuration(remaining));
     };
     auto* settings = Configs::dataManager->settingsRepo.get();
     ui->vSubUpdate->setText(nextUpd(settings->sub_auto_update, settings->sub_auto_update_last));
@@ -155,6 +176,10 @@ void DialogRuntimeStats::refreshLive() {
             lastProbedConfig_ = cfgName;
             egressSnapshotDone_ = false;
             lastProbeSecs_ = 0;
+            // The probe runs for seconds; without this the old config's egress sits under the new config's name.
+            ui->vOutIp->setText(QStringLiteral("—"));
+            ui->vCountry->setText(QStringLiteral("—"));
+            ui->vPing->setText(QStringLiteral("—"));
         }
         if (!egressSnapshotDone_ && (lastProbeSecs_ == 0 || nowSecs - lastProbeSecs_ >= 30)) {
             lastProbeSecs_ = nowSecs;
@@ -163,7 +188,7 @@ void DialogRuntimeStats::refreshLive() {
     }
 
     if (!connBusy_.exchange(true)) {
-        QPointer<DialogRuntimeStats> self(this);
+        QPointer<RuntimeStatsWidget> self(this);
         runOnNewThread([self]() {
             const auto conns = API::defaultClient->QueryConnections();
             int tcp = 0, udp = 0, total = 0;
@@ -176,14 +201,14 @@ void DialogRuntimeStats::refreshLive() {
             runOnUiThread([self, tcp, udp, total]() {
                 if (!self) return;
                 self->ui->vConns->setText(
-                    DialogRuntimeStats::tr("%1 active   ·   %2 TCP   ·   %3 UDP").arg(total).arg(tcp).arg(udp));
+                    RuntimeStatsWidget::tr("%1 active   ·   %2 TCP   ·   %3 UDP").arg(total).arg(tcp).arg(udp));
                 self->connBusy_.store(false);
             });
         });
     }
 
     if (!vpnBusy_.exchange(true)) {
-        QPointer<DialogRuntimeStats> self(this);
+        QPointer<RuntimeStatsWidget> self(this);
         runOnNewThread([self]() {
             bool ok = false;
             // Empty tag list = every live endpoint; 0 ms = current state, never wait.
@@ -202,7 +227,7 @@ void DialogRuntimeStats::refreshLive() {
     }
 }
 
-QString DialogRuntimeStats::selectedEndpointTag() const {
+QString RuntimeStatsWidget::selectedEndpointTag() const {
     const auto* selection = ui->endpointsTable->selectionModel();
     const auto rows = selection != nullptr ? selection->selectedRows() : QModelIndexList{};
     if (rows.isEmpty()) return {};
@@ -211,7 +236,7 @@ QString DialogRuntimeStats::selectedEndpointTag() const {
 }
 
 // A table's size hint ignores its rows, and the header's geometry is meaningless before show.
-void DialogRuntimeStats::fitEndpointTable() {
+void RuntimeStatsWidget::fitEndpointTable() {
     auto* table = ui->endpointsTable;
     // Rows keep the vertical header's default section size until asked.
     table->resizeRowsToContents();
@@ -226,7 +251,7 @@ void DialogRuntimeStats::fitEndpointTable() {
     table->setFixedHeight(height);
 }
 
-void DialogRuntimeStats::applyEndpoints(const QList<Stats::VpnEndpointView>& views) {
+void RuntimeStatsWidget::applyEndpoints(const QList<Stats::VpnEndpointView>& views) {
     endpointViews_ = views;
 
     if (views.isEmpty()) {
@@ -283,15 +308,9 @@ void DialogRuntimeStats::applyEndpoints(const QList<Stats::VpnEndpointView>& vie
         if (found != views.cend()) details_->applyStatus(*found);
         else details_->markGone();
     }
-
-    if (!endpointsGrown_) {
-        endpointsGrown_ = true;
-        const auto* scr = screen() != nullptr ? screen() : QGuiApplication::primaryScreen();
-        if (scr != nullptr) resize(size().expandedTo(sizeHint()).boundedTo(scr->availableGeometry().size()));
-    }
 }
 
-void DialogRuntimeStats::openEndpointDetails(const QString& tag) {
+void RuntimeStatsWidget::openEndpointDetails(const QString& tag) {
     if (tag.isEmpty()) return;
     const auto found = std::find_if(endpointViews_.cbegin(), endpointViews_.cend(),
                                     [&tag](const Stats::VpnEndpointView& view) { return view.tag == tag; });
@@ -304,14 +323,14 @@ void DialogRuntimeStats::openEndpointDetails(const QString& tag) {
     }
     if (details_) details_->close();
 
-    details_ = new DialogEndpointDetails(*found, this);
+    details_ = new DialogEndpointDetails(*found, window());
     details_->setAttribute(Qt::WA_DeleteOnClose);
     details_->show();
     details_->raise();
     details_->activateWindow();
 }
 
-void DialogRuntimeStats::probeEgress() {
+void RuntimeStatsWidget::probeEgress() {
     if (probing_.exchange(true)) return;
 
     auto* mw = GetMainWindow();
@@ -324,7 +343,7 @@ void DialogRuntimeStats::probeEgress() {
     if (ui->vOutIp->text() == QStringLiteral("—")) ui->vOutIp->setText(QStringLiteral("…"));
     if (ui->vCountry->text() == QStringLiteral("—")) ui->vCountry->setText(QStringLiteral("…"));
 
-    QPointer<DialogRuntimeStats> self(this);
+    QPointer<RuntimeStatsWidget> self(this);
     runOnNewThread([self]() {
         QString pingText;
         {
@@ -337,14 +356,14 @@ void DialogRuntimeStats::probeEgress() {
                 const int lat = res.results[0].latency_ms.value();
                 const auto vpnText = lat > 0 ? QString() : MainWindow::liveVpnConnectOkText();
                 pingText = lat > 0 ? QStringLiteral("%1 ms").arg(lat)
-                                   : (vpnText.isEmpty() ? DialogRuntimeStats::tr("Unavailable") : vpnText);
+                                   : (vpnText.isEmpty() ? RuntimeStatsWidget::tr("Unavailable") : vpnText);
             } else {
-                pingText = DialogRuntimeStats::tr("N/A");
+                pingText = RuntimeStatsWidget::tr("N/A");
             }
         }
 
-        QString ipText = DialogRuntimeStats::tr("N/A");
-        QString countryText = DialogRuntimeStats::tr("N/A");
+        QString ipText = RuntimeStatsWidget::tr("N/A");
+        QString countryText = RuntimeStatsWidget::tr("N/A");
         bool egressOk = false;
         const auto resp = NetworkRequestHelper::HttpGet(QStringLiteral("http://ip-api.com/json/"), false, true);
         if (resp.error.isEmpty()) {

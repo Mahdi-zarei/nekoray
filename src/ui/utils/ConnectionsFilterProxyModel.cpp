@@ -3,7 +3,6 @@
 
 ConnectionsFilterProxyModel::ConnectionsFilterProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent) {
-    // Every poll rewrites the rows in place, so acceptance has to be re-tested on dataChanged.
     setDynamicSortFilter(true);
 }
 
@@ -40,7 +39,6 @@ bool ConnectionsFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIn
     if (!m_source.isEmpty() && !meta->sourceDisplay.contains(m_source, Qt::CaseInsensitive)) return false;
     if (!m_process.isEmpty() && !meta->process.contains(m_process, Qt::CaseInsensitive)) return false;
     if (!m_outbound.isEmpty() && !meta->outbound.contains(m_outbound, Qt::CaseInsensitive)) return false;
-    // Composed strings last: only these two can cost an allocation on first touch.
     if (!m_dest.isEmpty() && !model->destText(sourceRow).contains(m_dest, Qt::CaseInsensitive)) return false;
     if (!m_protocol.isEmpty() && !model->protocolText(sourceRow).contains(m_protocol, Qt::CaseInsensitive)) return false;
     return true;

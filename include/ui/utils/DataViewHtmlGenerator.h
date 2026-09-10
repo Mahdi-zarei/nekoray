@@ -1,11 +1,17 @@
 #pragma once
 
 #include <QString>
+#include <QStringList>
 #include <QMutex>
 #include "include/global/HTTPRequestHelper.hpp"
 #ifndef Q_MOC_RUN
 #include <core/server/gen/libcore.pb.h>
 #endif
+
+// Declaration order is descending urgency; only the highest occupied level is ever rendered.
+enum class DataViewPriority { Critical, High, Medium, Low };
+
+enum class DataViewItem { Download, SpeedTest, LatencyTest, AutoSelector, VpnEndpoint, PendingRestart };
 
 class DataViewHtmlGenerator {
 public:
@@ -47,6 +53,14 @@ public:
         QString detail;
     };
 
+    struct PendingRestartPanelState {
+        bool visible = false;
+        QStringList reasons;
+    };
+
+    static constexpr auto RestartActionUrl = "throne-action:restart-proxy";
+    static constexpr auto DismissRestartActionUrl = "throne-action:dismiss-restart";
+
     void setDownloadReport(const DownloadProgressReport &report, bool show);
 
     void seedSpeedTest(int totalProfiles);
@@ -55,10 +69,15 @@ public:
 
     void seedLatencyTest(LatencyTestPanelState::Kind kind, int totalProfiles);
 
-    // Empty summary hides the panel.
     void setAutoSelectorStatus(const QString &summary, const QString &detail);
 
     void setVpnEndpointStatus(const QString &summary, const QString &detail, bool problem);
+
+    void addPendingRestartReason(const QString &reason);
+
+    void clearPendingRestart();
+
+    bool hasPendingRestart() const;
 
     void clearTestSections();
 
@@ -68,6 +87,9 @@ public:
 
 private:
     static QString getProgressBar(long long current, long long total);
+
+    // Assumes mu_ is held.
+    QString itemHtml(DataViewItem item);
 
     // The *SectionHtml helpers assume buildHtml already holds mu_.
     QString downloadSectionHtml();
@@ -80,6 +102,8 @@ private:
 
     QString vpnEndpointSectionHtml();
 
+    QString pendingRestartSectionHtml();
+
     // Pool threads seed panels while buildHtml reads them.
     mutable QMutex mu_;
 
@@ -88,6 +112,7 @@ private:
     LatencyTestPanelState latencyTest_ = {};
     AutoSelectorPanelState autoSelector_ = {};
     VpnEndpointPanelState vpnEndpoint_ = {};
+    PendingRestartPanelState pendingRestart_ = {};
 
     std::atomic<int> testProgress{0};
 };

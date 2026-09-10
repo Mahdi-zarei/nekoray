@@ -92,7 +92,6 @@ void MainWindow::log_process_loop() {
             needsPost = !logFlushScheduled;
             logFlushScheduled = true;
         }
-        // At most one flush in flight; later text rides the pending one, so the event queue cannot grow.
         if (needsPost) runOnUiThread([this] { flush_log_batch(); });
     }
 }

@@ -602,6 +602,31 @@ QToolButton::menu-indicator {
                </property>
               </layout>
              </widget>
+             <widget class="QWidget" name="runtime_tab">
+              <attribute name="title">
+               <string>Runtime Stats</string>
+              </attribute>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="sizeConstraint">
+                <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+               </property>
+               <property name="leftMargin">
+                <number>1</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>1</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -757,7 +782,6 @@ QToolButton::menu-indicator {
     <addaction name="separator"/>
     <addaction name="menu_otp_manager"/>
     <addaction name="separator"/>
-    <addaction name="actionRuntime_Stats"/>
     <addaction name="actionTraffic_Stats"/>
     <addaction name="actionCheck_For_Update"/>
    </widget>

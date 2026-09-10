@@ -9,7 +9,6 @@
 
 #include "include/ui/utils/ConnectionsTableModel.h"
 
-// Filter row over the connections table; traffic/speed hold formatted byte counts, so they get no field.
 class ConnectionsFilterHeader : public QHeaderView {
     Q_OBJECT
 public:
@@ -39,7 +38,6 @@ public:
 
     bool filtersVisible() const { return m_filtersVisible; }
 
-    // Hiding a column must clear its field, or the filter comes back with the column.
     void clearFilterFor(int column) {
         if (QLineEdit *edit = editForColumn(column)) edit->clear();
     }
@@ -97,7 +95,6 @@ public slots:
     void setFiltersVisible(bool visible) {
         m_filtersVisible = visible;
 
-        // Hiding must clear, or the list stays filtered with nothing explaining why.
         if (!visible) {
             for (QLineEdit *edit : filterEdits()) edit->clear();
         }
@@ -125,7 +122,6 @@ public slots:
         const int editHeight = 24;
         const int topPos = height() - editHeight - 4;
 
-        // A hidden section reports width 0, so placing its edit would give it a negative width over the neighbour.
         auto place = [&](QLineEdit *edit, int section) {
             if (isSectionHidden(section)) {
                 edit->hide();

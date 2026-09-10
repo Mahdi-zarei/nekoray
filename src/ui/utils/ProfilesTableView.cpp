@@ -119,7 +119,6 @@ void ProfilesTableView::dropEvent(QDropEvent *event) {
                 newRow--;
             }
         }
-        // The drop target is a view row; bring it into rowNum's space.
         if (m_filterProxy && newRow >= 0) {
             newRow = m_filterProxy->toSourceRow(newRow);
             if (newRow < 0) return;

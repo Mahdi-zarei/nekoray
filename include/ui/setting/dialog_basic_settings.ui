@@ -1354,7 +1354,20 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="xray_geoip_url"/>
+              <widget class="QComboBox" name="xray_geoip_url">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon</enum>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="xray_geoip_download">
@@ -1395,7 +1408,20 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="xray_geosite_url"/>
+              <widget class="QComboBox" name="xray_geosite_url">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::SizeAdjustPolicy::AdjustToMinimumContentsLengthWithIcon</enum>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="xray_geosite_download">

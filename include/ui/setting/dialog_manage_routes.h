@@ -62,6 +62,7 @@ private:
         int cache_capacity;
         bool disable_cache;
         bool disable_expire;
+        bool persist_cache;
         bool reverse_mapping;
         bool optimistic;
         QString optimistic_timeout;

@@ -102,6 +102,8 @@ set(PROJECT_SOURCES
         src/global/OtpPlaceholder.cpp
         include/global/VpnCredentialOverride.hpp
         src/global/VpnCredentialOverride.cpp
+        include/global/RunningProfiles.hpp
+        src/global/RunningProfiles.cpp
 
         3rdparty/qrcodegen.cpp
         3rdparty/QtExtKeySequenceEdit.cpp
@@ -219,6 +221,7 @@ set(PROJECT_SOURCES
         src/ui/utils/ConnectionCloseDelegate.cpp
         include/ui/utils/ScreenQrScanner.h
         src/ui/utils/ScreenQrScanner.cpp
+        include/ui/utils/NoWheelComboBox.h
 
         include/ui/profile/dialog_edit_profile.h
         src/ui/profile/dialog_edit_profile.cpp
@@ -364,9 +367,9 @@ set(PROJECT_SOURCES
         src/ui/stats/TrafficChartWidget.cpp
         include/ui/stats/TrafficChartWidget.h
 
-        src/ui/stats/dialog_runtime_stats.cpp
-        include/ui/stats/dialog_runtime_stats.h
-        include/ui/stats/dialog_runtime_stats.ui
+        src/ui/stats/RuntimeStatsWidget.cpp
+        include/ui/stats/RuntimeStatsWidget.h
+        include/ui/stats/RuntimeStatsWidget.ui
         src/ui/stats/dialog_endpoint_details.cpp
         include/ui/stats/dialog_endpoint_details.h
         include/ui/stats/dialog_endpoint_details.ui

@@ -25,6 +25,9 @@ namespace Stats
         BySource
     };
 
+    // The core sends M.Socksaddr.String(): "1.2.3.4:5678" or "[fe80::1]:5678", so an unbracketed form must split at the last colon.
+    QString EndpointHost(const QString& endpoint);
+
     class ConnectionMetadata
     {
         public:

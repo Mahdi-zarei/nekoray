@@ -403,7 +403,7 @@ namespace Configs {
         object["enabled"] = enabled;
         if (disable_sni) object["disable_sni"] = disable_sni;
         if (!server_name.isEmpty()) object["server_name"] = server_name;
-        if (insecure) object["insecure"] = insecure;
+        if (insecure || Configs::dataManager->settingsRepo->skip_cert) object["insecure"] = true;
         if (!alpn.isEmpty()) {
             object["alpn"] = QListStr2QJsonArray(alpn);
         }

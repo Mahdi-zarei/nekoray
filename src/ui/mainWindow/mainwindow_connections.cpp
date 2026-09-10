@@ -1,10 +1,15 @@
 #include "include/ui/mainwindow.h"
 #include "include/api/RPC.h"
+#include "include/database/entities/RouteProfile.h"
+#include "include/database/RoutesRepo.h"
+#include "include/database/SettingsRepo.h"
 #include "include/global/LocalNetwork.hpp"
 #include "include/ui/utils/ConnectionCloseDelegate.h"
 #include "include/ui/utils/ConnectionsFilterHeader.h"
 #include "include/ui/utils/ConnectionsFilterProxyModel.h"
 #include "include/ui/utils/ConnectionsTableModel.h"
+
+#include <QHostAddress>
 
 #include <QAbstractItemView>
 #include <QApplication>
@@ -23,7 +28,6 @@
 
 namespace
 {
-    // The material set is pure black, so it has to be tinted for dark themes.
     QIcon RecolorIcon(const QString& path, const QColor& color)
     {
         QPixmap pixmap(path);
@@ -61,20 +65,24 @@ void MainWindow::setupConnectionList()
     header->setSectionResizeMode(ConnectionsTableModel::ColOutbound, QHeaderView::ResizeToContents);
     header->setSectionResizeMode(ConnectionsTableModel::ColTraffic, QHeaderView::ResizeToContents);
     header->setSectionResizeMode(ConnectionsTableModel::ColSpeed, QHeaderView::ResizeToContents);
-    // The close column has no text, so ResizeToContents would collapse it to nothing.
     header->setSectionResizeMode(ConnectionsTableModel::ColClose, QHeaderView::Fixed);
     ui->connections->setColumnWidth(ConnectionsTableModel::ColClose, ConnectionCloseDelegate::ColumnWidth);
     ui->connections->verticalHeader()->hide();
 
-    // Otherwise the five content-sized columns re-measure up to 1000 rows whenever a poll changes the count.
     header->setResizeContentsPrecision(20);
     ui->connections->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->connections->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->connections->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->connections->setAlternatingRowColors(true);
     ui->connections->setWordWrap(false);
 
     refreshConnectionCloseIcons();
     restoreConnectionSort();
     setupConnectionSortMenu();
     setupConnectionFilter();
+
+    ui->connections->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->connections, &QWidget::customContextMenuRequested, this, &MainWindow::onConnectionContextMenu);
 
     connect(ui->connections, &QAbstractItemView::clicked, this, [this](const QModelIndex& index)
     {
@@ -141,10 +149,9 @@ void MainWindow::setupConnectionFilter()
     cornerLayout->addWidget(connectionCloseAllButton);
     ui->stats_widget->setCornerWidget(corner, Qt::TopRightCorner);
 
-    // The corner widget spans the whole tab bar, so it stays put and only greys out away from the connections tab.
-    auto syncEnabled = [=,this] { corner->setEnabled(ui->stats_widget->currentWidget() == ui->connections_tab); };
-    connect(ui->stats_widget, &QTabWidget::currentChanged, this, [syncEnabled](int) { syncEnabled(); });
-    syncEnabled();
+    auto syncCorner = [=,this] { corner->setVisible(ui->stats_widget->currentWidget() == ui->connections_tab); };
+    connect(ui->stats_widget, &QTabWidget::currentChanged, this, [syncCorner](int) { syncCorner(); });
+    syncCorner();
 
     connectionFilterDebounce = new QTimer(this);
     connectionFilterDebounce->setSingleShot(true);
@@ -164,7 +171,6 @@ void MainWindow::syncConnectionSourceColumn()
 {
     if (connectionsModel == nullptr) return;
     const bool show = LocalNetwork::LanInboundEnabled();
-    // refresh_status() drives this on a 2s tick, so bail out unless the state actually flipped.
     if (ui->connections->isColumnHidden(ConnectionsTableModel::ColSource) == !show) return;
 
     ui->connections->setColumnHidden(ConnectionsTableModel::ColSource, !show);
@@ -246,7 +252,6 @@ QStringList MainWindow::listedConnectionIds() const
 void MainWindow::closeConnections(const QStringList& ids)
 {
     if (ids.isEmpty()) return;
-    // Blocks until the core has walked every id, and "close all listed" hands it the whole table.
     runOnNewThread([ids] {
         bool rpcOK = false;
         const auto err = API::defaultClient->CloseConnections(&rpcOK, ids);
@@ -263,4 +268,107 @@ void MainWindow::UpdateConnectionList(const QList<Stats::ConnectionMetadata>& co
 {
     if (connectionsModel == nullptr) return;
     connectionsModel->setConnections(connections);
+}
+
+QString MainWindow::routeRuleAppendBlocker() const
+{
+    const auto& dm = Configs::dataManager;
+    const auto currentRoute = dm->routesRepo->GetRouteProfile(dm->settingsRepo->current_route_id);
+    if (!currentRoute) return tr("No active routing profile found.");
+    if (currentRoute->preventModifications) return tr("The current routing profile is locked against modifications.");
+    if (currentRoute->isRaw) return tr("The current routing profile is raw JSON.");
+    if (currentRoute->isRemote && currentRoute->autoUpdate) return tr("The current routing profile auto-updates from a URL.");
+    return {};
+}
+
+bool MainWindow::addRuleToCurrentRoute(const QString& rawRule, Configs::simpleAction action)
+{
+    auto fail = [this](const QString& msg) {
+        MW_show_log(msg);
+        return false;
+    };
+
+    if (const auto blocker = routeRuleAppendBlocker(); !blocker.isEmpty()) return fail(blocker);
+
+    const auto& dm = Configs::dataManager;
+    const auto currentRoute = dm->routesRepo->GetRouteProfile(dm->settingsRepo->current_route_id);
+    if (!currentRoute) return fail(tr("No active routing profile found."));
+
+    if (!currentRoute->AppendSimpleRule(rawRule, action))
+        return fail(tr("Failed to add routing rule: %1").arg(rawRule));
+
+    if (!dm->routesRepo->Save(currentRoute))
+        return fail(tr("Failed to save routing rule: %1").arg(rawRule));
+
+    MW_show_log(tr("Appended %1 to the %2 rules of \"%3\"")
+                    .arg(rawRule, Configs::simpleActionToString(action), currentRoute->name));
+    noteRestartNeeded(tr("Routing"));
+    return true;
+}
+
+void MainWindow::onConnectionContextMenu(const QPoint& pos)
+{
+    const QModelIndex proxyIndex = ui->connections->indexAt(pos);
+    if (!proxyIndex.isValid()) return;
+
+    const QModelIndex sourceIndex = connectionsFilterModel->mapToSource(proxyIndex);
+    if (!sourceIndex.isValid()) return;
+
+    const auto* meta = connectionsModel->metaAt(sourceIndex.row());
+    if (!meta) return;
+
+    const QString domain = meta->domain.trimmed();
+    const QString process = meta->process.trimmed();
+    const QString host = domain.isEmpty() ? Stats::EndpointHost(meta->dest.trimmed()) : domain;
+    if (host.isEmpty() && process.isEmpty()) return;
+
+    ui->connections->setCurrentIndex(proxyIndex);
+
+    const bool isDomain = QHostAddress(host).isNull();
+    const QString addressRule = isDomain ? ("suffix:" + host) : ("ip:" + host);
+    const QString processRule = "processName:" + process;
+
+    QMenu menu(this);
+    const QPoint globalPos = ui->connections->viewport()->mapToGlobal(pos);
+
+    auto showTip = [this](const QString& text) {
+        QToolTip::showText(QCursor::pos(), text, this);
+        auto r = ++toolTipID;
+        QTimer::singleShot(2000, this, [=, this] {
+            if (r == toolTipID) QToolTip::hideText();
+        });
+    };
+
+    struct RouteAction { Configs::simpleAction action; QString label; };
+    const RouteAction routeActions[] = {
+        { Configs::bypass, tr("Direct") },
+        { Configs::proxy,  tr("Proxy") },
+        { Configs::block,  tr("Block") },
+    };
+
+    const QString blocker = routeRuleAppendBlocker();
+
+    auto addRouteSubmenu = [&](const QString& title, const QString& rule) {
+        auto* sub = menu.addMenu(title);
+        if (!blocker.isEmpty())
+        {
+            sub->setEnabled(false);
+            sub->menuAction()->setToolTip(blocker);
+            return;
+        }
+        for (const auto& ra : routeActions)
+        {
+            auto* act = sub->addAction(ra.label);
+            connect(act, &QAction::triggered, this, [this, rule, ra, showTip] {
+                if (addRuleToCurrentRoute(rule, ra.action))
+                    showTip(tr("Appended to the %1 rules:\n%2").arg(ra.label, rule));
+            });
+        }
+    };
+
+    menu.setToolTipsVisible(true);
+    if (!host.isEmpty()) addRouteSubmenu(tr("Append \"%1\" to").arg(host), addressRule);
+    if (!process.isEmpty()) addRouteSubmenu(tr("Append process \"%1\" to").arg(process), processRule);
+
+    menu.exec(globalPos);
 }

@@ -144,6 +144,12 @@ void DialogManageRoutes::show_dns_advanced_editor() {
     disableExpire->setChecked(dns_advanced.disable_expire);
     layout->addRow(disableExpire);
 
+    auto persistCache = new QCheckBox(tr("Save Cache To File"), w);
+    persistCache->setToolTip(tr("<html><head/><body><p>Write cached DNS answers and FakeIP mappings to the core's cache "
+                                "file so they survive a restart. Off by default: each entry costs a disk write.</p></body></html>"));
+    persistCache->setChecked(dns_advanced.persist_cache);
+    layout->addRow(persistCache);
+
     auto reverseMapping = new QCheckBox(tr("Reverse Mapping"), w);
     reverseMapping->setChecked(dns_advanced.reverse_mapping);
     layout->addRow(reverseMapping);
@@ -156,6 +162,8 @@ void DialogManageRoutes::show_dns_advanced_editor() {
         optimisticTimeout->setEnabled(optimistic->isChecked());
         disableCache->setEnabled(!optimistic->isChecked());
         disableExpire->setEnabled(!optimistic->isChecked());
+        // Disable Cache short-circuits the store path, so the file would never be written.
+        persistCache->setEnabled(!disableCache->isChecked());
     };
     connect(optimistic, &QCheckBox::toggled, w, syncConflicts);
     connect(disableCache, &QCheckBox::toggled, w, syncConflicts);
@@ -180,6 +188,7 @@ void DialogManageRoutes::show_dns_advanced_editor() {
         dns_advanced.optimistic_timeout = optimisticTimeout->text().trimmed();
         dns_advanced.disable_cache = disableCache->isChecked();
         dns_advanced.disable_expire = disableExpire->isChecked();
+        dns_advanced.persist_cache = persistCache->isChecked();
         dns_advanced.reverse_mapping = reverseMapping->isChecked();
         w->accept();
     });
@@ -269,6 +278,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
         Configs::dataManager->settingsRepo->dns_cache_capacity,
         Configs::dataManager->settingsRepo->dns_disable_cache,
         Configs::dataManager->settingsRepo->dns_disable_expire,
+        Configs::dataManager->settingsRepo->dns_persist_cache,
         Configs::dataManager->settingsRepo->dns_reverse_mapping,
         Configs::dataManager->settingsRepo->dns_optimistic,
         Configs::dataManager->settingsRepo->dns_optimistic_timeout,
@@ -435,6 +445,7 @@ void DialogManageRoutes::accept() {
     Configs::dataManager->settingsRepo->dns_cache_capacity = dns_advanced.cache_capacity;
     Configs::dataManager->settingsRepo->dns_disable_cache = dns_advanced.disable_cache;
     Configs::dataManager->settingsRepo->dns_disable_expire = dns_advanced.disable_expire;
+    Configs::dataManager->settingsRepo->dns_persist_cache = dns_advanced.persist_cache;
     Configs::dataManager->settingsRepo->dns_reverse_mapping = dns_advanced.reverse_mapping;
     Configs::dataManager->settingsRepo->dns_optimistic = dns_advanced.optimistic;
     Configs::dataManager->settingsRepo->dns_optimistic_timeout = dns_advanced.optimistic_timeout;

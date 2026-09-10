@@ -51,7 +51,6 @@ public:
 
     int indexOfProfile(int id);
 
-    // A filter makes the source row and the display row disagree, hence both arguments.
     QString rowLabel(int sourceRow, int displayRow) const;
 
     // Null if the profile could not be loaded; valid until the next model change.

@@ -77,6 +77,9 @@ void MainWindow::RegisterHiddenMenuShortcuts(bool unregister) {
 
     if (unregister) return;
 
+    // A native menubar keeps its actions' shortcuts live even while hidden, so a second binding makes both ambiguous and kills them.
+    if (ui->menubar->isNativeMenuBar()) return;
+
     // Menus on visible toolButtons already register their actions' shortcuts; seed to avoid duplicates.
     QSet<QKeySequence> claimed;
     collectMenuShortcuts(ui->menu_program, claimed);
@@ -144,6 +147,16 @@ void MainWindow::loadShortcuts()
             action->setShortcut(mp[action->data().toString()]);
         }
     }
+
+#ifdef Q_OS_MACOS
+    // After the loop: setShortcut above replaces the list.
+    auto hideShortcuts = ui->actionHide_window->shortcuts();
+    const QKeySequence hideSeq(Qt::ControlModifier | Qt::Key_W);
+    if (!hideShortcuts.contains(hideSeq)) {
+        hideShortcuts.append(hideSeq);
+        ui->actionHide_window->setShortcuts(hideShortcuts);
+    }
+#endif
 
     RegisterHiddenMenuShortcuts();
 }

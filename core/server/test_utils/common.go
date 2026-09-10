@@ -167,22 +167,70 @@ func runBatch[T any](ctx context.Context, i *boxbox.Box, outboundTags []string, 
 	return res
 }
 
-func dialerHTTPClient(dial func(ctx context.Context, network, address string) (net.Conn, error), timeout time.Duration) *http.Client {
-	return &http.Client{
-		Transport: &http.Transport{
-			DialContext: func(ctx context.Context, network string, addr string) (net.Conn, error) {
-				return dial(ctx, network, addr)
-			},
-		},
-		Timeout: timeout,
+// Remembers every conn a probe dials, so the closer can tear them down rather than leave them to a
+// transport that outlives the box they were dialed through.
+type probeDialer struct {
+	dial   func(ctx context.Context, network, address string) (net.Conn, error)
+	access sync.Mutex
+	conns  []net.Conn
+	closed bool
+}
+
+func (d *probeDialer) DialContext(ctx context.Context, network, address string) (net.Conn, error) {
+	d.access.Lock()
+	closed := d.closed
+	d.access.Unlock()
+	if closed {
+		return nil, net.ErrClosed
+	}
+	conn, err := d.dial(ctx, network, address)
+	if err != nil {
+		return nil, err
+	}
+	// The closer can land mid-dial; that conn is ours to close, not to hand out.
+	d.access.Lock()
+	if d.closed {
+		d.access.Unlock()
+		_ = conn.Close()
+		return nil, net.ErrClosed
+	}
+	d.conns = append(d.conns, conn)
+	d.access.Unlock()
+	return conn, nil
+}
+
+// A proxied conn's Close can block on its own teardown handshake, so it never runs on the caller.
+func (d *probeDialer) Close() {
+	d.access.Lock()
+	conns := d.conns
+	d.conns = nil
+	d.closed = true
+	d.access.Unlock()
+	for _, conn := range conns {
+		go func(conn net.Conn) { _ = conn.Close() }(conn)
 	}
 }
 
-// Dials carry the batch context, not the per-request one, so cancelling the batch tears them down.
-func outboundHTTPClient(ctx context.Context, outbound adapter.Outbound, timeout time.Duration) *http.Client {
-	return dialerHTTPClient(func(_ context.Context, network, addr string) (net.Conn, error) {
-		return outbound.DialContext(ctx, "tcp", metadata.ParseSocksaddr(addr))
+func dialerHTTPClient(dial func(ctx context.Context, network, address string) (net.Conn, error), timeout time.Duration) (*http.Client, func()) {
+	probe := &probeDialer{dial: dial}
+	transport := &http.Transport{DialContext: probe.DialContext}
+	return &http.Client{Transport: transport, Timeout: timeout}, func() {
+		probe.Close()
+		transport.CloseIdleConnections()
+	}
+}
+
+// Dials carry a child of the batch context, not the per-request one, so cancelling the batch tears
+// them down -- and so does the closer, leaving none inside the outbound once the probe returns.
+func outboundHTTPClient(ctx context.Context, outbound adapter.Outbound, timeout time.Duration) (*http.Client, func()) {
+	dialCtx, cancelDials := context.WithCancel(ctx)
+	client, closeClient := dialerHTTPClient(func(_ context.Context, network, addr string) (net.Conn, error) {
+		return outbound.DialContext(dialCtx, "tcp", metadata.ParseSocksaddr(addr))
 	}, timeout)
+	return client, func() {
+		cancelDials()
+		closeClient()
+	}
 }
 
 func getNetDialer(dialer func(ctx context.Context, network string, destination metadata.Socksaddr) (net.Conn, error)) func(ctx context.Context, network string, address string) (net.Conn, error) {
@@ -191,26 +239,38 @@ func getNetDialer(dialer func(ctx context.Context, network string, destination m
 	}
 }
 
-func getSpeedtestServer(ctx context.Context, dialer func(ctx context.Context, network string, address string) (net.Conn, error)) (*speedtest.Server, error) {
-	clt := speedtest.New(speedtest.WithUserConfig(&speedtest.UserConfig{
-		DialContextFunc: dialer,
+func getSpeedtestServer(ctx context.Context, dialer func(ctx context.Context, network string, address string) (net.Conn, error)) (*speedtest.Server, func(), error) {
+	probe := &probeDialer{dial: dialer}
+	// speedtest.New builds its own transport and writes it back here; the servers it returns keep using it.
+	userConfig := &speedtest.UserConfig{
+		DialContextFunc: probe.DialContext,
 		PingMode:        speedtest.HTTP,
 		MaxConnections:  8,
-	}))
+	}
+	clt := speedtest.New(speedtest.WithUserConfig(userConfig))
+	closeClient := func() {
+		probe.Close()
+		if userConfig.T != nil {
+			userConfig.T.CloseIdleConnections()
+		}
+	}
 	fetchCtx, cancel := context.WithTimeout(ctx, FetchServersTimeout)
 	defer cancel()
 	srv, err := clt.FetchServerListContext(fetchCtx)
 	if err != nil {
-		return nil, err
+		closeClient()
+		return nil, nil, err
 	}
 	srv, err = srv.FindServer(nil)
 	if err != nil {
-		return nil, err
+		closeClient()
+		return nil, nil, err
 	}
 
 	if srv.Len() == 0 {
-		return nil, errors.New("no server found for speedTest")
+		closeClient()
+		return nil, nil, errors.New("no server found for speedTest")
 	}
 
-	return srv[0], nil
+	return srv[0], closeClient, nil
 }

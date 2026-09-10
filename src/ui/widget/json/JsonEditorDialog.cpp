@@ -14,7 +14,7 @@
 
 namespace JsonEdit {
     JsonEditorDialog::JsonEditorDialog(const QJsonObject& root, QWidget* parent) : QDialog(parent), m_original(root) {
-        setWindowTitle(tr("JSON Editor"));
+        setWindowTitle(QObject::tr("JSON Editor"));
         setWindowModality(Qt::ApplicationModal);
         setModal(true);
 
@@ -35,10 +35,10 @@ namespace JsonEdit {
         bottom->addWidget(m_status);
         bottom->addStretch();
 
-        auto* format = new QPushButton(tr("Format"), this);
+        auto* format = new QPushButton(QObject::tr("Format"), this);
         connect(format, &QPushButton::clicked, this, [this] {
             if (!m_editor->formatDocument()) {
-                MessageBoxWarning(tr("Invalid JSON"), tr("Fix the errors before formatting the document."));
+                MessageBoxWarning(QObject::tr("Invalid JSON"), QObject::tr("Fix the errors before formatting the document."));
             }
         });
         bottom->addWidget(format);
@@ -68,8 +68,8 @@ namespace JsonEdit {
             const auto document = QJsonDocument::fromJson(text.toUtf8(), &error);
             if (error.error == QJsonParseError::NoError && document.isObject()) return document.object();
 
-            MessageBoxWarning(tr("Invalid JSON"), error.error == QJsonParseError::NoError
-                                                      ? tr("The document must be a JSON object.")
+            MessageBoxWarning(QObject::tr("Invalid JSON"), error.error == QJsonParseError::NoError
+                                                      ? QObject::tr("The document must be a JSON object.")
                                                       : error.errorString());
         }
         return m_original;

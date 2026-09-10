@@ -48,7 +48,6 @@ void MainWindow::on_subscription_group_changed(int gid, const QList<int>& distur
         const auto prunedBuilt = selector->lastBuilt.removeIf(gone);
         if (prunedPool > 0 || prunedBuilt > 0) Configs::dataManager->profilesRepo->Save(ent);
 
-        // Only the running selector holds a built config that can go stale.
         if (running == nullptr || running->id != ent->id) continue;
         // A replaced member keeps its id, so only the disturbed set spots it.
         bool rebuild = prunedBuilt > 0;
@@ -72,7 +71,6 @@ void MainWindow::on_auto_selector_exhausted(int profileID) {
     MW_show_log(tr("[Auto selector] Every running profile stopped working — rebuilding from the "
                    "next best candidates."));
     runOnNewThread([=, this] {
-        // Re-testing the members that just died sinks them so fresh candidates rise.
         QList<int> stale;
         if (auto selector = ent->AutoSelector(); selector != nullptr) stale = selector->lastBuilt;
         rank_auto_selector(ent, stale);

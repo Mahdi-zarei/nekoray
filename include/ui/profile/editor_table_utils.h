@@ -6,6 +6,8 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
+#include "include/ui/utils/NoWheelComboBox.h"
+
 // Inline rather than file-local: a unity build puts both editors in one TU.
 
 inline QString EditorNumText(qint64 value) {
@@ -24,7 +26,7 @@ inline QString EditorComboCellText(const QTableWidget *table, int row, int colum
 
 inline void EditorSetComboCell(QTableWidget *table, int row, int column, const QStringList &items,
                                const QString &current) {
-    auto combo = new QComboBox(table);
+    auto combo = new NoWheelComboBox(table);
     combo->addItems(items);
     combo->setCurrentText(current);
     table->setCellWidget(row, column, combo);

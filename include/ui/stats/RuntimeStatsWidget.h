@@ -1,31 +1,35 @@
 #pragma once
 
-#include <QDialog>
+#include <QWidget>
 #include <QList>
 #include <QPointer>
 #include <QStringList>
 
 #include <atomic>
 
-#include "ui_dialog_runtime_stats.h"
+#include "ui_RuntimeStatsWidget.h"
 
 #include "include/sys/ProcessMetrics.hpp"
 #include "include/ui/stats/dialog_endpoint_details.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class DialogRuntimeStats;
+    class RuntimeStatsWidget;
 }
 QT_END_NAMESPACE
 
 class QTimer;
 
-class DialogRuntimeStats : public QDialog {
+class RuntimeStatsWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit DialogRuntimeStats(QWidget* parent = nullptr);
-    ~DialogRuntimeStats() override;
+    explicit RuntimeStatsWidget(QWidget* parent = nullptr);
+    ~RuntimeStatsWidget() override;
+
+protected:
+    void showEvent(QShowEvent *event) override;
+    void hideEvent(QHideEvent *event) override;
 
 private:
     void refreshLive();
@@ -35,8 +39,9 @@ private:
     void fitEndpointTable();
     void openEndpointDetails(const QString& tag);
     [[nodiscard]] QString selectedEndpointTag() const;
+    [[nodiscard]] bool panelActive() const;
 
-    Ui::DialogRuntimeStats* ui;
+    Ui::RuntimeStatsWidget* ui;
     QTimer* timer_ = nullptr;
     Sys::ProcessMetrics metrics_;
     std::atomic<bool> probing_{false};
@@ -50,5 +55,4 @@ private:
     QPointer<DialogEndpointDetails> details_;
     QList<Stats::VpnEndpointView> endpointViews_;
     QStringList endpointTags_;
-    bool endpointsGrown_ = false;
 };

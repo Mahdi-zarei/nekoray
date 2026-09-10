@@ -73,5 +73,27 @@ namespace Configs {
             XhttpAndReality,
             AllVLESS,
         };
+
+        struct GeoAssetProvider {
+            QString name;
+            QString geoip;
+            QString geosite;
+        };
+
+        // Both files must come from one provider; v2fly publishes its geosite as dlc.dat.
+        inline QList<GeoAssetProvider> XrayGeoAssetProviders = {
+            {"Loyalsoldier (global / China)",
+             "https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat",
+             "https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat"},
+            {"Chocolate4U (Iran)",
+             "https://github.com/Chocolate4U/Iran-v2ray-rules/raw/release/geoip.dat",
+             "https://github.com/Chocolate4U/Iran-v2ray-rules/raw/release/geosite.dat"},
+            {"runetfreedom (Russia)",
+             "https://github.com/runetfreedom/russia-v2ray-rules-dat/raw/release/geoip.dat",
+             "https://github.com/runetfreedom/russia-v2ray-rules-dat/raw/release/geosite.dat"},
+            {"v2fly (upstream)",
+             "https://github.com/v2fly/geoip/releases/latest/download/geoip.dat",
+             "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"},
+        };
     }
 } // namespace Configs

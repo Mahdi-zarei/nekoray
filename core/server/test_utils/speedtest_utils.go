@@ -69,10 +69,11 @@ func (w *countingWriter) Write(p []byte) (int, error) {
 }
 
 func countryTest(ctx context.Context, dialer func(ctx context.Context, network string, address string) (net.Conn, error), res *SpeedTestResult) error {
-	srv, err := getSpeedtestServer(ctx, dialer)
+	srv, closeClient, err := getSpeedtestServer(ctx, dialer)
 	if err != nil {
 		return err
 	}
+	defer closeClient()
 	res.ServerName = srv.Name
 	res.ServerCountry = srv.Country
 	res.Latency = int32(srv.Latency.Milliseconds())
@@ -153,7 +154,8 @@ func simpleDownloadTest(ctx context.Context, dialer func(ctx context.Context, ne
 	if timeout <= 0 {
 		timeout = URLTestTimeout
 	}
-	client := dialerHTTPClient(dialer, timeout)
+	client, closeClient := dialerHTTPClient(dialer, timeout)
+	defer closeClient()
 
 	res.ServerName = "N/A"
 	res.ServerCountry = "N/A"
@@ -219,10 +221,11 @@ func simpleDownloadTest(ctx context.Context, dialer func(ctx context.Context, ne
 }
 
 func speedTestWithDialer(ctx context.Context, dialer func(ctx context.Context, network string, address string) (net.Conn, error), res *SpeedTestResult, testDl, testUl bool, timeout time.Duration) error {
-	srv, err := getSpeedtestServer(ctx, dialer)
+	srv, closeClient, err := getSpeedtestServer(ctx, dialer)
 	if err != nil {
 		return err
 	}
+	defer closeClient()
 	res.ServerName = srv.Name
 	res.ServerCountry = srv.Country
 

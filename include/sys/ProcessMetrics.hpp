@@ -16,6 +16,9 @@ namespace Sys {
         // 0/negative pid -> not ok; a reused pid reads 0 for that tick via the non-negative-delta guard.
         Sample sample(qint64 pid);
 
+        // Drops the CPU baseline; the next sample per pid reports 0% and re-seeds.
+        void reset() { prior_.clear(); }
+
     private:
         struct Prior {
             quint64 cpuTimeNs = 0; // cumulative process CPU time (user+kernel), ns

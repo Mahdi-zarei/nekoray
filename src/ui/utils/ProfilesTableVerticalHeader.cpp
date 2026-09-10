@@ -19,7 +19,6 @@ void ProfilesTableVerticalHeader::setProfilesModel(ProfilesTableModel *model, Pr
     if (m_model) {
         connect(m_model, &ProfilesTableModel::dataChanged, this, [this](const QModelIndex &topLeft, const QModelIndex &bottomRight) {
             for (int r = topLeft.row(); r <= bottomRight.row(); ++r) {
-                // dataChanged carries source rows; sections are numbered by the proxy.
                 const int section = m_proxy ? m_proxy->toProxyRow(r) : r;
                 if (section >= 0) updateSection(section);
             }
@@ -57,7 +56,6 @@ void ProfilesTableVerticalHeader::paintSection(QPainter *painter, const QRect &r
     }
     QString text;
     if (m_model) {
-        // logicalIndex counts visible rows; the model is indexed by source row.
         const int sourceRow = m_proxy ? m_proxy->toSourceRow(logicalIndex) : logicalIndex;
         text = m_model->rowLabel(sourceRow, logicalIndex);
     } else {

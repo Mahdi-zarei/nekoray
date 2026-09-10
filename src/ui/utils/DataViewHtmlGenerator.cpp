@@ -4,6 +4,32 @@
 #include "include/global/Configs.hpp"
 #include "include/ui/setting/ThemeManager.hpp"
 
+#include <array>
+
+namespace {
+    struct ItemPriority {
+        DataViewItem item;
+        DataViewPriority priority;
+    };
+
+    // Within one level, panels render in this order.
+    constexpr std::array kItemPriorities = {
+        ItemPriority{DataViewItem::SpeedTest, DataViewPriority::Critical},
+        ItemPriority{DataViewItem::LatencyTest, DataViewPriority::Critical},
+        ItemPriority{DataViewItem::PendingRestart, DataViewPriority::Medium},
+        ItemPriority{DataViewItem::VpnEndpoint, DataViewPriority::Medium},
+        ItemPriority{DataViewItem::AutoSelector, DataViewPriority::Medium},
+        ItemPriority{DataViewItem::Download, DataViewPriority::Medium},
+    };
+
+    constexpr std::array kPriorityOrder = {
+        DataViewPriority::Critical,
+        DataViewPriority::High,
+        DataViewPriority::Medium,
+        DataViewPriority::Low,
+    };
+}
+
 void DataViewHtmlGenerator::setDownloadReport(const DownloadProgressReport &report, bool show) {
     QMutexLocker lk(&mu_);
     download_.visible = show;
@@ -51,6 +77,30 @@ void DataViewHtmlGenerator::setVpnEndpointStatus(const QString &summary, const Q
     vpnEndpoint_.visible = !summary.isEmpty();
 }
 
+void DataViewHtmlGenerator::addPendingRestartReason(const QString &reason) {
+    QMutexLocker lk(&mu_);
+    QString trimmed = reason.trimmed();
+    if (trimmed.isEmpty()) trimmed = QObject::tr("Settings");
+    if (!pendingRestart_.reasons.contains(trimmed)) {
+        if (pendingRestart_.reasons.size() < 4) {
+            pendingRestart_.reasons << trimmed;
+        } else if (pendingRestart_.reasons.last() != QStringLiteral("...")) {
+            pendingRestart_.reasons << QStringLiteral("...");
+        }
+    }
+    pendingRestart_.visible = true;
+}
+
+void DataViewHtmlGenerator::clearPendingRestart() {
+    QMutexLocker lk(&mu_);
+    pendingRestart_ = {};
+}
+
+bool DataViewHtmlGenerator::hasPendingRestart() const {
+    QMutexLocker lk(&mu_);
+    return pendingRestart_.visible;
+}
+
 void DataViewHtmlGenerator::clearTestSections() {
     QMutexLocker lk(&mu_);
     latencyTest_ = {};
@@ -64,24 +114,44 @@ void DataViewHtmlGenerator::addTestProgress(int count) {
 
 QString DataViewHtmlGenerator::buildHtml() {
     QMutexLocker lk(&mu_);
-    QString html;
-    if (download_.visible) {
-        html += downloadSectionHtml();
+    for (const auto priority : kPriorityOrder) {
+        QString html;
+        for (const auto &entry : kItemPriorities) {
+            if (entry.priority == priority) html += itemHtml(entry.item);
+        }
+        if (!html.isEmpty()) return html;
     }
-    if (speedtest_.visible) {
-        html += speedtestSectionHtml();
+    return {};
+}
+
+QString DataViewHtmlGenerator::itemHtml(DataViewItem item) {
+    switch (item) {
+        case DataViewItem::Download:       return download_.visible ? downloadSectionHtml() : QString();
+        case DataViewItem::SpeedTest:      return speedtest_.visible ? speedtestSectionHtml() : QString();
+        case DataViewItem::LatencyTest:    return latencyTest_.visible ? latencyTestSectionHtml() : QString();
+        case DataViewItem::AutoSelector:   return autoSelector_.visible ? autoSelectorSectionHtml() : QString();
+        case DataViewItem::VpnEndpoint:    return vpnEndpoint_.visible ? vpnEndpointSectionHtml() : QString();
+        case DataViewItem::PendingRestart: return pendingRestart_.visible ? pendingRestartSectionHtml() : QString();
     }
-    if (latencyTest_.visible) {
-        html += latencyTestSectionHtml();
+    return {};
+}
+
+QString DataViewHtmlGenerator::pendingRestartSectionHtml() {
+    const auto &tokens = themeManager()->tokens;
+    QString res = QString("<p style='text-align:center;margin:0;color:%1;'>%2</p>")
+                      .arg(tokens.info.name(), QObject::tr("Settings changed, restart to apply").toHtmlEscaped());
+    if (!pendingRestart_.reasons.isEmpty()) {
+        res += QString("<p style='text-align:center;margin:0;opacity:0.75;'>%1</p>")
+                   .arg(pendingRestart_.reasons.join(QStringLiteral(", ")).toHtmlEscaped());
     }
-    // Last and conditional: ambient status yields the view whenever a job wants to report progress.
-    if (html.isEmpty() && vpnEndpoint_.visible) {
-        html += vpnEndpointSectionHtml();
-    }
-    if (html.isEmpty() && autoSelector_.visible) {
-        html += autoSelectorSectionHtml();
-    }
-    return html;
+    res += QString("<p style='text-align:center;margin:0;'>"
+                   "<a style='color:%1;' href='%2'>%3</a>"
+                   "&nbsp;&nbsp;&#183;&nbsp;&nbsp;"
+                   "<a style='color:%4;' href='%5'>%6</a>"
+                   "</p>")
+               .arg(tokens.accent.name(), QString(RestartActionUrl), QObject::tr("Restart").toHtmlEscaped(),
+                    tokens.muted.name(), QString(DismissRestartActionUrl), QObject::tr("Ignore").toHtmlEscaped());
+    return res;
 }
 
 QString DataViewHtmlGenerator::vpnEndpointSectionHtml() {

@@ -251,10 +251,24 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     ui->vless_xray_pref->addItems(Configs::Xray::XrayVlessPreferenceString);
     ui->vless_xray_pref->setCurrentIndex(Configs::dataManager->settingsRepo->xray_vless_preference);
-    D_LOAD_STRING(xray_geoip_url)
-    D_LOAD_STRING(xray_geosite_url)
-    ui->xray_geoip_url->setPlaceholderText("https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat");
-    ui->xray_geosite_url->setPlaceholderText("https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat");
+    auto populateGeoAssetCombo = [](QComboBox *combo, bool geoip, const QString &current, const QStringList &history) {
+        for (const auto &p: Configs::Xray::XrayGeoAssetProviders) {
+            combo->addItem(geoip ? p.geoip : p.geosite);
+            combo->setItemData(combo->count() - 1, p.name, Qt::ToolTipRole);
+        }
+        for (const auto &h: history) {
+            if (combo->findText(h) < 0) combo->addItem(h);
+        }
+        const auto &fallback = Configs::Xray::XrayGeoAssetProviders.first();
+        combo->lineEdit()->setPlaceholderText(geoip ? fallback.geoip : fallback.geosite);
+        combo->setCurrentText(current);
+    };
+    populateGeoAssetCombo(ui->xray_geoip_url, true,
+                          Configs::dataManager->settingsRepo->xray_geoip_url,
+                          Configs::dataManager->settingsRepo->xray_geoip_url_history);
+    populateGeoAssetCombo(ui->xray_geosite_url, false,
+                          Configs::dataManager->settingsRepo->xray_geosite_url,
+                          Configs::dataManager->settingsRepo->xray_geosite_url_history);
 
     ui->ntp_enable->setChecked(Configs::dataManager->settingsRepo->enable_ntp);
     ui->ntp_server->setEnabled(Configs::dataManager->settingsRepo->enable_ntp);
@@ -428,8 +442,8 @@ void DialogBasicSettings::accept() {
         Configs::dataManager->settingsRepo->core_box_api_secret = secret;
 
     Configs::dataManager->settingsRepo->xray_vless_preference = static_cast<Configs::Xray::XrayVlessPreference>(ui->vless_xray_pref->currentIndex());
-    D_SAVE_STRING(xray_geoip_url)
-    D_SAVE_STRING(xray_geosite_url)
+    Configs::dataManager->settingsRepo->xray_geoip_url = ui->xray_geoip_url->currentText().trimmed();
+    Configs::dataManager->settingsRepo->xray_geosite_url = ui->xray_geosite_url->currentText().trimmed();
 
     Configs::dataManager->settingsRepo->enable_ntp = ui->ntp_enable->isChecked();
     Configs::dataManager->settingsRepo->ntp_server_address = ui->ntp_server->text().trimmed();
@@ -505,15 +519,37 @@ void DialogBasicSettings::downloadXrayGeoAsset(const QString &url, const QString
     });
 }
 
+void DialogBasicSettings::rememberGeoAssetUrl(QComboBox *combo, const QString &url, QStringList &history) {
+    if (url.isEmpty()) return;
+    for (const auto &p: Configs::Xray::XrayGeoAssetProviders) {
+        if (url == p.geoip || url == p.geosite) return;
+    }
+
+    history.removeAll(url);
+    history.prepend(url);
+    while (history.size() > 5) history.removeLast();
+
+    // Providers occupy the head of the combo, so everything after them is history that may have aged out.
+    for (int i = combo->count() - 1; i >= static_cast<int>(Configs::Xray::XrayGeoAssetProviders.size()); --i) {
+        if (!history.contains(combo->itemText(i))) combo->removeItem(i);
+    }
+    if (combo->findText(url) < 0) combo->addItem(url);
+    combo->setCurrentText(url);
+
+    Configs::dataManager->settingsRepo->Save();
+}
+
 void DialogBasicSettings::on_xray_geoip_download_clicked() {
-    QString url = ui->xray_geoip_url->text().trimmed();
-    if (url.isEmpty()) url = ui->xray_geoip_url->placeholderText();
+    QString url = ui->xray_geoip_url->currentText().trimmed();
+    if (url.isEmpty()) url = ui->xray_geoip_url->lineEdit()->placeholderText();
+    rememberGeoAssetUrl(ui->xray_geoip_url, url, Configs::dataManager->settingsRepo->xray_geoip_url_history);
     downloadXrayGeoAsset(url, "geoip.dat");
 }
 
 void DialogBasicSettings::on_xray_geosite_download_clicked() {
-    QString url = ui->xray_geosite_url->text().trimmed();
-    if (url.isEmpty()) url = ui->xray_geosite_url->placeholderText();
+    QString url = ui->xray_geosite_url->currentText().trimmed();
+    if (url.isEmpty()) url = ui->xray_geosite_url->lineEdit()->placeholderText();
+    rememberGeoAssetUrl(ui->xray_geosite_url, url, Configs::dataManager->settingsRepo->xray_geosite_url_history);
     downloadXrayGeoAsset(url, "geosite.dat");
 }
 

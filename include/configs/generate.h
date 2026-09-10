@@ -1,6 +1,7 @@
 #pragma once
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QSet>
 
 #include "include/database/entities/Profile.h"
 
@@ -44,6 +45,8 @@ namespace Configs
         QList<AutoSelectorBuildInfo> autoSelectors;
         // Endpoint hop tag -> profile id, so a live status can be named after its profile.
         QMap<QString, int> vpnEndpointProfiles;
+        // Every profile the config was built from, chain hops and route members included.
+        QSet<int> involvedProfiles;
     };
 
     class BuildTestConfigResult {
@@ -112,6 +115,9 @@ namespace Configs
 
     // Eligible: an openvpn/openconnect profile, or a chain whose exit hop is one, never the reverse.
     bool CanBeAuxEndpoint(const std::shared_ptr<Profile> &ent);
+
+    // Hops behind the exit of a chain endpoint that are endpoints themselves, exit-first.
+    QList<int> AuxEndpointInnerHops(int endpointProfileID);
 
     std::shared_ptr<BuildTestConfigResult> BuildTestConfig(const QList<std::shared_ptr<Profile> > &profiles);
 }

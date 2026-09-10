@@ -68,7 +68,7 @@ enum class MwMessage {
     RestartProgram,
     Raise,
     UpdateShortcuts,
-    ProfileChanged,       // arg MwArg::RestartProxy when the saved profile is running
+    ProfileChanged,       // arg MwArg::RestartProxy when the saved profile is part of the running config
     GroupsChanged,
     SubscriptionFinished, // arg MwArg::Quiet skips the import-count line
     SubscriptionNewGroup,

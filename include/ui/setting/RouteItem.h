@@ -59,13 +59,20 @@ private:
 
     void refreshEndpointCandidates() const;
 
-    void addEndpointRow(int profileId) const;
+    void addEndpointRow(int profileId, bool innerHops);
 
     void removeEndpointRow(int profileId);
 
     [[nodiscard]] QList<int> listedEndpointIDs() const;
 
-    // One endpointPreferredBy rule per listed endpoint, keeping existing rules where they sit.
+    [[nodiscard]] QList<int> listedInnerHopEndpointIDs() const;
+
+    // The listed endpoint profileId is an opened-up inner hop of, or -1.
+    [[nodiscard]] int innerHopOwner(int profileId) const;
+
+    void setEndpointRowInnerHops(int profileId, bool innerHops);
+
+    // One endpointPreferredBy rule per listed endpoint and opened-up inner hop, keeping existing rules where they sit.
     void syncEndpointRules();
 
     [[nodiscard]] bool currentRuleIsEndpoint() const;

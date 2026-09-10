@@ -3,7 +3,6 @@
 #include <QIcon>
 #include <QStyledItemDelegate>
 
-// Replaces a per-row QToolButton: persistent cell widgets are all re-laid-out on every scroll.
 class ConnectionCloseDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:

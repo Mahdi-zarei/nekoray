@@ -2,6 +2,69 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fa_IR" sourcelanguage="en">
 <context>
+    <name>ConnectionsTableModel</name>
+    <message>
+        <source>Close this connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination (Domain)</source>
+        <translation>مقصد (دامنه)</translation>
+    </message>
+    <message>
+        <source>Process</source>
+        <translation>فرآیند</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>پروتکل</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>خروجی</translation>
+    </message>
+    <message>
+        <source>Traffic</source>
+        <translation>ترافیک</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click To Sort By Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click To Disable Sorting</source>
+        <translation>برای غیرفعال کردن مرتب‌سازی کلیک کنید</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Process</source>
+        <translation>برای مرتب‌سازی بر اساس فرآیند کلیک کنید</translation>
+    </message>
+    <message>
+        <source>Click To Sort By Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click To Sort By Outbound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to sort by traffic; right-click to choose total/down/up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to sort by speed; right-click to choose total/down/up</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Request with proxy but no profile started.</source>
@@ -1981,10 +2044,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>نتیجه تست</translation>
     </message>
     <message>
-        <source>Traffic</source>
-        <translation>ترافیک</translation>
-    </message>
-    <message>
         <source>Share</source>
         <translation>اشتراک گذاری</translation>
     </message>
@@ -2381,14 +2440,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>اتصال‌ها</translation>
     </message>
     <message>
-        <source>Click To Disable Sorting</source>
-        <translation>برای غیرفعال کردن مرتب‌سازی کلیک کنید</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>پروتکل</translation>
-    </message>
-    <message>
         <source>Logs</source>
         <translation>گزارش‌ها</translation>
     </message>
@@ -2419,18 +2470,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Routing</source>
         <translation>مسیریابی</translation>
-    </message>
-    <message>
-        <source>Destination (Domain)</source>
-        <translation>مقصد (دامنه)</translation>
-    </message>
-    <message>
-        <source>Process</source>
-        <translation>فرآیند</translation>
-    </message>
-    <message>
-        <source>Click To Sort By Process</source>
-        <translation>برای مرتب‌سازی بر اساس فرآیند کلیک کنید</translation>
     </message>
     <message>
         <source>Routing Menu</source>
@@ -2577,10 +2616,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>ناتوانی در ضبط صفحه</translation>
     </message>
     <message>
-        <source>Outbound</source>
-        <translation>خروجی</translation>
-    </message>
-    <message>
         <source>Click To Toggle sort by Traffic</source>
         <translation>برای تغییر مرتب‌سازی بر اساس ترافیک کلیک کنید</translation>
     </message>
@@ -2596,14 +2631,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Please run Throne as admin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click To Sort By Protocol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click To Sort By Outbound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

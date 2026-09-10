@@ -64,8 +64,7 @@ namespace Stats
         }
     }
 
-    // The core sends M.Socksaddr.String(): "1.2.3.4:5678" or "[fe80::1]:5678", so an unbracketed form must split at the last colon.
-    static QString endpointHost(const QString& endpoint)
+    QString EndpointHost(const QString& endpoint)
     {
         if (endpoint.startsWith('['))
         {
@@ -93,7 +92,7 @@ namespace Stats
         c.closedAtMs = conn.closed_at.value();
         c.source = QString::fromStdString(conn.source.value());
         // In tun mode our own traffic enters with the tun's (or this machine's LAN) address, so a loopback-only test would label it a LAN client.
-        const QString host = endpointHost(c.source);
+        const QString host = EndpointHost(c.source);
         c.sourceDisplay = host.isEmpty() || LocalNetwork::IsOwnAddress(host) ? localLabel : host;
         return c;
     }

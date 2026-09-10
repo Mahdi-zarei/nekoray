@@ -20,6 +20,7 @@
 #include "include/ui/widget/json/JsonEditorDialog.h"
 #include "include/global/GuiUtils.hpp"
 #include "include/global/Utils.hpp"
+#include "include/global/RunningProfiles.hpp"
 
 #include <QInputDialog>
 #include <QLabel>
@@ -911,7 +912,8 @@ void DialogEditProfile::accept() {
         }
     } else {
         auto changed = Configs::dataManager->profilesRepo->Save(ent);
-        if (changed && Configs::dataManager->settingsRepo->started_id == ent->id) args << MwArg::RestartProxy;
+        if (changed && (Configs::dataManager->settingsRepo->started_id == ent->id ||
+                        Configs::RunningUsesProfile(ent->id))) args << MwArg::RestartProxy;
     }
 
     MW_dialog_message(MwMessage::ProfileChanged, args);

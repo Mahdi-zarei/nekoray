@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RuntimeStatsWidget</class>
+ <widget class="QWidget" name="RuntimeStatsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>470</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" name="rootGrid">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupProcess">
+     <property name="title">
+      <string>Process</string>
+     </property>
+     <layout class="QVBoxLayout" name="processLayout">
+      <item>
+       <layout class="QGridLayout" name="tableGrid">
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelThroneName">
+          <property name="text">
+           <string notr="true">Throne</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="vThroneCpu">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="vThroneRam">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="labelCoreName">
+          <property name="text">
+           <string>Core</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="vCoreCpu">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="vCoreRam">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3" rowspan="2">
+         <spacer name="tableSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>12</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="chartsRow">
+        <item>
+         <widget class="MiniChartWidget" name="cpuChart" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MiniChartWidget" name="ramChart" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupRunning">
+     <property name="title">
+      <string>Running Config</string>
+     </property>
+     <layout class="QVBoxLayout" name="runningLayout">
+      <item>
+       <layout class="QGridLayout" name="formRunning">
+        <item row="3" column="1">
+         <widget class="QLabel" name="vCountry">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelCountry">
+          <property name="text">
+           <string>Country</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="vCfgName">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="labelCfgName">
+          <property name="text">
+           <string>Config</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLabel" name="labelOutIp">
+          <property name="text">
+           <string>Out IP</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <widget class="QLabel" name="vOutIp">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::TextInteractionFlag::TextSelectableByMouse</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QLabel" name="vPing">
+          <property name="text">
+           <string notr="true">—</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="labelPing">
+          <property name="text">
+           <string>Ping</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="groupEndpoints" native="true">
+        <layout class="QVBoxLayout" name="endpointsLayout">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QTableWidget" name="endpointsTable">
+           <property name="frameShape">
+            <enum>QFrame::Shape::NoFrame</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <column>
+            <property name="text">
+             <string>Endpoint</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>State</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string/>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="groupNetwork">
+     <property name="title">
+      <string>Network</string>
+     </property>
+     <layout class="QGridLayout" name="formNetwork">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelConns">
+        <property name="text">
+         <string>Connections</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="vConns">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="networkGap1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="labelSpeedProxy">
+        <property name="text">
+         <string>Proxy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="vSpeedProxy">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <spacer name="networkGap2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="labelSpeedDirect">
+        <property name="text">
+         <string>Direct</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLabel" name="vSpeedDirect">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <spacer name="networkTail">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="groupSystem">
+     <property name="title">
+      <string>System</string>
+     </property>
+     <layout class="QGridLayout" name="formSystem">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelDbSize">
+        <property name="text">
+         <string>Databases</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="vDbSize">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="systemGap1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="labelUptime">
+        <property name="text">
+         <string>Uptime</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="vUptime">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <spacer name="systemGap2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="labelSubUpdate">
+        <property name="text">
+         <string>Next sub update</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLabel" name="vSubUpdate">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <spacer name="systemGap3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="9">
+       <widget class="QLabel" name="labelRouteUpdate">
+        <property name="text">
+         <string>Next remote route update</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <widget class="QLabel" name="vRouteUpdate">
+        <property name="text">
+         <string notr="true">—</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <spacer name="systemTail">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MiniChartWidget</class>
+   <extends>QWidget</extends>
+   <header>include/ui/stats/MiniChartWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -177,14 +177,14 @@ namespace JsonEdit {
     }
 
     QString JsonCodeEdit::statusText() const {
-        if (toPlainText().trimmed().isEmpty()) return tr("Empty");
+        if (toPlainText().trimmed().isEmpty()) return QObject::tr("Empty");
         int errors = 0;
         for (const auto& issue : m_issues) {
             if (issue.severity == Severity::Error) errors++;
         }
-        if (errors > 0) return tr("%n problem(s)", "", errors);
-        if (!m_issues.isEmpty()) return tr("%n warning(s)", "", static_cast<int>(m_issues.size()));
-        return tr("Valid JSON");
+        if (errors > 0) return QObject::tr("%n problem(s)", "", errors);
+        if (!m_issues.isEmpty()) return QObject::tr("%n warning(s)", "", static_cast<int>(m_issues.size()));
+        return QObject::tr("Valid JSON");
     }
 
     bool JsonCodeEdit::formatDocument() {

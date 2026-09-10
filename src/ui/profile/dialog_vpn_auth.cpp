@@ -21,6 +21,7 @@
 
 #include "include/api/RPC.h"
 #include "include/global/Utils.hpp"
+#include "include/ui/utils/NoWheelComboBox.h"
 
 namespace {
     const QColor kVpnAuthErrorColor(0xE0, 0x5A, 0x5A);
@@ -212,7 +213,7 @@ void DialogVpnAuth::buildFormFields() {
         const auto label = field.label.isEmpty() ? field.submissionKey : field.label;
         QWidget *widget = nullptr;
         if (field.kind == "select") {
-            auto *combo = new QComboBox(ui->form_container);
+            auto *combo = new NoWheelComboBox(ui->form_container);
             for (const auto &option : field.options) {
                 combo->addItem(option.second.isEmpty() ? option.first : option.second, option.first);
             }
