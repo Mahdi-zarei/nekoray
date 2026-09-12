@@ -142,6 +142,10 @@ namespace Configs {
         bool net_use_proxy = false;
         bool net_insecure = false;
         bool reset_proxy_on_disable_sp = false;
+        // Linux/GNOME only: also write the socks system-proxy entry, which the session
+        // exports as all_proxy=socks://..., a scheme several CLI tools reject. Off by
+        // default; non-HTTP traffic is proxied either way.
+        bool set_socks_system_proxy = false;
 
         // Subscription
         QString user_agent = ""; // set at main.cpp

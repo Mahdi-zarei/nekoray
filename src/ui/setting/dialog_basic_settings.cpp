@@ -58,6 +58,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_STRING(direct_test_url)
     D_LOAD_BOOL(disable_tray)
     ui->reset_proxy_on_disable_sp->setChecked(Configs::dataManager->settingsRepo->reset_proxy_on_disable_sp);
+    D_LOAD_BOOL(set_socks_system_proxy)
     ui->url_timeout->setText(Int2String(Configs::dataManager->settingsRepo->url_test_timeout_ms));
     ui->speedtest_mode->setCurrentIndex(Configs::dataManager->settingsRepo->speed_test_mode);
     ui->test_timeout->setText(Int2String(Configs::dataManager->settingsRepo->speed_test_timeout_ms));
@@ -111,6 +112,11 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->proxy_scheme_l->hide();
     ui->proxy_scheme->hide();
     ui->windows_no_admin->hide();
+#endif
+
+#ifndef Q_OS_LINUX
+    // Only the Linux path writes per-protocol desktop proxy entries.
+    ui->set_socks_system_proxy->hide();
 #endif
 
     ui->max_log_line->setText(QString::number(Configs::dataManager->settingsRepo->max_log_line));
@@ -369,6 +375,7 @@ void DialogBasicSettings::accept() {
     Configs::dataManager->settingsRepo->allow_beta_update = ui->allow_beta->isChecked();
     Configs::dataManager->settingsRepo->disable_mixed_inbound = ui->disable_mixed_inbound->isChecked();
     Configs::dataManager->settingsRepo->reset_proxy_on_disable_sp = ui->reset_proxy_on_disable_sp->isChecked();
+    D_SAVE_BOOL(set_socks_system_proxy)
     D_SAVE_BOOL(inbound_auth)
     D_SAVE_STRING(inbound_user)
     D_SAVE_STRING(inbound_pass)

@@ -80,6 +80,7 @@ namespace Configs {
             {"system_proxy_enabled",          &remember_system_proxy},
             {"tun_mode_enabled",              &remember_tun},
             {"reset_proxy_on_disable_sp", &reset_proxy_on_disable_sp},
+            {"set_socks_system_proxy",       &set_socks_system_proxy},
             {"dns_disable_cache", &dns_disable_cache},
             {"dns_disable_expire", &dns_disable_expire},
             {"dns_persist_cache", &dns_persist_cache},
