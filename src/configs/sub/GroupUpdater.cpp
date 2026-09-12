@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QMutexLocker>
+#include <QRegularExpression>
 #include <QUrl>
 
 #include <algorithm>
@@ -122,7 +123,45 @@ namespace Subscription {
             const auto group = Configs::dataManager->groupsRepo->GetGroup(gid);
             return group == nullptr ? Int2String(gid) : group->name;
         }
+
+        QString decodeHeaderValue(const QString &raw) {
+            QString str = raw.trimmed();
+            if (str.startsWith("base64:", Qt::CaseInsensitive)) {
+                QString payload = str.mid(7).trimmed();
+                if (payload.isEmpty()) return QString();
+                QByteArray decoded = QByteArray::fromBase64(payload.toUtf8(), 
+                    QByteArray::Base64UrlEncoding | QByteArray::AbortOnBase64DecodingErrors);
+                if (decoded.isEmpty()) {
+                    decoded = QByteArray::fromBase64(payload.toUtf8());
+                }
+                if (!decoded.isEmpty()) return QString::fromUtf8(decoded).trimmed();
+                return QString();
+            }
+            return str;
+        }
     } // namespace
+
+    int ParseUpdateInterval(const QString &headerStr) {
+        if (headerStr.trimmed().isEmpty()) return 0;
+        QString s = headerStr.trimmed().remove('"').remove('\'').toLower();
+        bool ok = false;
+        if (s.endsWith("h")) {
+            int h = s.chopped(1).toInt(&ok);
+            if (ok && h > 0) return h;
+        } else if (s.endsWith("d")) {
+            int d = s.chopped(1).toInt(&ok);
+            if (ok && d > 0) return d * 24;
+        } else if (s.endsWith("s")) {
+            int sec = s.chopped(1).toInt(&ok);
+            if (ok && sec > 0) return std::max(1, sec / 3600);
+        }
+        int num = s.toInt(&ok);
+        if (ok && num > 0) {
+            if (num > 1000) return std::max(1, num / 3600);
+            return num;
+        }
+        return 0;
+    }
 
     GroupUpdater *updater() {
         static auto *instance = new GroupUpdater;
@@ -162,6 +201,31 @@ namespace Subscription {
                 refresh(gid, false);
                 emit asyncUpdateCallback(gid);
             }});
+        }
+    }
+
+    void GroupUpdater::CheckAutoUpdate() {
+        const qint64 now = QDateTime::currentSecsSinceEpoch();
+        const auto globalMinutes = Configs::dataManager->settingsRepo->sub_auto_update;
+        const bool globalEnabled = globalMinutes >= 30;
+        const auto tabOrder = Configs::dataManager->groupsRepo->GetGroupsTabOrder();
+
+        for (const int gid : tabOrder) {
+            const auto group = Configs::dataManager->groupsRepo->GetGroup(gid);
+            if (group == nullptr || group->url.isEmpty() || group->archive || group->skip_auto_update) continue;
+
+            qint64 intervalSecs = 0;
+            if (group->sub_update_interval > 0) {
+                intervalSecs = static_cast<qint64>(group->sub_update_interval) * 3600;
+            } else if (globalEnabled) {
+                intervalSecs = static_cast<qint64>(globalMinutes) * 60;
+            }
+
+            if (intervalSecs <= 0) continue;
+
+            if (group->sub_last_update <= 0 || (now - group->sub_last_update) >= intervalSecs) {
+                RefreshGroup(gid, nullptr, false);
+            }
         }
     }
 
@@ -254,8 +318,56 @@ namespace Subscription {
             return false;
         }
         body = std::move(resp.data);
+
+        // 1. Extract from HTTP response headers
         userInfo = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
+        if (userInfo.isEmpty()) {
+            userInfo = NetworkRequestHelper::GetHeader(resp.header, "Subscription-Userinfo");
+        }
+
+        QString intervalHeader = NetworkRequestHelper::GetHeader(resp.header, "profile-update-interval");
+        if (intervalHeader.isEmpty()) {
+            intervalHeader = NetworkRequestHelper::GetHeader(resp.header, "x-profile-update-interval");
+        }
+        QString profileTitle = decodeHeaderValue(NetworkRequestHelper::GetHeader(resp.header, "Profile-Title"));
+        QString webPageUrl = NetworkRequestHelper::GetHeader(resp.header, "Profile-Web-Page-Url");
+        QString supportUrl = NetworkRequestHelper::GetHeader(resp.header, "Support-Url");
+        if (supportUrl.isEmpty()) supportUrl = NetworkRequestHelper::GetHeader(resp.header, "support-url");
+        QString announceMsg = decodeHeaderValue(NetworkRequestHelper::GetHeader(resp.header, "Announce"));
+
+        // 2. In-body comments fallback (#subscription-userinfo:, #profile-title:, etc.)
+        for (const auto &line : QString::fromUtf8(body).split('\n')) {
+            const auto trimmed = line.trimmed();
+            if (trimmed.isEmpty()) continue;
+            if (!trimmed.startsWith('#') && !trimmed.startsWith("//")) break;
+            auto clean = trimmed.mid(trimmed.startsWith("//") ? 2 : 1).trimmed();
+
+            if (userInfo.isEmpty() && clean.startsWith("subscription-userinfo:", Qt::CaseInsensitive)) {
+                userInfo = clean.section(':', 1).trimmed();
+            } else if (intervalHeader.isEmpty() && clean.startsWith("profile-update-interval:", Qt::CaseInsensitive)) {
+                intervalHeader = clean.section(':', 1).trimmed();
+            } else if (profileTitle.isEmpty() && clean.startsWith("profile-title:", Qt::CaseInsensitive)) {
+                profileTitle = decodeHeaderValue(clean.section(':', 1).trimmed());
+            } else if (webPageUrl.isEmpty() && clean.startsWith("profile-web-page-url:", Qt::CaseInsensitive)) {
+                webPageUrl = clean.section(':', 1).trimmed();
+            } else if (supportUrl.isEmpty() && clean.startsWith("support-url:", Qt::CaseInsensitive)) {
+                supportUrl = clean.section(':', 1).trimmed();
+            } else if (announceMsg.isEmpty() && (clean.startsWith("announce:", Qt::CaseInsensitive) || clean.startsWith("notice:", Qt::CaseInsensitive))) {
+                announceMsg = decodeHeaderValue(clean.section(':', 1).trimmed());
+            }
+        }
+
+        int intervalHours = ParseUpdateInterval(intervalHeader);
+        if (intervalHours > 0) userInfo += (userInfo.isEmpty() ? "" : "; ") + QString("interval=%1").arg(intervalHours);
+        if (!profileTitle.isEmpty()) userInfo += (userInfo.isEmpty() ? "" : "; ") + QString("title=") + profileTitle;
+        if (!webPageUrl.isEmpty()) userInfo += (userInfo.isEmpty() ? "" : "; ") + QString("web_url=") + webPageUrl;
+        if (!supportUrl.isEmpty()) userInfo += (userInfo.isEmpty() ? "" : "; ") + QString("support_url=") + supportUrl;
+        if (!announceMsg.isEmpty()) userInfo += (userInfo.isEmpty() ? "" : "; ") + QString("announce=") + announceMsg;
+
         MW_show_log("<<<<<<<< " + QObject::tr("Subscription request fininshed: %1").arg(name));
+        if (intervalHours > 0) {
+            MW_show_log(QObject::tr("Subscription server update interval: %1 hour(s)").arg(intervalHours));
+        }
         return true;
     }
 
@@ -284,10 +396,29 @@ namespace Subscription {
 
         QByteArray body;
         QString userInfo;
-        if (!fetch(group->url.trimmed(), group->name, body, userInfo)) return;
+        if (!fetch(group->url.trimmed(), group->name, body, userInfo)) {
+            group->sub_last_update = QDateTime::currentSecsSinceEpoch();
+            groupsRepo->Save(group);
+            return;
+        }
 
-        group->sub_last_update = QDateTime::currentMSecsSinceEpoch() / 1000;
-        group->info = userInfo;
+        group->sub_last_update = QDateTime::currentSecsSinceEpoch();
+        if (!userInfo.isEmpty()) {
+            group->info = userInfo;
+        }
+
+        auto subInfo = group->GetSubUserInfo();
+        static const QRegularExpression intervalRe(R"((?:^|[;\s])interval=(\d+))", QRegularExpression::CaseInsensitiveOption);
+        auto mInterval = intervalRe.match(userInfo);
+        if (mInterval.hasMatch() && group->sub_update_interval == 0) {
+            group->sub_update_interval = mInterval.captured(1).toInt();
+        }
+
+        if (!subInfo.title.isEmpty() && (group->name.isEmpty() || group->name == QUrl(group->url).host())) {
+            group->name = subInfo.title;
+            MW_dialog_message(MwMessage::GroupsChanged, {});
+        }
+
         groupsRepo->Save(group);
 
         // Auto selectors are local state, not servers the remote sent: keep them out of the diff.

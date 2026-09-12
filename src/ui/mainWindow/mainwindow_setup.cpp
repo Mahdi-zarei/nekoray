@@ -5,6 +5,7 @@
 #include "include/ui/mainWindow/TestRunner.h"
 
 #include <QMenu>
+#include <QStackedWidget>
 
 #include "include/configs/sub/GroupUpdater.hpp"
 #include "include/configs/sub/RouteUpdater.hpp"
@@ -23,6 +24,7 @@
 #include "include/ui/stats/dialog_traffic_stats.h"
 #include "include/ui/stats/RuntimeStatsWidget.h"
 #include "include/ui/widget/StartStopButton.hpp"
+#include "include/ui/widget/SubscriptionInfoCard.hpp"
 
 #include "include/configs/generate.h"
 #include "include/database/GroupsRepo.h"
@@ -688,6 +690,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(filterHeader, &ProfilesTableFilterHeader::focusTableRequested, this,
             [this](bool selectFirst) { focusProfilesTable(selectFirst); });
 
+    // (Page 0: Subscription Card, Page 1: Live test reports)
+    m_topBarStack = new QStackedWidget(this);
+    m_subInfoCard = new SubscriptionInfoCard(this);
+
+    ui->horizontalLayout_2->removeWidget(ui->data_view);
+    m_topBarStack->addWidget(m_subInfoCard);
+    m_topBarStack->addWidget(ui->data_view);
+    ui->horizontalLayout_2->addWidget(m_topBarStack);
+
     this->refresh_groups();
 
     tray = new QSystemTrayIcon(nullptr);
@@ -1087,20 +1098,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(Stats::autoSelectorMonitor, &Stats::AutoSelectorMonitor::updated, this,
             [this] { refresh_auto_selector_view(); }, Qt::QueuedConnection);
 
-    {
+{
         auto* runner = Throne::PeriodicRunner::instance();
-        // Interval is sign-encoded in settings (negative = disabled); < 30 min counts as off.
-        const auto minutesOf = [](int v) { return v >= 30 ? v : 0; };
+        static qint64 lastSubCheck = 0;
         runner->Add({
-            tr("subscriptions"),
-            [minutesOf] { return minutesOf(Configs::dataManager->settingsRepo->sub_auto_update); },
-            [] { return Configs::dataManager->settingsRepo->sub_auto_update_last; },
+            "",
+            [] { return 10; }, 
+            [] { return lastSubCheck; },
             [](qint64 t) {
-                Configs::dataManager->settingsRepo->sub_auto_update_last = t;
-                Configs::dataManager->settingsRepo->Save();
+                lastSubCheck = t;
             },
-            [] { Subscription::updater()->RefreshAll(true); },
+            [] { Subscription::updater()->CheckAutoUpdate(); },
         });
+        const auto minutesOf = [](int v) { return v >= 30 ? v : 0; };
         runner->Add({
             tr("routing profiles"),
             [minutesOf] { return minutesOf(Configs::dataManager->settingsRepo->route_auto_update); },
@@ -1134,4 +1144,3 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow() {
     delete ui;
 }
-

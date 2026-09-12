@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QStackedWidget>
+#include "include/ui/widget/SubscriptionInfoCard.hpp"
+
 #include <include/global/HTTPRequestHelper.hpp>
 #ifndef Q_MOC_RUN
 #include <core/server/gen/libcore.pb.h>
@@ -287,6 +290,9 @@ private:
     class RuntimeStatsWidget *runtimeStatsWidget = nullptr;
     std::atomic<qint64> lastUpdatedMs = QDateTime::currentMSecsSinceEpoch();
     DataViewHtmlGenerator dataViewHtmlGenerator_;
+
+    QStackedWidget *m_topBarStack = nullptr;       
+    SubscriptionInfoCard *m_subInfoCard = nullptr; 
 
     QList<QShortcut*> hiddenMenuShortcuts;
 

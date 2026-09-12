@@ -121,7 +121,24 @@
       <item row="0" column="1">
        <widget class="MyLineEdit" name="url"/>
       </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_update_interval">
+        <property name="text">
+         <string>Update Interval</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
+       <widget class="QSpinBox" name="sub_update_interval">
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>720</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
        <widget class="QCheckBox" name="skip_auto_update">
         <property name="text">
          <string>Skip automatic update</string>
@@ -174,6 +191,7 @@
   <tabstop>name</tabstop>
   <tabstop>type</tabstop>
   <tabstop>url</tabstop>
+  <tabstop>sub_update_interval</tabstop>
   <tabstop>skip_auto_update</tabstop>
   <tabstop>copy_links</tabstop>
   <tabstop>copy_links_nkr</tabstop>

@@ -1,12 +1,39 @@
 #pragma once
+#include <QDateTime>
 #include <QList>
 #include <QMutex>
 #include <QString>
+#include <algorithm>
 
 #include "include/ui/group/GroupSort.hpp"
 
 namespace Configs
 {
+    struct SubUserInfo {
+        bool valid = false;
+        qint64 upload = 0;       // Bytes
+        qint64 download = 0;     // Bytes
+        qint64 total = 0;        // Bytes (0 = unlimited)
+        qint64 expire = 0;       // Unix epoch seconds (0 = no expiry)
+        QString title;           // Profile Title (e.g. "WindyDay")
+        QString web_url;         // Website / Dashboard URL
+        QString support_url;     // Support / Telegram URL
+        QString announce;        // Announcement text
+
+        [[nodiscard]] qint64 used() const { return upload + download; }
+        [[nodiscard]] qint64 remaining() const { return (total > used()) ? (total - used()) : 0; }
+        [[nodiscard]] double percentUsed() const {
+            if (total <= 0) return 0.0;
+            return std::clamp((static_cast<double>(used()) / static_cast<double>(total)) * 100.0, 0.0, 100.0);
+        }
+        [[nodiscard]] bool isExpired() const {
+            if (expire <= 0) return false;
+            return QDateTime::currentSecsSinceEpoch() > expire;
+        }
+    };
+
+    SubUserInfo ParseSubUserInfo(const QString &info);
+
     enum class testBy : int {
         latency = 0,
         dlSpeed,
@@ -43,6 +70,7 @@ namespace Configs
         QString url = "";
         QString info = "";
         qint64 sub_last_update = 0;
+        int sub_update_interval = 0; // In hours (0 = Default/Auto, >0 = custom)
         int front_proxy_id = -1;
         int landing_proxy_id = -1;
 
@@ -58,6 +86,8 @@ namespace Configs
         QList<std::pair<int, int>> selectedProfilesIdIdxPairs;
 
         Group() = default;
+
+        [[nodiscard]] SubUserInfo GetSubUserInfo() const { return ParseSubUserInfo(info); }
 
         void clearCalculatedColumnWidth();
 

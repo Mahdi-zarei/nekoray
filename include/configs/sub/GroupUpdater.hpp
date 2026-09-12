@@ -22,6 +22,8 @@ namespace Subscription {
 
         void RefreshAll(bool onlyAllowed = false);
 
+        void CheckAutoUpdate();
+
         void SubscribeUrl(const QString &url, const Finish &finish = nullptr);
 
         void ImportUrl(const QString &url, const Finish &finish = nullptr);
@@ -54,5 +56,6 @@ namespace Subscription {
         bool running = false;
     };
 
+    int ParseUpdateInterval(const QString &headerStr);
     GroupUpdater *updater();
 } // namespace Subscription
