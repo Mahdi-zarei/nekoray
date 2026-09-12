@@ -122,30 +122,20 @@
         </property>
        </widget>
       </item>
-      <item row="8" column="0" colspan="2">
-       <widget class="QCheckBox" name="use_tunnel_dns">
+      <item row="8" column="0">
+       <widget class="QLabel" name="tunnel_dns_l">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resolve the names the VPN server claims - its split-DNS suffixes and search domains - through the resolvers it pushes. Turn this off if the server claims every domain and breaks public DNS. Kept on regardless while this profile carries all traffic with &quot;Only route advertised network&quot; enabled, since the pushed resolvers are then the only reachable ones.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;How DNS uses the resolvers the VPN server pushes when this profile is started.&lt;/p&gt;&lt;p&gt;None: ignore them. Use this if the server claims every domain and breaks public DNS.&lt;br/&gt;Prefer: resolve the names the server claims - its split-DNS suffixes and search domains - through them, and everything else as usual.&lt;br/&gt;Strict: also send every remote DNS query to them instead of the remote DNS server, and fail the lookups they cannot answer. Direct lookups are unchanged.&lt;/p&gt;&lt;p&gt;As an endpoint in a routing profile, Prefer and Strict both resolve only the names the server claims.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="text">
-         <string>Resolve through this tunnel</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Tunnel DNS</string>
         </property>
        </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QComboBox" name="tunnel_dns"/>
       </item>
       <item row="9" column="0" colspan="2">
-       <widget class="QCheckBox" name="block_outside_dns">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fail a lookup the tunnel cannot answer instead of retrying it directly. Leave this off for a management VPN: names it does not claim then still resolve through the direct resolver.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Block outside DNS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0" colspan="2">
        <widget class="QPushButton" name="advanced_button">
         <property name="text">
          <string>Advanced</string>
@@ -275,8 +265,7 @@
   <tabstop>mtu</tabstop>
   <tabstop>otp_profile</tabstop>
   <tabstop>only_advertised_routes</tabstop>
-  <tabstop>use_tunnel_dns</tabstop>
-  <tabstop>block_outside_dns</tabstop>
+  <tabstop>tunnel_dns</tabstop>
   <tabstop>advanced_button</tabstop>
   <tabstop>insecure</tabstop>
   <tabstop>tls_server_name</tabstop>

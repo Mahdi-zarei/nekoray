@@ -197,8 +197,8 @@ namespace Configs {
             QMap<QString, QString> vpnEndpointTags;
             QList<QString> vpnGateTags;
             QList<QString> vpnAuxTags;
-            // The gated tunnel that carries the whole profile refuses any DNS it cannot answer.
-            bool vpnBlockOutsideDns = false;
+            // The main-profile tunnel set to Strict tunnel DNS; its resolvers take every remote query.
+            QString vpnStrictTag;
             QList<QString> xrayIngressTags;
             QList<QString> singIngressTags;
             QList<coreBridgeConfig> singToXrayBridges;
@@ -986,9 +986,8 @@ namespace Configs {
                 };
             }
 
-            // A gated tunnel takes the fall-through only where unmatched traffic can reach it.
-            QString vpnFinalDnsTag;
-            bool vpnDirectFinalDns = false;
+            // Strict tunnel DNS takes every query that would otherwise go to dns-remote.
+            QString remoteDnsTag = tags::dnsRemote;
             if (!ctx.forTest) {
                 for (auto it = ctx.vpnEndpointTags.cbegin(); it != ctx.vpnEndpointTags.cend(); ++it) {
                     const auto dnsTag = QString(tags::dnsVpnPrefix) + "-" + it.key();
@@ -997,14 +996,10 @@ namespace Configs {
                         {"type", it.value()},
                         {"endpoint", it.key()},
                     };
-                    if (ctx.vpnGateTags.contains(it.key())) {
+                    if (it.key() == ctx.vpnStrictTag) {
                         server["accept_default_resolvers"] = true;
                         server["accept_search_domain"] = true;
-                        if (it.key() == tags::proxy || it.key() == tags::warpBypass) {
-                            // dns-remote detours through this tunnel, so direct is the only reachable fallback.
-                            if (ctx.vpnBlockOutsideDns) { if (vpnFinalDnsTag.isEmpty()) vpnFinalDnsTag = dnsTag; }
-                            else vpnDirectFinalDns = true;
-                        }
+                        remoteDnsTag = dnsTag;
                     }
                     servers += server;
                     headRules += QJsonObject{
@@ -1085,16 +1080,11 @@ namespace Configs {
             const bool useDirectFinalDNS = ctx.forTest || settings.dns_final_out == tags::direct;
 
             if (!ctx.forTest && dns.needProxyDnsRules && useDirectFinalDNS) {
-                appendDnsRoutingRules(rules, dns.proxy, tags::dnsRemote, settings.remote_dns_disable_ipv6);
+                appendDnsRoutingRules(rules, dns.proxy, remoteDnsTag, settings.remote_dns_disable_ipv6);
             }
 
-            const bool finalIsDirect = useDirectFinalDNS || vpnDirectFinalDns;
-            appendDnsRoute(rules, QJsonObject{},
-                           !vpnFinalDnsTag.isEmpty() ? vpnFinalDnsTag
-                           : finalIsDirect ? QString(tags::dnsDirect)
-                                           : QString(tags::dnsRemote),
-                           vpnFinalDnsTag.isEmpty() && (finalIsDirect ? settings.direct_dns_disable_ipv6
-                                                                      : settings.remote_dns_disable_ipv6));
+            appendDnsRoute(rules, QJsonObject{}, useDirectFinalDNS ? QString(tags::dnsDirect) : remoteDnsTag,
+                           useDirectFinalDNS ? settings.direct_dns_disable_ipv6 : settings.remote_dns_disable_ipv6);
 
             auto dnsLocalAddress = settings.core_box_underlying_dns.isEmpty() ? "local" : settings.core_box_underlying_dns;
             auto dnsLocalObj = buildDnsObj(ctx, dnsLocalAddress);
@@ -1360,14 +1350,12 @@ namespace Configs {
                     const bool gated = !opts.auxiliary &&
                                        ((ovpn != nullptr && ovpn->only_advertised_routes) ||
                                         (ocon != nullptr && ocon->only_advertised_routes));
-                    const bool tunnelDNS = (ovpn != nullptr && ovpn->use_tunnel_dns) ||
-                                           (ocon != nullptr && ocon->use_tunnel_dns);
-                    // dns-remote detours through this tunnel, so it cannot be the fallback here.
-                    const bool carriesProfile = tag == tags::proxy || tag == tags::warpBypass;
-                    if (tunnelDNS || (gated && carriesProfile)) ctx.vpnEndpointTags.insert(tag, ent->type);
-                    if (gated && carriesProfile)
-                        ctx.vpnBlockOutsideDns = (ovpn != nullptr && ovpn->block_outside_dns) ||
-                                                 (ocon != nullptr && ocon->block_outside_dns);
+                    const QString tunnelDns = ovpn != nullptr ? ovpn->tunnel_dns
+                                            : ocon != nullptr ? ocon->tunnel_dns : QString();
+                    if (tunnelDns != kTunnelDnsNone) ctx.vpnEndpointTags.insert(tag, ent->type);
+                    // Only the main profile owns the remote queries; an auxiliary tunnel keeps to the names it claims.
+                    if (tunnelDns == kTunnelDnsStrict && (tag == tags::proxy || tag == tags::warpBypass))
+                        ctx.vpnStrictTag = tag;
                     if (gated) ctx.vpnGateTags << tag;
                 }
                 auto [object, error] = ent->outbound->Build();
@@ -2104,6 +2092,10 @@ namespace Configs {
 
             QJsonArray vpnFallthroughRules;
             if (!ctx.forTest && ctx.vpnGateTags.contains(finalTag)) {
+                // A hostname destination has no address for preferred_by to match until it is resolved.
+                QJsonObject gateResolve{{"action", "resolve"}};
+                if (!settings.resolve_domain_strategy.isEmpty()) gateResolve["strategy"] = settings.resolve_domain_strategy;
+                vpnFallthroughRules.append(gateResolve);
                 vpnFallthroughRules.append(QJsonObject{
                     {"preferred_by", QJsonArray{finalTag}},
                     {"action", "route"},

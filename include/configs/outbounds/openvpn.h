@@ -86,8 +86,7 @@ namespace Configs
         // Throne-only, never sent to the core.
         int otp_profile_id = -1;
         bool only_advertised_routes = true;
-        bool use_tunnel_dns = true;
-        bool block_outside_dns = false;
+        QString tunnel_dns = kTunnelDnsPrefer;
 
         QString mode;
         QList<std::shared_ptr<OpenVPNRemote>> servers;

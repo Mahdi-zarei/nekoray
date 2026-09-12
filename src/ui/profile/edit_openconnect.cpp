@@ -12,6 +12,9 @@ EditOpenConnect::EditOpenConnect(QWidget *parent) : QWidget(parent), ui(new Ui::
     ui->setupUi(this);
 
     ui->flavor->addItems({"", "anyconnect", "gp", "fortinet", "f5", "pulse", "nc"});
+    ui->tunnel_dns->addItem(tr("None"), QString(Configs::kTunnelDnsNone));
+    ui->tunnel_dns->addItem(tr("Prefer"), QString(Configs::kTunnelDnsPrefer));
+    ui->tunnel_dns->addItem(tr("Strict"), QString(Configs::kTunnelDnsStrict));
 
     ui->otp_profile_l->setToolTip(tr("<html><head/><body><p>Binds an authenticator entry to this profile. %1 in the "
                                      "username, password, software token or form entry fields is replaced with a "
@@ -65,8 +68,9 @@ void EditOpenConnect::onStart(std::shared_ptr<Configs::Profile> _ent) {
     ui->server_path->setText(outbound->server_path);
     ui->mtu->setText(outbound->mtu == 0 ? QString() : Int2String(outbound->mtu));
     ui->only_advertised_routes->setChecked(outbound->only_advertised_routes);
-    ui->use_tunnel_dns->setChecked(outbound->use_tunnel_dns);
-    ui->block_outside_dns->setChecked(outbound->block_outside_dns);
+    auto tunnelDnsIndex = ui->tunnel_dns->findData(outbound->tunnel_dns);
+    if (tunnelDnsIndex < 0) tunnelDnsIndex = ui->tunnel_dns->findData(QString(Configs::kTunnelDnsPrefer));
+    ui->tunnel_dns->setCurrentIndex(tunnelDnsIndex);
 
     ui->otp_profile->addItem(tr("None"), -1);
     for (const auto &otp: Configs::dataManager->otpProfilesRepo->GetAllOtpProfiles()) {
@@ -95,8 +99,7 @@ bool EditOpenConnect::onEnd() {
     outbound->mtu = ui->mtu->text().trimmed().toInt();
     outbound->otp_profile_id = ui->otp_profile->currentData().toInt();
     outbound->only_advertised_routes = ui->only_advertised_routes->isChecked();
-    outbound->use_tunnel_dns = ui->use_tunnel_dns->isChecked();
-    outbound->block_outside_dns = ui->block_outside_dns->isChecked();
+    outbound->tunnel_dns = ui->tunnel_dns->currentData().toString();
 
     outbound->tls->insecure = ui->insecure->isChecked();
     outbound->tls->server_name = ui->tls_server_name->text().trimmed();
