@@ -152,6 +152,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     themeManager()->ApplyTheme(Configs::dataManager->settingsRepo->theme);
     ui->setupUi(this);
+#ifdef Q_OS_MACOS
+    auto hideShortcuts = ui->actionHide_window->shortcuts();
+    const QKeySequence closeSeq(Qt::MetaModifier | Qt::Key_W);
+    if (!hideShortcuts.contains(closeSeq)) {
+        hideShortcuts.append(closeSeq);
+        ui->actionHide_window->setShortcuts(hideShortcuts);
+    }
+
+    auto *minimizeShortcut = new QShortcut(QKeySequence(Qt::MetaModifier | Qt::Key_M), this);
+    connect(minimizeShortcut, &QShortcut::activated, this, [this]() {
+        showMinimized();
+    });
+#endif
 
     setActionsData();
     loadShortcuts();

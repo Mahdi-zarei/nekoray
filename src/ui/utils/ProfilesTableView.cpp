@@ -56,6 +56,10 @@ void ProfilesTableView::keyPressEvent(QKeyEvent *event) {
         event->accept();
         return;
     }
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+        event->ignore();
+        return;
+    }
     QTableView::keyPressEvent(event);
 }
 
